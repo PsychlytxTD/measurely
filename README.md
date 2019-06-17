@@ -1,2 +1,2 @@
-# Measurely
-Production and beta code
+# measurely
+Production and preproduction code.
