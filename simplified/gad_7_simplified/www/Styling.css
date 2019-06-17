@@ -1,0 +1,100 @@
+                               .main-header .logo {
+                                 font-size: 20px;
+                                 text-align: left;
+                                 line-height: 60px;
+                                 height: 60px;
+                               }
+                       
+                                .skin-blue .main-header .logo {
+                                background-color: #d35400;
+                                }
+                                
+                             
+                                .skin-blue .main-header .logo:hover {
+                                background-color:  #283747 ;
+                                }
+                                
+                           
+                                .skin-blue .main-header .navbar {
+                                background-color: #283747;
+                                }       
+                                
+                       
+                                .skin-blue .main-sidebar {
+                                background-color: #283747;
+                                }
+                                
+                               
+                                .skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
+                                background-color:   #283747  ;
+                                
+                                }
+                                
+                               
+                                .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
+                                background-color:  #283747 ;
+                                }
+                                               
+                                .skin-blue .main-header .navbar .sidebar-toggle:hover{
+                                background-color:#827717;
+                                }
+                                
+                                .skin-blue .sidebar-menu > li:hover > a {
+                                border-left-color: #827717;
+                                }
+                                
+                                .skin-blue .sidebar-menu > li.active > a {
+                                border-left-color: #283747;
+                                }
+                                
+                                .tabbable > .nav > li[class=active]    > a {
+                                background-color: #283747; color:white;
+                                }
+                                
+                                .nav-tabs-custom>.nav-tabs>li.active {
+                                border-top-color: #827717;
+                                }
+                                
+                                .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+                                border-top-color: #283747;
+                                }
+                                
+                                hr {
+                                border-style: solid;
+                                border-color: #283747;
+                                border-width: 2px;
+                                }
+                                
+                                .well {background-color:#e5e5e5; 
+                                       color: #000000;
+                                       border: 2px solid #827717
+                                }
+                                
+                                .progress-bar {background-color: #d35400;}
+                                
+                                .progress-bar {background-color: #d35400;}
+                                
+                                .radio-inline {margin-right: 45px; padding-top: 8px;}
+                                
+                                .shiny-options-group {font-size: 17px;}
+                                
+                                .reportbutton {
+                                 width: 270px; background-color:#283747;color:#d35400;
+                                }
+                                
+                                .submit_data {color:#d35400;}
+                                
+                                .submit_data_blue {color:#283747;}
+                                
+                                .selectize-input { line-height: 30px; }
+                                
+                                .selectize-dropdown { line-height: 30px; }
+                                
+                               .swal-button--confirm { background: #283747; border-color: #283747; outline: none;}
+                               
+                               .swal-button--confirm:hover { background: #d35400; border-color: #d35400; }
+                               
+                               .swal-button--confirm:focus {box-shadow:none;}
+
+                                
+                                )

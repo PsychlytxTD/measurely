@@ -1,0 +1,43 @@
+---
+title: "Clinical Report"
+author: "`r params$client_name`"
+date: "Today's Date: `r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  memor::pdf_memo:
+    company: 
+      name: PsychlytX
+      address: 18 Stanley Street, Collingwood 3066
+      phone: 03 9787 9313
+      email: info@psychlytx.com.au
+    logo: "logo.png"
+    logo_height: 2cm
+    libertine: TRUE
+    fancy_captions: FALSE
+always_allow_html: yes
+params:
+  report_data: 'NULL'
+  client_name: 'NULL'
+---
+
+```{r, echo = FALSE, include = FALSE}
+library(knitr)
+library(kableExtra)
+library(extrafont)
+
+opts_chunk$set(fig.width = 6, fig.height = 5, fig.pos = "H", dev = "cairo_pdf")
+
+```
+
+```{r, results='asis', echo=FALSE, message = FALSE, warning = FALSE}
+for (i in seq(nrow(params$report_data))) {
+  if (i != 1) cat("\\clearpage \n\n")
+  cat("#", params$report_data$subscale_info[[i]]$title, "\n\n")
+  print(params$report_data$plot[[i]])
+  cat(params$report_data$scores_table[[i]])
+  cat(params$report_data$statistics_table_1[[i]])
+  cat(params$report_data$statistics_table_2[[i]])
+  cat(params$report_data$subscale_info[[i]]$description, "\n\n")
+}
+```
+
+
