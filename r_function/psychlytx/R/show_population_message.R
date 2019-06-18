@@ -24,7 +24,7 @@ show_population_message_UI<- function(id) {
     fluidRow(
 
       column(width = 7, offset = 4, HTML('&nbsp;'), a(tags$strong("Learn more about customisation"),
-                                                      href = "https:://psychlytx.com.au", style = "color:#d35400"))),
+                                                      href = "http://psychlytx.com", style = "color:#d35400"))),
 
     br(),
 

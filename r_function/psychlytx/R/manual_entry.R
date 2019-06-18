@@ -34,7 +34,7 @@ manual_data_UI<- function(id) {
 
       column(width = 4,
 
-             actionButton(ns("submit_scores"), "Submit", class = "submit_data"),
+             actionButton(ns("submit_scores"), "Submit Measure Responses", class = "submit_data"),
 
              tags$head(tags$style(".submit_data{color:#d35400;}"))
 

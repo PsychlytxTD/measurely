@@ -40,7 +40,7 @@ download_report_UI<- function(id) {
 
 
                      mainPanel(tags$b("This report will display outcomes across all measures completed by the client using
-                                      PsychlytX web applications."),
+                                      Measurely web applications."),
 
                                br(),
 
