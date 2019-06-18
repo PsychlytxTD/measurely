@@ -46,7 +46,7 @@ write_pretherapy_analytics_to_db<- function(input, output, session, pool, analyt
       sendSweetAlert(
         session = session,
         title = "Registration Successful!!",
-        text = "Your client can now complete any PsychlytX questionnaire to which you are subscribed.",
+        text = "This client can now complete a questionnaire using any Measurely web application to which you are subscribed.",
         type = "success"
       )
 

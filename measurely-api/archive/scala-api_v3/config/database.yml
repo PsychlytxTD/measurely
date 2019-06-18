@@ -1,0 +1,31 @@
+development: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: jameslovie
+  password: e2534e41-bbb6-4e2b-b687-71c5be7c7d35
+  # host: <%= ENV['DATABASE_HOST'] %>
+  host: scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com
+  port: <%= ENV['DATABASE_PORT'].present? ? ENV['DATABASE_PORT'] : 5432 %>
+
+development:
+  <<: *default
+  url: scaladb_test
+
+test:
+  <<: *default
+  url: scaladb_test
+
+staging:
+  <<: *default
+  host: <%= ENV['DATABASE_HOST'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+
+production:
+  <<: *default
+  host: <%= ENV['DATABASE_HOST'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>

@@ -17,14 +17,14 @@ analytics_pretherapy_UI<- function(id) {
                      br(),
                      br(),
                      column(width = 7, a(tags$strong("We take privacy seriously. View our policy here."),
-                                                    href = "https:://psychlytx.com.au", style = "color:#d35400; text-decoration: underline;") ),
+                                                    href = "http://www.psychlytx.com", style = "color:#d35400; text-decoration: underline;") ),
                      br(),
                      br(),
                      textInput(ns("first_name"), "First Name", width = '50%'), #Create the widgets for pretherapy analytics
                      textInput(ns("last_name"), "Last Name", width = '50%'),
                      textInput(ns("email_address"), "Email Address", width = '50%'),
                      selectInput(ns("sex"), "Sex", c("", "Male", "Female", "Other"), width = '20%'),
-                     dateInput(ns("birth_date"), "Date of Birth", startview = "year", format = "dd-mm-yyyy", width = '20%'),
+                     dateInput(ns("birth_date"), "Date of Birth", startview = "year", format = "dd-mm-yyyy", value = as.Date(NA), width = '20%'),
                      numericInput(ns("postcode"), "Postcode", value = "", width = '20%'),
                      selectInput(ns("marital_status"), "Marital Status", c("", "Never Married", "Currently Married", "Separated", "Divorced", "Widowed", "Cohabiting"), width = '30%'),
                      selectInput(ns("sexuality"), "Sexual Orientation", c("", "Heterosexual", "Lesbian", "Gay", "Bisexual", "Transgender", "Queer", "Other"), width = '30%'),
@@ -68,9 +68,9 @@ analytics_pretherapy<- function(input, output, session, clinician_id) {
   output$pretherapy_data_entry_message<- renderText({ #Send message to ensure that fields for first and last name are filled out by user
 
 
-    if(input$first_name == "" | input$last_name == "" | input$email_address == "") {
+    if(input$first_name == "" | input$last_name == "" | length(input$birth_date) < 1 | input$email_address == "") {
 
-      return(paste("<span style=\"color:red\">Please provide your client's first name, last name and email address to complete registration.</span>"))
+      return(paste("<span style=\"color:red\">Information is missing. Please provide your client's first name, last name, date of birth and email address to complete registration.</span>"))
 
     } else {
 
@@ -92,7 +92,7 @@ analytics_pretherapy<- function(input, output, session, clinician_id) {
     #Use req() to avoid error messages if the values are NULL
 
     pretherapy_analytics_items<- list( req(clinician_id), req(client_id), req(input$first_name), req(input$last_name), req(input$email_address), input$sex,
-                                       input$birth_date, input$postcode, input$marital_status,
+                                       req(input$birth_date), input$postcode, input$marital_status,
                                        input$sexuality, input$ethnicity, input$indigenous, input$children,
                                        input$workforce_status, input$education ) %>% purrr::set_names(c("clinician_id", "client_id", "first_name", "last_name", "email_address", "sex", "birth_date",
                                        "postcode", "marital_status", "sexuality", "ethnicity", "indigenous", "children", "workforce_status", "education"))
@@ -167,16 +167,31 @@ analytics_posttherapy_UI<- function(id) {
                                         selectizeInput(ns("secondary_diagnosis"), "Secondary Diagnosis", psychlytx::diagnosis_list, width = '60%'),
                                         textInput(ns("referrer"), "Referrer", value = "", width = '50%'),
                                         selectInput(ns("attendance_schedule"), "Schedule of Attendance", c("", "Varied", "Twice A Week", "Once A Week", "Once a Fortnight", "Once Every 3 Weeks", "Once A Month", "Greater Than 1 Month Apart"), width = '40%'),
-                                        numericInput(ns("non_attendances"), "Sessions Not Attended (No Notice Given)", value = "", width = '20%'),
+                                        numericInput(ns("cancellations"), "Number of Cancellations", value = "", width = '20%'),
+                                        numericInput(ns("non_attendances"), "Number of Non-Attendances (No Notice Given)", value = "", width = '20%'),
                                         numericInput(ns("attendances"), "Number of Sessions Attended", value = "", width = '20%'),
                                         radioButtons(ns("premature_dropout"), "Premature Dropout", choices = c("Yes", "No"), selected = character(0), width = '20%'),
                                         selectInput(ns("therapy"), "Therapeutic Approach Used", psychlytx::therapies_list, width = '50%'),
-                                        selectInput(ns("funding"), "Funding Source", choices = c("", "Entirely Self-Funded", "Partly Medicare Funded", "Entirely Medicare Funded (Bulk Billing)",
+                                        selectInput(ns("funding"), "Funding Source", choices = c("", "Entirely Self-Funded", "Partly Medicare Funded", "Entirely Medicare Funded (Bulk Billed)",
                                                                                                 "Private Health Fund", "National Disability Insurance Scheme (NDIS)",
                                                                                                 "WorkCover", "Transport Accident Commission (TAC)",
                                                                                                 "Department of Veterans Affairs (DVA)",
                                                                                                 "Victims of Crime Assistance Tribunal (VOCAT)",
                                                                                                 "Other"), width = '40%'),
+                                        conditionalPanel(condition = "input.funding == 'Private Health Fund'", ns = ns,
+
+                                                         selectizeInput(inputId = ns("private_health_fund"), label = "Select Private Health Fund", width = '60%',
+                                                                        choices = c("", "ACA", "ahm", "Apia", "Australian Unity", "Allianz", "Budget Direct", "Bupa",
+                                                                                    "CBHS", "CDH", "CUA", "Defence Health", "Doctors Health Fund", "Emergency Services Health",
+                                                                                    "Frank Health Insurance", "GMF", "GMHBA", "GUHealth", "HBA", "HBF", "HCF", "HealthCare",
+                                                                                    "Health Partners", "health.com.au", "HIF", "IMAN Health Cover", "Latrove Health", "Medibank",
+                                                                                    "Mildura Health Fund", "Navy Health", "NIB", "Nurses & Midwives Health", "onemedifund",
+                                                                                    "Peoplecare", "Phoenix Health FUnd", "Police Health", "Qantas Insurance", "Queensland Country Health Fund",
+                                                                                    "Researve Bank Health Society", "RT Health Insurance", "St.LukesHealth", "Teachers Health",
+                                                                                    "Transport Health", "TUH", "UniHealth", "Westfund Health"))
+
+                                                         ),
+
                                         selectInput(ns("out_of_pocket"), "Out-Of-Pocket Expense", c("", "None", "$1-$10",
                                                                                                      "$11-$20", "$21-$30", "$31-$40",
                                                                                                      "$41-$50", "$51-$60",
@@ -230,9 +245,11 @@ analytics_posttherapy<- function(input, output, session, clinician_id, selected_
 
     client_id<- selected_client()
 
-    posttherapy_analytics_items<- list( req(clinician_id), req(client_id), input$principal_diagnosis, input$secondary_diagnosis, input$referrer, input$attendance_schedule, input$non_attendances,
-          input$attendances, input$premature_dropout, input$therapy, input$funding, input$out_of_pocket ) %>% purrr::set_names(c("clinician_id", "client_id", "principal_diagnosis",
-          "secondary_diagnosis", "referrer", "attendance_schedule", "non_attendances", "attendances", "premature_dropout", "therapy", "funding", "out_of_pocket"))
+    posttherapy_analytics_items<- list( req(clinician_id), req(client_id), input$principal_diagnosis, input$secondary_diagnosis, input$referrer, input$attendance_schedule,
+                                        input$cancellations, input$non_attendances, input$attendances, input$premature_dropout, input$therapy, input$funding, input$private_health_fund,
+                                        input$out_of_pocket ) %>% purrr::set_names(c("clinician_id", "client_id", "principal_diagnosis",
+          "secondary_diagnosis", "referrer", "attendance_schedule", "cancellations", "non_attendances", "attendances", "premature_dropout", "therapy", "funding", "private_health_fund",
+          "out_of_pocket"))
 
 
     list( posttherapy_analytics_items ) %>% {
@@ -245,11 +262,13 @@ analytics_posttherapy<- function(input, output, session, clinician_id, selected_
         secondary_diagnosis = purrr::map_chr(., "secondary_diagnosis"),
         referrer = purrr::map_chr(., "referrer"),
         attendance_schedule = purrr::map_chr(., "attendance_schedule"),
+        cancellations = purrr::map_chr(., "cancellations"),
         non_attendances = purrr::map_dbl(., "non_attendances"),
         attendances = purrr::map_dbl(., "attendances"),
         premature_dropout = purrr::map_chr(., "premature_dropout"),
         therapy = purrr::map_chr(., "therapy"),
         funding = purrr::map_chr(., "funding"),
+        private_health_fund = purrr::map_chr(., "private_health_fund"),
         out_of_pocket = purrr::map_chr(., "out_of_pocket")
 
       )

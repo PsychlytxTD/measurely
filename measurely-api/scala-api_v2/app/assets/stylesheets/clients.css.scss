@@ -1,0 +1,26 @@
+th { font-size: 14px; }
+td { font-size: 14px; }
+
+.navbar-brand {
+        font-size: 20px;
+        margin-top: 5px; 
+        margin-bottom: 5px; 
+        text-align: center;
+        font-weight: 200;
+}
+
+.navbar-default .navbar-brand {
+          color: #ffffff;
+          font-weight: 200;
+}
+
+.navbar-default .navbar-nav > li > a {
+        color: white;
+        font-size: 5px;
+        padding-top: 10px;
+}
+
+.navbar-fixed-top {
+   -webkit-font-smoothing: antialiased;
+}
+

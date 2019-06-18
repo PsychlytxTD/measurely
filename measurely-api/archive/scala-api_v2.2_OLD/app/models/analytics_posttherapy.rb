@@ -1,0 +1,2 @@
+class AnalyticsPosttherapy < ApplicationRecord
+end

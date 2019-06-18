@@ -1,3 +1,6 @@
+ HEAD
+
+ 87c5f3ff09b8d928704c3f6a6310847a6a667737
 # History files
 .Rhistory
 .Rapp.history
@@ -42,4 +45,7 @@ rsconnect/
 
 #.DS_Store - files that appear on mac
 .DS_Store
+<<<<<<< HEAD
 
+=======
+>>>>>>> 87c5f3ff09b8d928704c3f6a6310847a6a667737

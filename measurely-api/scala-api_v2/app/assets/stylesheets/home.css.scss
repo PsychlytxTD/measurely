@@ -1,0 +1,70 @@
+html, body {
+  min-height: 100%;
+  height: 100%;
+}
+
+body {
+  /*background: #d35500;*/
+  background: linear-gradient(223deg, #f06e17, #d35500);
+  background-size: 400% 400%;
+
+  -webkit-animation: ScalaBackground 4s ease infinite;
+  -moz-animation: ScalaBackground 4s ease infinite;
+  animation: ScalaBackground 4s ease infinite;
+
+  @-webkit-keyframes ScalaBackground {
+      0%{background-position:88% 0%}
+      50%{background-position:13% 100%}
+      100%{background-position:88% 0%}
+  }
+  @-moz-keyframes ScalaBackground {
+      0%{background-position:88% 0%}
+      50%{background-position:13% 100%}
+      100%{background-position:88% 0%}
+  }
+  @keyframes ScalaBackground { 
+      0%{background-position:88% 0%}
+      50%{background-position:13% 100%}
+      100%{background-position:88% 0%}
+  }
+  height: 100%;
+}
+
+header {
+  height: 100px;
+  a {
+    font-weight: 200;
+  }
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 100px);
+
+  h1 {
+    color: #fff;
+    font-weight:200;
+  }
+  p {
+    color: #fff;
+  }
+  .btn-login {
+    padding: 10px 40px;
+    font-weight: 500;
+    font-size: 18px;
+    outline: none;
+
+    &, &:focus, &:active {
+      border: 0;
+      background: #007ED3;
+      &:hover {
+        border: 0;
+        background: #379ADE;
+        cursor: pointer;
+      }
+    }
+  }
+}
