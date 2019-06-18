@@ -91,7 +91,7 @@ ui<- function(request) {
                                       br(),
                                       br(),
                                       
-                                      tags$a(href = "https:://psychlytx.com.au", "Edit client records here.", style = "color:#d35400; text-decoration: underline;")
+                                      tags$a(href = "http://www.psychlytx.com", "Edit client records here.", style = "color:#d35400; text-decoration: underline;")
 
                                     ),
                                     

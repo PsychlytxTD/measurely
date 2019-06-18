@@ -46,9 +46,9 @@ display_client_data<- function(input, output, session, pool, selected_client, me
 
     selected_client_sql<- "SELECT *
     FROM scale
-    WHERE client_id = ?client_id AND measure = ?measure;"
+    WHERE client_id = ?client_id;"
 
-    selected_client_query<- sqlInterpolate(pool, selected_client_sql, client_id = selected_client(), measure = measure)
+    selected_client_query<- sqlInterpolate(pool, selected_client_sql, client_id = selected_client())
 
     dbGetQuery(pool, selected_client_query)
 

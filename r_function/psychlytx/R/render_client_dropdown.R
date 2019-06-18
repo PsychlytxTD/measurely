@@ -14,11 +14,8 @@ tagList(
 
 titlePanel(span(tagList(icon("f07c", lib = "font-awesome", class = "far fa-folder-open"), h4("Find And Select Your Client")))),
 
-actionButton(ns("refresh"), "Refresh Client List", class = "submit_data_blue"),
 
-br(),
-
-uiOutput(ns("client_dropdown"))
+uiOutput(ns("client_dropdown")), actionButton(ns("refresh"), "Refresh List", class = "submit_data_blue")
 
 
 )
@@ -78,7 +75,11 @@ output$client_dropdown<- renderUI({ #Make the client selection widget
   selectizeInput(
     inputId = ns("client_selection"),
     label = "",
-    choices = clients())
+    choices = clients(),
+    options = list(
+      placeholder = 'Type a name or scroll down..',
+      onInitialize = I('function() { this.setValue(""); }')
+    ))
 
 
 })
