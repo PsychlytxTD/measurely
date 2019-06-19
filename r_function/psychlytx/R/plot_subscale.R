@@ -24,27 +24,27 @@ plot_subscale <- function(subscale_df, subscale_info) {
 
   #Calculate the ymin and ymax values to use with cutoff shading
 
-  ymin_cutoff_1 <- subscale_df$cutoff_value_1[length( subscale_df$cutoff_value_1 )]
+  ymin_cutoff_1 <- subscale_df$cutoff_value_1[1]
 
-  ymax_cutoff_1 <- subscale_df$cutoff_value_2[length( subscale_df$cutoff_value_1 )] - 0.1
+  ymax_cutoff_1 <- subscale_df$cutoff_value_2[1] - subscale_info$plot_shading_gap[1]
 
-  ymin_cutoff_2 <- subscale_df$cutoff_value_2[length( subscale_df$cutoff_value_2 )]
+  ymin_cutoff_2 <- subscale_df$cutoff_value_2[1]
 
-  ymax_cutoff_2 <- subscale_df$cutoff_value_3[length( subscale_df$cutoff_value_3 )] - 0.1
+  ymax_cutoff_2 <- subscale_df$cutoff_value_3[1] - subscale_info$plot_shading_gap[1]
 
-  ymin_cutoff_3 <- subscale_df$cutoff_value_3[length( subscale_df$cutoff_value_3 )]
+  ymin_cutoff_3 <- subscale_df$cutoff_value_3[1]
 
-  ymax_cutoff_3 <- subscale_df$cutoff_value_4[length( subscale_df$cutoff_value_4 )] - 0.1
+  ymax_cutoff_3 <- subscale_df$cutoff_value_4[1] - subscale_info$plot_shading_gap[1]
 
-  ymin_cutoff_4 <- subscale_df$cutoff_value_4[length( subscale_df$cutoff_value_4 )]
+  ymin_cutoff_4 <- subscale_df$cutoff_value_4[1]
 
-  ymax_cutoff_4 <- subscale_df$cutoff_value_5[length( subscale_df$cutoff_value_5 )] - 0.1
+  ymax_cutoff_4 <- subscale_df$cutoff_value_5[1] - subscale_info$plot_shading_gap[1]
 
-  ymin_cutoff_5 <- subscale_df$cutoff_value_5[length( subscale_df$cutoff_value_5 )]
+  ymin_cutoff_5 <- subscale_df$cutoff_value_5[1]
 
-  ymax_cutoff_5 <- subscale_df$cutoff_value_6[length( subscale_df$cutoff_value_6 )] - 0.1
+  ymax_cutoff_5 <- subscale_df$cutoff_value_6[1] - subscale_info$plot_shading_gap[1]
 
-  ymin_cutoff_6 <- subscale_df$cutoff_value_6[length( subscale_df$cutoff_value_6 )]
+  ymin_cutoff_6 <- subscale_df$cutoff_value_6[1]
 
   ymax_cutoff_6 <- Inf
 
@@ -196,68 +196,68 @@ plot_subscale <- function(subscale_df, subscale_info) {
       aes(
         label = paste(cutoff_label_1, ":", cutoff_value_1),
         x = as.Date(x_axis_lower_expansion),
-        y = cutoff_value_1 + 0.2
+        y = cutoff_value_1 + subscale_info$plot_cutoff_label_start[1]
       ),
       #Position cutoff label 1
       hjust = 0,
       nudge_y = 0.7,
       family = "Linux Libertine",
-      size = 4
+      size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
         label = paste(cutoff_label_2, ":", cutoff_value_2),
         x = as.Date(x_axis_lower_expansion),
-        y = cutoff_value_2 + 0.2
+        y = cutoff_value_2 + subscale_info$plot_cutoff_label_start[1]
       ),
       #Position cutoff label 2
       hjust = 0,
       nudge_y = 0.7,
       family = "Linux Libertine",
-      size = 4
+      size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
         label = paste(cutoff_label_3, ":", cutoff_value_3),
         x = as.Date(x_axis_lower_expansion),
-        y = cutoff_value_3 + 0.2
+        y = cutoff_value_3 + subscale_info$plot_cutoff_label_start[1]
       ),
       #Position cutoff label 3
       hjust = 0,
       nudge_y = 0.7,
       family = "Linux Libertine",
-      size = 4
+      size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
         label = paste(cutoff_label_4, ":", cutoff_value_4),
         x = as.Date(x_axis_lower_expansion),
-        y = cutoff_value_4 + 0.2
+        y = cutoff_value_4 + subscale_info$plot_cutoff_label_start[1]
       ),
       #Position cutoff label 4
       hjust = 0,
       nudge_y = 0.7,
       family = "Linux Libertine",
-      size = 4
+      size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
         label = paste(cutoff_label_5, ":", cutoff_value_5),
         x = as.Date(x_axis_lower_expansion),
-        y = cutoff_value_5 + 0.2
+        y = cutoff_value_5 + subscale_info$plot_cutoff_label_start[1]
       ),
       #Position cutoff label 5
       hjust = 0,
       nudge_y = 0.7,
       family = "Linux Libertine",
-      size = 4
+      size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
         label = paste(cutoff_label_6, ":", cutoff_value_6),
         x = as.Date(x_axis_lower_expansion),
-        y = cutoff_value_6 + 0.2
+        y = cutoff_value_6 + subscale_info$plot_cutoff_label_start[1]
       ),
       #Position cutoff label 6
       hjust = 0,
       nudge_y = 0.7,
       family = "Linux Libertine",
-      size = 4
+      size = subscale_info$plot_cutoff_label_size[1]
     )
 
 

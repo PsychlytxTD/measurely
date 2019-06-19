@@ -41,6 +41,12 @@
 #'
 #' @param min_score A numeric value indicating minimum possible score on the subscale.
 #'
+#' @param plot_shading_gap A numeric value subtracted from a cutoff score to indicate the amount of white space between shaded rectangles.
+#'
+#' @param plot_cutoff_label_start A numeric value added to a cutoff score to indicate how far up the cutoff label appears.
+#'
+#' @param plot_cutoff_label_size A numeric value indicating the font size of the cutoff labels.
+#'
 #' @param description A description of subscale's properties, to display in report.
 #'
 #' @export
@@ -48,7 +54,8 @@
 #The paramaters from the subscale list (some of which are themselves lists) are passed as arguments.
 
 params_list_maker<- function(title, brief_title, measure, subscale, population_quantity, populations, input_population, sds, means, mean_sd_references, reliabilities, reliability_references,
-                             cutoff_values, cutoff_labels, cutoff_references, cutoff_quantity, items, max_score, min_score, description) {
+                             cutoff_values, cutoff_labels, cutoff_references, cutoff_quantity, items, max_score, min_score, plot_shading_gap,
+                             plot_cutoff_label_start, plot_cutoff_label_size, description) {
 
   req(input_population)
 

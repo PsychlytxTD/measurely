@@ -8,7 +8,8 @@ generate_cutoff_widget(input, output, session, title, brief_title, measure,
   subscale, population_quantity, populations, input_population, sds, means,
   mean_sd_references, reliabilities, reliability_references, cutoff_values,
   cutoff_labels, cutoff_references, cutoff_quantity, items, max_score,
-  min_score, description, sample_overview, journal_references,
+  min_score, plot_shading_gap, plot_cutoff_label_start,
+  plot_cutoff_label_size, description, sample_overview, journal_references,
   existing_data)
 }
 \arguments{
@@ -49,6 +50,12 @@ generate_cutoff_widget(input, output, session, title, brief_title, measure,
 \item{max_score}{A numeric value indicating maximum possible score on the subscale.}
 
 \item{min_score}{A numeric value indicating minimum possible score on the subscale.}
+
+\item{plot_shading_gap}{A numeric value subtracted from a cutoff score to indicate the amount of white space between shaded rectangles.}
+
+\item{plot_cutoff_label_start}{A numeric value added to a cutoff score to indicate how far up the cutoff label appears.}
+
+\item{plot_cutoff_label_size}{A numeric value indicating the font size of the cutoff labels.}
 
 \item{description}{A string indicating a description of subscale's properties, to display in report}
 

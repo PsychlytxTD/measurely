@@ -125,6 +125,12 @@ apply_initial_population_UI<- function(id) {
 #'
 #' @param min_score A numeric value indicating minimum possible score on the subscale.
 #'
+#' @param plot_shading_gap A numeric value subtracted from a cutoff score to indicate the amount of white space between shaded rectangles.
+#'
+#' @param plot_cutoff_label_start A numeric value added to a cutoff score to indicate how far up the cutoff label appears.
+#'
+#' @param plot_cutoff_label_size A numeric value indicating the font size of the cutoff labels.
+#'
 #' @param description A string indicating a description of subscale's properties, to display in report
 #'
 #' @param sample_overview A string indicating a description of each research sample (different for each population)
@@ -138,7 +144,8 @@ apply_initial_population_UI<- function(id) {
 
 apply_initial_population<- function(input, output, session, title, brief_title, measure, subscale, population_quantity, populations, sds, means,
                                     mean_sd_references, reliabilities, reliability_references, cutoff_values, cutoff_labels, cutoff_references, cutoff_quantity,
-                                    items, max_score, min_score, description, sample_overview, journal_references, existing_data, tabsetpanel_id = "tabset") {
+                                    items, max_score, min_score, plot_shading_gap, plot_cutoff_label_start, plot_cutoff_label_size, description,
+                                    sample_overview, journal_references, existing_data, tabsetpanel_id = "tabset") {
 
   parent_session <- get("session", envir = parent.frame(2)) #Need to ensure correct scoping - want R to look in the parent app not the module
 
