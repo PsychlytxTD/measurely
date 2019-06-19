@@ -163,15 +163,30 @@ analytics_posttherapy_UI<- function(id) {
                                         titlePanel(span(tagList(icon("chart-bar", lib = "font-awesome")),
                                                         h3(tags$b("Please provide important information about clinical outcomes.")))),
                                         br(),
-                                        selectInput(ns("principal_diagnosis"), "Primary Diagnosis", psychlytx::diagnosis_list, width = '60%'),
-                                        selectizeInput(ns("secondary_diagnosis"), "Secondary Diagnosis", psychlytx::diagnosis_list, width = '60%'),
+                                        selectizeInput(ns("principal_diagnosis"), "Primary Diagnosis", choices = psychlytx::diagnosis_list,
+                                                       options = list(
+                                                         placeholder = 'Type a word or scroll down..',
+                                                         onInitialize = I('function() { this.setValue(""); }')
+                                                       ),
+                                                       multiple = FALSE, width = '60%'),
+                                        selectizeInput(ns("secondary_diagnosis"), "Secondary Diagnosis", choices = psychlytx::diagnosis_list,
+                                                       options = list(
+                                                         placeholder = 'Type a word or scroll down..',
+                                                         onInitialize = I('function() { this.setValue(""); }')
+                                                       ),
+                                                       width = '60%'),
                                         textInput(ns("referrer"), "Referrer", value = "", width = '50%'),
                                         selectInput(ns("attendance_schedule"), "Schedule of Attendance", c("", "Varied", "Twice A Week", "Once A Week", "Once a Fortnight", "Once Every 3 Weeks", "Once A Month", "Greater Than 1 Month Apart"), width = '40%'),
                                         numericInput(ns("cancellations"), "Number of Cancellations", value = "", width = '20%'),
                                         numericInput(ns("non_attendances"), "Number of Non-Attendances (No Notice Given)", value = "", width = '20%'),
                                         numericInput(ns("attendances"), "Number of Sessions Attended", value = "", width = '20%'),
                                         radioButtons(ns("premature_dropout"), "Premature Dropout", choices = c("Yes", "No"), selected = character(0), width = '20%'),
-                                        selectInput(ns("therapy"), "Therapeutic Approach Used", psychlytx::therapies_list, width = '50%'),
+                                        selectizeInput(ns("therapy"), "Therapeutic Approach Used", choices = psychlytx::therapies_list,
+                                                    options = list(
+                                                      placeholder = 'Type a word or scroll down..',
+                                                      onInitialize = I('function() { this.setValue(""); }')
+                                                    ),
+                                                    width = '50%'),
                                         selectInput(ns("funding"), "Funding Source", choices = c("", "Entirely Self-Funded", "Partly Medicare Funded", "Entirely Medicare Funded (Bulk Billed)",
                                                                                                 "Private Health Fund", "National Disability Insurance Scheme (NDIS)",
                                                                                                 "WorkCover", "Transport Accident Commission (TAC)",
@@ -188,7 +203,11 @@ analytics_posttherapy_UI<- function(id) {
                                                                                     "Mildura Health Fund", "Navy Health", "NIB", "Nurses & Midwives Health", "onemedifund",
                                                                                     "Peoplecare", "Phoenix Health FUnd", "Police Health", "Qantas Insurance", "Queensland Country Health Fund",
                                                                                     "Researve Bank Health Society", "RT Health Insurance", "St.LukesHealth", "Teachers Health",
-                                                                                    "Transport Health", "TUH", "UniHealth", "Westfund Health"))
+                                                                                    "Transport Health", "TUH", "UniHealth", "Westfund Health"),
+                                                                        options = list(
+                                                                          placeholder = 'Type a word or scroll down..',
+                                                                          onInitialize = I('function() { this.setValue(""); }')
+                                                                        ))
 
                                                          ),
 

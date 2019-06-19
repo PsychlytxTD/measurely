@@ -92,8 +92,4 @@ result <- httr::POST(url,                     #Send the email
 
   })
 
-
-observe({ print( formatted_response_body_for_email() )})
-
-
 }
