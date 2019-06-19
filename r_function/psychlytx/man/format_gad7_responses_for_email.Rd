@@ -4,11 +4,15 @@
 \alias{format_gad7_responses_for_email}
 \title{Convert GAD-7 Measure Responses}
 \usage{
-format_gad7_responses_for_email(input, output, session, manual_entry,
+format_gad7_responses_for_email(input, output, session, pool, manual_entry,
   measure_data)
 }
 \arguments{
+\item{pool}{A pool db connection object}
+
 \item{manual_entry}{A list of raw item scores and the date of measure completion.}
+
+\item{measure_data}{A list of values returned when clinician submits new scale responses. Of list items, only accessing the button value, to trigger the query.}
 }
 \description{
 Convert GAD-7 raw measure responses into a readable table, to be send in an email to the clinician.

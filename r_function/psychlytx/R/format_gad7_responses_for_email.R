@@ -19,11 +19,15 @@ format_gad7_responses_for_email_UI<- function(id) {
 #'
 #' Convert GAD-7 raw measure responses into a readable table, to be send in an email to the clinician.
 #'
+#' @param pool A pool db connection object
+#'
 #' @param manual_entry A list of raw item scores and the date of measure completion.
+#'
+#' @param measure_data A list of values returned when clinician submits new scale responses. Of list items, only accessing the button value, to trigger the query.
 #'
 #' @export
 
-format_gad7_responses_for_email<- function(input, output, session, manual_entry, measure_data) {
+format_gad7_responses_for_email<- function(input, output, session, pool, manual_entry, measure_data) {
 
   reactive({
 
@@ -40,6 +44,19 @@ format_gad7_responses_for_email<- function(input, output, session, manual_entry,
    TRUE ~ as.character(manual_entry()$item_scores)
 
  )
+
+
+ #Need to retrieve client's name for the email
+
+  client_name_sql<- "SELECT first_name, last_name
+  FROM client
+  WHERE client_id = ?client_id;"
+
+  client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id)
+
+  client_name<- dbGetQuery( pool, client_name_query )
+  client_name<- paste(client_name, collapse = " ")
+
 
 
   #If the measure does not have established cutoffs, use the function below to create the vector of scores and severity range descriptions.
@@ -68,7 +85,7 @@ format_gad7_responses_for_email<- function(input, output, session, manual_entry,
  score_severity_range<- c(measure_data()$score, severity_range)
 
 
- body_values<- c(score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.
+ body_values<- c(client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.
 
 
                     #Need to replage "to:" field with clinician's email address, pulled from Autho
@@ -76,7 +93,7 @@ format_gad7_responses_for_email<- function(input, output, session, manual_entry,
     body<- do.call(sprintf, c(list('{"from": {"email":"measurely@psychlytx.com","name":"Measurely"},
         "personalizations": [{"to": [{"email":"tim@effectivepsych.com.au"}],
                    "dynamic_template_data":{
-                   "header":"Your client has completed a measure.",
+                   "header":"Your client, %s, has completed a measure.",
 
                    "score": "%s",
                    "severity_range": "%s",

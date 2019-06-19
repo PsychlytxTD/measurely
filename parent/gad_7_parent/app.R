@@ -304,7 +304,7 @@ server <- function(input, output, session) {
   
 
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the body text to be sent.
-  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", manual_entry, measure_data)
+  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, manual_entry, measure_data)
   
   
   callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
