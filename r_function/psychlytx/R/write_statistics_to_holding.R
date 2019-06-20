@@ -35,9 +35,11 @@ write_statistics_to_holding_UI<- function(id) {
   br(),
   actionButton(ns("submit_holding_data"), "Send Email", class = "submit_data", style = "margin-top: 9px") %>%
     helper( type = "inline", title = "What will happen when I email this measure to my client?", colour = "#283747", #Make info icon to explain what happens when email is sent.
-            content = c("Your client will receive a unique key and a link to this particular measure.",
-                        "After the measure has been completed, you will receive an email that shows your client's raw item responses.",
-                        "You will also receive a link back to this web application, where you can download a full clinical report.")))
+            content = c("Your client will receive a unique Measurely key and a link to complete this particular measure.",
+                        "",
+                        "After the measure has been completed, you will receive an email displaying your client's results.",
+                        "",
+                        "In the same email, you will receive a link to return to this application and download a full clinical report.")))
 
   )))
 
