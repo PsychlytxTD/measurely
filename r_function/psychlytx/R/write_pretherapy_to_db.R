@@ -6,7 +6,7 @@
 #'
 #' @export
 
-write_pretherapy_analytics_to_db_UI<- function(id) {
+write_pretherapy_to_db_UI<- function(id) {
 
   return(NULL)
 
@@ -25,7 +25,7 @@ write_pretherapy_analytics_to_db_UI<- function(id) {
 #' @export
 
 
-write_pretherapy_analytics_to_db<- function(input, output, session, pool, analytics_pretherapy) {
+write_pretherapy_to_db<- function(input, output, session, pool, analytics_pretherapy) {
 
 
   observe({

@@ -73,7 +73,7 @@ ui<- function(request) {
                                   
                                   psychlytx::analytics_pretherapy_UI("analytics_pretherapy"), #Make the client registration panel
                                   
-                                  psychlytx::write_pretherapy_analytics_to_db_UI("write_pretherapy_to_db")
+                                  psychlytx::write_pretherapy_to_db_UI("write_pretherapy_to_db")
                                   
                          ),
                          
@@ -227,7 +227,7 @@ server <- function(input, output, session) {
   analytics_pretherapy<- callModule(psychlytx::analytics_pretherapy, "analytics_pretherapy", clinician_id) #Return the pretherapy analytics responses
   
   
-  callModule(psychlytx::write_pretherapy_analytics_to_db, "write_pretherapy_to_db", pool, analytics_pretherapy) #Write pre-therapy analytics responses data to db
+  callModule(psychlytx::write_pretherapy_to_db, "write_pretherapy_to_db", pool, analytics_pretherapy) #Write pre-therapy analytics responses data to db
   
   
   callModule(psychlytx::reliability_calc, "reliability_derivation")  #If selected, derive reliability value from statistics
