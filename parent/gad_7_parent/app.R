@@ -42,6 +42,8 @@ onStop(function() {
 
 clinician_id<- "a71c6d9c-10e2-4247-b704-50d72ad14783" #Temp storage of clinician id
 
+#clinician_email<- Sys.getenv(“SHINYPROXY_USERNAME”)  ##This is how we will access the clinician username (i.e. email) to pass to the modules
+
 
 
 ui<- function(request) {
