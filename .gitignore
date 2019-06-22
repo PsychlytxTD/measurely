@@ -40,8 +40,8 @@ rsconnect/
 
 # packrat stuff
 
- packrat/*
- *packrat.opts
+*/packrat/lib*
+*/packrat/src/
  
 
 .Rproj.user
