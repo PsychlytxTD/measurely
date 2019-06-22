@@ -40,7 +40,7 @@ rsconnect/
 
 # packrat stuff
 
- packrat/
+ **/packrat
 
 .Rproj.user
 
