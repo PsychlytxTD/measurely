@@ -39,8 +39,9 @@ vignettes/*.pdf
 rsconnect/
 
 # packrat stuff
-*/packrat/lib*
-*/packrat/src/
+
+ packrat/
+
 .Rproj.user
 
 #.DS_Store - files that appear on mac
