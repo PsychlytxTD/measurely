@@ -43,7 +43,7 @@ clients<- reactive({
 
   # Querying code to be called when clinician clicks 'existing client' tab further down. To generate dropdown of clients.
 
-  client_list_sql<- "SELECT clinician_id, client_id, first_name, last_name, birth_date
+  client_list_sql<- "SELECT clinician_id, id, first_name, last_name, birth_date
   FROM client
   WHERE clinician_id = ?clinician_id;"
 
@@ -59,7 +59,7 @@ clients<- reactive({
   client_list<- client_list %>%
     collect  %>%
     split( .$dropdown_client ) %>%    # Field that will be used for the labels
-    purrr::map(~.$client_id)          #Field that will be returned when the clinician actually chooses the client
+    purrr::map(~.$id)          #Field that will be returned when the clinician actually chooses the client
 
 
 })

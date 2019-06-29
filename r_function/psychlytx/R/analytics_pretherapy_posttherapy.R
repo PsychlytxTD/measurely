@@ -24,7 +24,7 @@ analytics_pretherapy_UI<- function(id) {
                      textInput(ns("last_name"), "Last Name", width = '50%'),
                      textInput(ns("email_address"), "Email Address", width = '50%'),
                      selectInput(ns("sex"), "Sex", c("", "Male", "Female", "Other"), width = '20%'),
-                     dateInput(ns("birth_date"), "Date of Birth", startview = "year", format = "dd-mm-yyyy", value = as.Date(NA), width = '20%'),
+                     dateInput(ns("birth_date"), "Date of Birth", startview = "year", format = "dd/mm/yyyy", value = as.Date(NA), width = '20%'),
                      numericInput(ns("postcode"), "Postcode", value = "", width = '20%'),
                      selectInput(ns("marital_status"), "Marital Status", c("", "Never Married", "Currently Married", "Separated", "Divorced", "Widowed", "Cohabiting"), width = '30%'),
                      selectInput(ns("sexuality"), "Sexual Orientation", c("", "Heterosexual", "Lesbian", "Gay", "Bisexual", "Transgender", "Queer", "Other"), width = '30%'),
@@ -86,15 +86,15 @@ analytics_pretherapy<- function(input, output, session, clinician_id) {
   eventReactive(input$submit_analytics_pretherapy, {
 
 
-   client_id<- uuid::UUIDgenerate() #Generate unique client ID
+   id<- uuid::UUIDgenerate() #Generate unique client ID
 
 
     #Use req() to avoid error messages if the values are NULL
 
-    pretherapy_analytics_items<- list( req(clinician_id), req(client_id), req(input$first_name), req(input$last_name), req(input$email_address), input$sex,
+    pretherapy_analytics_items<- list( req(id), req(clinician_id), req(input$first_name), req(input$last_name), req(input$email_address), input$sex,
                                        req(input$birth_date), input$postcode, input$marital_status,
                                        input$sexuality, input$ethnicity, input$indigenous, input$children,
-                                       input$workforce_status, input$education ) %>% purrr::set_names(c("clinician_id", "client_id", "first_name", "last_name", "email_address", "sex", "birth_date",
+                                       input$workforce_status, input$education ) %>% purrr::set_names(c("id", "clinician_id", "first_name", "last_name", "email_address", "sex", "birth_date",
                                        "postcode", "marital_status", "sexuality", "ethnicity", "indigenous", "children", "workforce_status", "education"))
 
 
@@ -105,13 +105,13 @@ analytics_pretherapy<- function(input, output, session, clinician_id) {
       tibble::tibble(  #Create a dataframe with all the pre-therapy analytics widget values as columns
                        #Specify the variable type explicitly
 
+      id = purrr::map_chr(., "id"),
       clinician_id = purrr::map_chr(., "clinician_id"),
-      client_id = purrr::map_chr(., "client_id"),
       first_name = purrr::map_chr(., "first_name"),
       last_name = purrr::map_chr(., "last_name"),
       email_address = purrr::map_chr(., "email_address"),
       sex = purrr::map_chr(., "sex"),
-      birth_date = format(lubridate::as_date(purrr::map_dbl(., "birth_date")), "%d/%m/%Y"), #Convert to date class
+      birth_date = as.character(lubridate::as_date(purrr::map_dbl(., "birth_date"))), #Convert to correct SQL format and conver to character
       postcode = purrr::map_chr(., "postcode"),
       marital_status = purrr::map_chr(., "marital_status"),
       sexuality = purrr::map_chr(., "sexuality"),
@@ -266,7 +266,7 @@ analytics_posttherapy<- function(input, output, session, clinician_id, selected_
 
     posttherapy_analytics_items<- list( req(clinician_id), req(client_id), input$principal_diagnosis, input$secondary_diagnosis, input$referrer, input$attendance_schedule,
                                         input$cancellations, input$non_attendances, input$attendances, input$premature_dropout, input$therapy, input$funding, input$private_health_fund,
-                                        input$out_of_pocket ) %>% purrr::set_names(c("clinician_id", "client_id", "principal_diagnosis",
+                                        input$out_of_pocket ) %>% purrr::set_names(c("id", "client_id", "principal_diagnosis",
           "secondary_diagnosis", "referrer", "attendance_schedule", "cancellations", "non_attendances", "attendances", "premature_dropout", "therapy", "funding", "private_health_fund",
           "out_of_pocket"))
 
@@ -275,7 +275,7 @@ analytics_posttherapy<- function(input, output, session, clinician_id, selected_
 
       tibble::tibble(
 
-        clinician_id = purrr::map_chr(., "clinician_id"),
+        id = purrr::map_chr(., "id"),
         client_id = purrr::map_chr(., "client_id"),
         principal_diagnosis = purrr::map_chr(., "principal_diagnosis"),
         secondary_diagnosis = purrr::map_chr(., "secondary_diagnosis"),

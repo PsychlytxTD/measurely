@@ -78,7 +78,7 @@ write_statistics_to_holding<- function(input, ouput, session, pool, holding_data
 
     client_email_sql<- "SELECT email_address
     FROM client
-    WHERE client_id = ?client_id;"
+    WHERE id = ?client_id;"
 
     client_email_query<- sqlInterpolate(pool, client_email_sql, client_id = holding_data()$client_id)
 

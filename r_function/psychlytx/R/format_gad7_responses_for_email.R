@@ -50,7 +50,7 @@ format_gad7_responses_for_email<- function(input, output, session, pool, manual_
 
   client_name_sql<- "SELECT first_name, last_name
   FROM client
-  WHERE client_id = ?client_id;"
+  WHERE id = ?client_id;"
 
   client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id)
 

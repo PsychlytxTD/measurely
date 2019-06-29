@@ -1,9 +1,9 @@
 
 CREATE TABLE client (
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp,
+    creation_date timestamp default current_timestamp,
+    update_date timestamp default current_timestamp,
     id text UNIQUE NOT NULL PRIMARY KEY,
-    clinician_id text UNIQUE NOT NULL REFERENCES clinician
+    clinician_id text NOT NULL,
     first_name text NOT NULL,
     last_name text NOT NULL,
     email_address text NOT NULL,
@@ -14,26 +14,17 @@ CREATE TABLE client (
     sexuality text,
     ethnicity text,
     indigenous boolean,
-    children smallint,
+    children float,
     workforce_status text,
     education text
 );
 
 
-CREATE TABLE clinician (
-    id text UNIQUE NOT NULL PRIMARY KEY,  
-    first_name text NOT NULL,
-    last_name text NOT NULL
-);
-
-
-
-
 CREATE TABLE scale (
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp,
+    creation_date timestamp default current_timestamp,
+    update_date timestamp default current_timestamp,
     id text UNIQUE NOT NULL PRIMARY KEY,
-    clinician_id text NOT NULL REFERENCES clinician, 
+    clinician_id text NOT NULL, 
     client_id text NOT NULL REFERENCES client,
     measure text NOT NULL,
     subscale text NOT NULL,
@@ -64,7 +55,7 @@ CREATE TABLE scale (
     cutoff_value_3 float NOT NULL,
     cutoff_value_4 float NOT NULL,
     cutoff_value_5 float NOT NULL,
-    cutoff_value_6 float NOT NULL
+    cutoff_value_6 float NOT NULL,
     cutoff_reference_1 text NOT NULL,
     cutoff_reference_2 text NOT NULL,
     cutoff_reference_3 text NOT NULL,
@@ -76,9 +67,9 @@ CREATE TABLE scale (
 
 
 CREATE TABLE holding (
-    created_at timestamp default current_timestamp,
+    creation_date timestamp default current_timestamp,
     id text UNIQUE NOT NULL PRIMARY KEY,
-    clinician_id text NOT NULL REFERENCES clinician,
+    clinician_id text NOT NULL,
     client_id text NOT NULL REFERENCES client,
     measure text NOT NULL,
     subscale text NOT NULL,
@@ -102,7 +93,7 @@ CREATE TABLE holding (
     cutoff_value_3 float NOT NULL,
     cutoff_value_4 float NOT NULL,
     cutoff_value_5 float NOT NULL,
-    cutoff_value_6 float NOT NULL
+    cutoff_value_6 float NOT NULL,
     cutoff_reference_1 text NOT NULL,
     cutoff_reference_2 text NOT NULL,
     cutoff_reference_3 text NOT NULL,
@@ -113,9 +104,9 @@ CREATE TABLE holding (
 
 
 CREATE TABLE item (
-    created_at timestamp default current_timestamp,
+    creation_date timestamp default current_timestamp,
     id text UNIQUE NOT NULL PRIMARY KEY,
-    clinician_id text NOT NULL REFERENCES clinician, 
+    clinician_id text NOT NULL, 
     client_id text NOT NULL REFERENCES client,
     date date NOT NULL,
     measure text NOT NULL,
@@ -252,9 +243,9 @@ CREATE TABLE item (
 );
 
 CREATE TABLE posttherapy_analytics (
-    created_at timestamp default current_timestamp,
-    id text UNIQUE NOT NULL PRIMARY KEY, #Each row needs unique id because there may be more than one for a given client
-    clinician_id text NOT NULL REFERENCES clinician,
+    creation_date timestamp default current_timestamp,
+    id text UNIQUE NOT NULL PRIMARY KEY,
+    clinician_id text NOT NULL,
     client_id text NOT NULL REFERENCES client,
     principal_diagnosis text,
     secondary_diagnosis text,

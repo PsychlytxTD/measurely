@@ -44,7 +44,7 @@ combine_all_input<- function(input, output, session, input_list) {
         client_id = purrr::map_chr(., "client_id"),
         measure = purrr::map_chr(., "measure"),
         subscale = purrr::map_chr(., "subscale"),
-        date = format(lubridate::as_date(purrr::map_dbl(., "date")), "%d/%m/%Y"), #Convert to date class
+        date = as.character(lubridate::as_date(purrr::map_dbl(., "date"))), #Convert to correct SQL format and conver to character
         score = purrr::map_dbl(., "score"),
         mean = purrr::map_dbl(., "mean"),
         mean_reference = purrr::map_chr(., "mean_reference"),
@@ -105,7 +105,7 @@ combine_all_input<- function(input, output, session, input_list) {
 
       #Use UUIDgenerate to make unique entry id for scale table called scale_id. Need this for lookup using Ruby API.
 
-    ) %>% dplyr::mutate_if(is.numeric, round, 2) %>% dplyr::mutate(scale_id = uuid::UUIDgenerate()) %>%  dplyr::select(clinician_id, client_id, measure, subscale, date, score, pts, se, ci, ci_upper, ci_lower, everything())
+    ) %>% dplyr::mutate_if(is.numeric, round, 2) %>% dplyr::mutate(id = uuid::UUIDgenerate()) %>%  dplyr::select(clinician_id, client_id, measure, subscale, date, score, pts, se, ci, ci_upper, ci_lower, everything())
 
 
 

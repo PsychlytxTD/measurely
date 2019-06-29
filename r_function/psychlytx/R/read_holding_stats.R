@@ -57,7 +57,7 @@ read_holding_stats<- function(input, output, session, pool, measure, tabsetpanel
     holding_stats_client_sql<- "SELECT h.*, c.first_name, c.last_name
     FROM holding h
     LEFT JOIN client c
-    ON h.client_id = c.client_id
+    ON h.client_id = c.id
     WHERE h.client_id = ?client_id AND h.measure = ?measure;"
 
     holding_stats_client_query<- sqlInterpolate(pool, holding_stats_client_sql, client_id = input$client_id, measure = measure)

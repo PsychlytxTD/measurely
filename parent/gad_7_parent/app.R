@@ -42,7 +42,16 @@ onStop(function() {
 
 clinician_id<- "a71c6d9c-10e2-4247-b704-50d72ad14783" #Temp storage of clinician id
 
-#clinician_email<- Sys.getenv(“SHINYPROXY_USERNAME”)  ##This is how we will access the clinician username (i.e. email) to pass to the modules
+#clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
+
+#url<- "https://scala.au.auth0.com/userinfo"
+
+#clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN"))))
+
+#clinician_object<- httr::content(clinician_object, as = "parsed")
+
+#clinician_id<- clinician_object$sub
+
 
 
 
@@ -356,7 +365,7 @@ onclick("trigger_most_recent_data",  #Query database when user clicks report tab
   
   #Pull selected client's data from db, create a nested df containing all necessary info for report (plots and tables) and send to R Markdown doc.
   
-  callModule( psychlytx::download_report, "download_report", pool, selected_client, psychlytx::global_subscale_info, most_recent_client_data)
+  callModule( psychlytx::download_report, "download_report", pool, selected_client, psychlytx::global_subscale_info, most_recent_client_data )
   
   
 }
