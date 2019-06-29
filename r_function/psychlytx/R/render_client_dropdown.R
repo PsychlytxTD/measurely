@@ -53,6 +53,8 @@ clients<- reactive({
 
   validate(need(length(client_list) >= 1, "No clients registered yet."))
 
+  client_list$birth_date<- as.character(format(client_list$birth_date, "%d/%m/%Y")) #Make sure date appears in correct format (i.e. day, month, year)
+
   client_list <- client_list %>%
     tidyr::unite(dropdown_client, first_name, last_name, birth_date, sep = " ", remove = FALSE)
 
