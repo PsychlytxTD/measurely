@@ -17,6 +17,7 @@
 
 plot_subscale <- function(subscale_df, subscale_info) {
 
+
   #Convert date variable to date class
 
   subscale_df <- transform(subscale_df, date = chron(date, format = "d/m/Y" ) )
@@ -200,6 +201,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       ),
       #Position cutoff label 1
       hjust = 0,
+      angle = 45,
       nudge_y = subscale_info$plot_cutoff_label_start[1],
       family = "Linux Libertine",
       size = subscale_info$plot_cutoff_label_size[1]
@@ -211,6 +213,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       ),
       #Position cutoff label 2
       hjust = 0,
+      angle = 45,
       nudge_y = subscale_info$plot_cutoff_label_start[1],
       family = "Linux Libertine",
       size = subscale_info$plot_cutoff_label_size[1]
@@ -222,6 +225,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       ),
       #Position cutoff label 3
       hjust = 0,
+      angle = 45,
       nudge_y = subscale_info$plot_cutoff_label_start[1],
       family = "Linux Libertine",
       size = subscale_info$plot_cutoff_label_size[1]
@@ -233,6 +237,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       ),
       #Position cutoff label 4
       hjust = 0,
+      angle = 45,
       nudge_y = subscale_info$plot_cutoff_label_start[1],
       family = "Linux Libertine",
       size = subscale_info$plot_cutoff_label_size[1]
@@ -244,6 +249,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       ),
       #Position cutoff label 5
       hjust = 0,
+      angle = 45,
       nudge_y = subscale_info$plot_cutoff_label_start[1],
       family = "Linux Libertine",
       size = subscale_info$plot_cutoff_label_size[1]
@@ -255,6 +261,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       ),
       #Position cutoff label 6
       hjust = 0,
+      angle = 45,
       nudge_y = subscale_info$plot_cutoff_label_start[1],
       family = "Linux Libertine",
       size = subscale_info$plot_cutoff_label_size[1]

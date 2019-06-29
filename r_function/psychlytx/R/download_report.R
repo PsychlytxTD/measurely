@@ -73,6 +73,8 @@ download_report<- function(input, output, session, pool, selected_client, global
 
    report_data <- reactive({
 
+     most_recent_client_data$value$date<- as.character(format(most_recent_client_data$value$date, "%d/%m/%Y"))
+
     #Nest the dataframe: create a list column of dataframes - one per each subscale.
     #We want to group the scores by subscale. So GAD7 should have its own df, PHQ9 should have its own df etc.
 
