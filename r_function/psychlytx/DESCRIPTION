@@ -1,27 +1,38 @@
 Package: psychlytx
 Type: Package
-Title: Creates the .UI and .Server Code for PsychlytX Web Applications
+Title: Creates The .UI And .Server Code For The Measurely Web Application By Psychlytx
 Version: 0.0.0.9000
 Author: person("Timothy", "Deitz", email = "psychlytx@gmail.com", 
   role = c("aut", "cre"))
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: This package modularises the code for creating PsychlytX web applications.
-    Shiny Modules are used to reproduce sections of the .UI and .Server code efficiently.
+Maintainer: The package maintainer <psychlytx@gmail.com>
+Description: This package creates modules and regular functions for Measurely.
+Depends: R (>= 3.3.2)
 License: file LICENSE 
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Imports: 
-    dplyr,
-    kableExtra,
-    readxl,
-    DT,
-    shinydashboard,
-    ggrepel,
-    Rcpp,
-    shinyjs,
-    V8,
-    car,
-    zoo
-Suggests: 
-    testthat
+    dplyr (>= 0.8.0.1),
+    shinydashboard (>= 0.6.1),
+    magrittr (= 1.5),
+    purrr (>= 0.2.4),
+    tidyr (>= 0.8.3),
+    lubridate (>= 1.7.4),
+    chron (>= 2.3-53),
+    shinyjs (>= 1.0),
+    RPostgreSQL (>= 0.6-2),
+    DBI (>= 1.0.0),
+    pool (>= 0.1.4),
+    ggplot2 (>= 3.1.0),
+    DT (>= 0.5),
+    memor (>= 0.2),
+    extrafont (>= 0.17),
+    extrafontdb (>= 1.0),
+    shinyhelper (>= 0.3.1),
+    shinyWidgets (>= 0.4.8),
+    shinycssloaders (>= 0.2.0),
+    httr (>= 1.4.0),
+    car (>= 2.1-5),
+    purrrlyr (>= 0.0.5),
+    knitr (>= 1.22),
+    kableExtra (>= 1.1.0)
