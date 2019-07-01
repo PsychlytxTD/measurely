@@ -14,7 +14,7 @@ RoxygenNote: 6.1.1
 Imports: 
     dplyr (>= 0.8.0.1),
     shinydashboard (>= 0.6.1),
-    magrittr (= 1.5),
+    magrittr (>= 1.5),
     purrr (>= 0.2.4),
     tidyr (>= 0.8.3),
     lubridate (>= 1.7.4),
@@ -35,4 +35,5 @@ Imports:
     car (>= 2.1-5),
     purrrlyr (>= 0.0.5),
     knitr (>= 1.22),
-    kableExtra (>= 1.1.0)
+    kableExtra (>= 1.1.0),
+    ggrepel (>= 0.8.0)

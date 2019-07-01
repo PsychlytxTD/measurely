@@ -27,7 +27,7 @@ format_gad7_responses_for_email_UI<- function(id) {
 #'
 #' @export
 
-format_gad7_responses_for_email<- function(input, output, session, pool, manual_entry, measure_data) {
+format_gad7_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data) {
 
   reactive({
 
@@ -85,13 +85,13 @@ format_gad7_responses_for_email<- function(input, output, session, pool, manual_
  score_severity_range<- c(measure_data()$score, severity_range)
 
 
- body_values<- c(client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.
+ body_values<- c(clinician_email, client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.
 
 
                     #Need to replage "to:" field with clinician's email address, pulled from Autho
 
     body<- do.call(sprintf, c(list('{"from": {"email":"measurely@psychlytx.com","name":"Measurely"},
-        "personalizations": [{"to": [{"email":"tim@effectivepsych.com.au"}],
+        "personalizations": [{"to": [{"email":"%s"}],
                    "dynamic_template_data":{
                    "header":"Your client, %s, has completed a measure.",
 

@@ -11,7 +11,6 @@ library(DBI)
 library(pool)
 library(ggplot2)
 library(DT)
-library(shinyjs)
 library(memor)
 library(extrafont)
 library(extrafontdb)
@@ -39,17 +38,15 @@ onStop(function() {
 })
 
 
-clinician_id<- "a71c6d9c-10e2-4247-b704-50d72ad14783" #Temp storage of clinician id
+clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  #Access clinician username (i.e. email) to pass to the modules
 
-#clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
+url<- "https://scala.au.auth0.com/userinfo"
 
-#url<- "https://scala.au.auth0.com/userinfo"
+clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN"))))
 
-#clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN"))))
+clinician_object<- httr::content(clinician_object, as = "parsed")
 
-#clinician_object<- httr::content(clinician_object, as = "parsed")
-
-#clinician_id<- clinician_object$sub
+clinician_id<- clinician_object$sub #Access clinician uuid
 
 
 
@@ -314,7 +311,7 @@ server <- function(input, output, session) {
   
 
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the body text to be sent.
-  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, manual_entry, measure_data)
+  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
   callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db

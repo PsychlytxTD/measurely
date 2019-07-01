@@ -4,8 +4,8 @@
 \alias{format_gad7_responses_for_email}
 \title{Convert GAD-7 Measure Responses}
 \usage{
-format_gad7_responses_for_email(input, output, session, pool, manual_entry,
-  measure_data)
+format_gad7_responses_for_email(input, output, session, pool,
+  clinician_email, manual_entry, measure_data)
 }
 \arguments{
 \item{pool}{A pool db connection object}
