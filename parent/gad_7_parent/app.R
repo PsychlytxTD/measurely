@@ -38,15 +38,17 @@ onStop(function() {
 })
 
 
-clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  #Access clinician username (i.e. email) to pass to the modules
+
+clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
 
 url<- "https://scala.au.auth0.com/userinfo"
 
-clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN"))))
+clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
+`Content-Type` = "application/json"))
 
-clinician_object<- httr::content(clinician_object, as = "parsed")
+clinician_object<- httr::content(clinician_object)
 
-clinician_id<- clinician_object$sub #Access clinician uuid
+clinician_id<- clinician_object$sub #Access the id object
 
 
 
