@@ -63,8 +63,8 @@ GAD_7<- list(  title = "Generalized Anxiety Disorder 7-Item Scale (GAD-7)", #Tit
                    items = 1:7,
                    max_score = 30,
                    min_score = 0,
-                   plot_shading_gap = 0.1, #Gap = next cutoff minus plot_shading gap
-                   plot_cutoff_label_start = 0.8, #Indicates how far above the cutoff value the text cutoff label starts
+                   plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
+                   plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                    plot_cutoff_label_size = 3,
                    description = readr::read_file(
                      "gad7.md"
