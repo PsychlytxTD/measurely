@@ -209,7 +209,7 @@ download_report<- function(input, output, session, pool, selected_client, global
 
     client_name_sql<- "SELECT last_name, first_name, CONCAT('D.O.B:', ' ', birth_date)
     FROM client
-    WHERE client_id = ?client_id;"
+    WHERE id = ?client_id;"
 
     client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = selected_client() )
 
