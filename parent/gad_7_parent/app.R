@@ -48,7 +48,7 @@ clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bear
 
 clinician_object<- httr::content(clinician_object)
 
-clinician_id<- clinician_object["sub"] #Access the id object
+clinician_id<- paste(clinician_object["sub"]) #Access the id object
 
 
 
