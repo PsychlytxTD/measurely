@@ -78,7 +78,7 @@ download_report<- function(input, output, session, pool, selected_client, global
     #Nest the dataframe: create a list column of dataframes - one per each subscale.
     #We want to group the scores by subscale. So GAD7 should have its own df, PHQ9 should have its own df etc.
 
-    subscale_df <- most_recent_client_data$value %>%
+    subscale_df <- tibble::as_tibble(most_recent_client_data$value) %>%
       dplyr::group_by(subscale) %>%
       tidyr::nest() %>% dplyr::arrange(subscale)
 

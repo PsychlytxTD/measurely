@@ -3,13 +3,16 @@ library(magrittr)
 library(purrr)
 library(tidyr)
 library(dplyr)
+library(knitr)
 library(lubridate)
 library(chron)
+library(grid)
 library(shinyjs)
 library(RPostgreSQL)
 library(DBI)
 library(pool)
 library(ggplot2)
+library(ggrepel)
 library(DT)
 library(memor)
 library(extrafont)
@@ -17,17 +20,17 @@ library(extrafontdb)
 library(shinyhelper)
 library(shinyWidgets)
 library(shinycssloaders)
-library(grid)
 library(httr)
 library(car)
 library(purrrlyr)
+library(uuid)
 
 pool <- dbPool( #Set up the pool connection management
   drv = dbDriver("PostgreSQL"),
   dbname = "scaladb",
   host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
   user = "jameslovie",
-  password = "e2534e41-bbb6-4e2b-b687-71c5be7c7d35"
+  password = Sys.getenv("PGPASSWORD")
 )
 
 
@@ -39,16 +42,16 @@ onStop(function() {
 
 
 
-clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
+clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
 
-url<- "https://scala.au.auth0.com/userinfo"
+#url<- "https://scala.au.auth0.com/userinfo"
 
-clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
-`Content-Type` = "application/json"))
+#clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
+#`Content-Type` = "application/json"))
 
-clinician_object<- httr::content(clinician_object)
+#clinician_object<- httr::content(clinician_object)
 
-clinician_id<- paste(clinician_object["sub"]) #Access the id object
+clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
 
 
 

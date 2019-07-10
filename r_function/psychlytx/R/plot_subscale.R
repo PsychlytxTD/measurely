@@ -262,7 +262,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
     )
 
 
-  m_sd_sample_caption<- grobTree(textGrob(paste("Mean & sd apply to the following client group:", subscale_df$population), x=0.05,  y=0.95, hjust=0,
+  m_sd_sample_caption<- grid::grobTree(textGrob(paste("Mean & sd apply to the following client group:", subscale_df$population), x=0.05,  y=0.95, hjust=0,
                             gp=gpar(col = "white", fontsize=11, fontfamily = "Linux Libertine")))
 
   plot + annotation_custom(m_sd_sample_caption) #Print plot
