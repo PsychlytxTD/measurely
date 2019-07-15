@@ -24,6 +24,7 @@ library(httr)
 library(car)
 library(purrrlyr)
 library(uuid)
+library(shinyBS)
 
 pool <- dbPool( #Set up the pool connection management
   drv = dbDriver("PostgreSQL"),
@@ -100,6 +101,15 @@ ui<- function(request) {
                                       
                                       actionButton("retrieve_client_data", "Select Client", class = "submit_data"),
                                       
+                                      bsModal("show_population_modal", "Please Indicate Your Client's Stage of Assessment", "retrieve_client_data", size = "large",
+                                              
+                                              psychlytx::apply_initial_population_UI("apply_population"),
+                                              
+                                              psychlytx::analytics_posttherapy_UI("analytics_posttherapy") #End-of-therapy clinical outcomes panel
+                                              
+                                      ),
+                                      
+                                      
                                       br(),
                                       br(),
                                       
@@ -114,9 +124,9 @@ ui<- function(request) {
                                       
                                     ))),
                          
-                         tabPanel(tags$strong("Complete Measure"),
+                         
+                         tabPanel(tags$strong("Complete Measure"), 
                                   
-                                  psychlytx::apply_initial_population_UI("apply_population"),
                                   
                                   psychlytx::extract_holding_statistics_UI("extract_holding_statistics"),
                                   
@@ -125,8 +135,6 @@ ui<- function(request) {
                                   psychlytx::write_statistics_to_holding_UI("write_holding_statistics_to_db"),
 
                                   psychlytx::gad7_scale_UI("gad7_scale"), #Item of the specific measure
-                                  
-                                  psychlytx::analytics_posttherapy_UI("analytics_posttherapy"), #End-of-therapy clinical outcomes panel
                                   
                                   psychlytx::write_posttherapy_to_db_UI("write_posttherapy_to_db"),
                                 

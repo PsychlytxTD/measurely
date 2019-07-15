@@ -151,7 +151,7 @@ analytics_posttherapy_UI<- function(id) {
 
       fluidRow(
 
-    column(width = 12, checkboxInput(ns("last_assessment"), h4(tags$strong("Check here if your client is completing their final assessment on any questionnaire.", style = "color: #d35400")),
+    column(width = 10, offset = 1, checkboxInput(ns("last_assessment"), h4(tags$strong("Final assessment using this measure or any other.", style = "color: #283747")),
                                                  width = "100%"))),
 
     conditionalPanel(condition = "input.last_assessment == 1", ns = ns,

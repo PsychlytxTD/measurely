@@ -14,32 +14,27 @@ write_statistics_to_holding_UI<- function(id) {
 
   fluidPage(
 
+    fluidRow(
+
+      column(width = 4,
+
+             titlePanel(span(tagList(icon("edit", lib = "font-awesome", class = "far fa-edit"),
+                                     h4(tags$b("Please Complete The Measure.")))))
+
+      )),
+
   fluidRow(
 
-    column(width = 2,
-
-     br(),
-
-      h4(tags$strong("OR"))
-
-    )),
-
-  fluidRow(
-
-  column(width = 5,
-
-         titlePanel(span(icon("envelope", lib = "font-awesome"), h4(tags$strong("Send this measure to your client via email."))))),
-
- column(width = 2,   #Create button to send measure to client via email, and to automatically write his or her statistics to the holding table in the db.
+ column(width = 4, #Create button to send measure to client via email, and to automatically write his or her statistics to the holding table in the db.
   br(),
   br(),
-  actionButton(ns("submit_holding_data"), "Send Email", class = "submit_data", style = "margin-top: 9px") %>%
-    helper( type = "inline", title = "What will happen when I email this measure to my client?", colour = "#283747", #Make info icon to explain what happens when email is sent.
-            content = c("Your client will receive a unique Measurely key and a link to complete this particular measure.",
+  actionButton(ns("submit_holding_data"), "Email This Measure To My Client Instead", class = "submit_data", style = "margin-top: 9px") %>%
+    helper( type = "inline", title = "What happens once I send this measure to my client?", colour = "#283747", #Make info icon to explain what happens when email is sent.
+            content = c("1. Your client will receive a unique Measurely key and a link to complete this particular measure.",
                         "",
-                        "After the measure has been completed, you will receive an email displaying your client's results.",
+                        "2. After the measure has been completed, you will receive an email displaying your client's results.",
                         "",
-                        "In the same email, you will receive a link to return to this application and download a full clinical report.")))
+                        "3. Within the same email, you will receive a link to return to this application and download a full clinical report.")))
 
   )))
 

@@ -18,64 +18,40 @@ apply_initial_population_UI<- function(id) {
       fluidRow(
 
       column(width = 10, offset = 1,
-             checkboxInput(ns("first_time_scale_completion"), h4(tags$strong("Check here if your client is completing this questionnaire for the first time.", style = "color: #d35400")), width = "100%" #Checking the 'first' box should trigger prompt to select a population
-                                           ))),
+             checkboxInput(ns("first_time_scale_completion"), h4(tags$strong("First assessment using this measure", style = "color: #283747")), width = "100%" #Checking the 'first' box should trigger prompt to select a population
+                                           ))
+      ),
+
+      fluidRow(
+
+        column(width = 10, offset = 1, checkboxInput(ns("ongoing_outcome_monitoring"), h4(tags$strong("Ongoing Outcome Monitoring", style = "color: #283747"))))
+
+        ),
 
     conditionalPanel(condition = "input.first_time_scale_completion == 1", ns = ns,
 
-                     tagList(
-                         fluidRow(
+ tagList(
 
-                           #Make info icon to explain why it is important to select a population
-
-                           column(width = 8, offset = 2, HTML('&nbsp;'), HTML('&nbsp;'), HTML('&nbsp;'),h4(tags$strong("Select A Group With Similar Characteristics To Your Client")) %>%
-                                    helper( type = "inline", title = "Why select a client group?", colour = "#283747",
-                                            content = c("<b>Choosing a client group ensures that:</b>",
-          "",
-          "<b>1.</b> Appropriate research statistics (e.g. means and standard deviations) are used to estimate
-          measurement error when calculating change in scores over time.",
-          "",
-          "<b>2.</b> Suitable classifications of symptom severity appear in your client's clinical report. ",
-          "",
-          "",
-          "You may customise your client's settings if desired."), size = "m"
-                                    ))),
 
     fluidRow(
-      column(width = 6, offset = 3,
+      column(width = 7, offset = 2,
+
+      uiOutput(ns("sample_description")),
 
       uiOutput(ns("select_population"))
 
     )),
 
-    fluidRow(
-      column(width = 5, offset = 3,
-
-             uiOutput(ns("sample_description"))
-      )),
-
-    br(),
-    br(),
     br(),
 
     fluidRow(
-      column(width = 3, offset = 3,
+      column(width = 10, offset = 2,
 
              uiOutput(ns("other_population")),
 
-             actionButton(ns("go_custom_settings"), "Customise Client Settings (Optional) ", class = "submit_data")
+             actionButton(ns("go_custom_settings"), "Optional: Customise Client Settings", class = "submit_data")
 
-             )))),
-
-  fluidRow(
-
-    column(width = 12,
-
-          titlePanel(span(tagList(icon("edit", lib = "font-awesome", class = "far fa-edit"),
-                            h4(tags$b("Complete the questionnaire below and and click"),
-                               tags$code("Submit.", style = "color:#d35400")))))
-
-    ))
+             ))))
 
     ))
 
@@ -258,7 +234,7 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
 
     }
 
-    h4("Learn more about this client group") %>% #Make the population info popup modal
+    h4("Select A Group With Similar Characteristics To Your Client") %>% #Make the population info popup modal
       helper(
              colour = "#283747",
              size = "m",
