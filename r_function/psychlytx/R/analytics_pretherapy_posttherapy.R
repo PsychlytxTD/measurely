@@ -266,7 +266,7 @@ analytics_posttherapy<- function(input, output, session, clinician_id, selected_
 
     posttherapy_analytics_items<- list( req(clinician_id), req(client_id), input$principal_diagnosis, input$secondary_diagnosis, input$referrer, input$attendance_schedule,
                                         input$cancellations, input$non_attendances, input$attendances, input$premature_dropout, input$therapy, input$funding, input$private_health_fund,
-                                        input$out_of_pocket ) %>% purrr::set_names(c("id", "client_id", "principal_diagnosis",
+                                        input$out_of_pocket ) %>% purrr::set_names(c("clinician_id", "client_id", "principal_diagnosis",
           "secondary_diagnosis", "referrer", "attendance_schedule", "cancellations", "non_attendances", "attendances", "premature_dropout", "therapy", "funding", "private_health_fund",
           "out_of_pocket"))
 
@@ -275,7 +275,7 @@ analytics_posttherapy<- function(input, output, session, clinician_id, selected_
 
       tibble::tibble(
 
-        id = purrr::map_chr(., "id"),
+        clinician_id = purrr::map_chr(., "clinician_id"),
         client_id = purrr::map_chr(., "client_id"),
         principal_diagnosis = purrr::map_chr(., "principal_diagnosis"),
         secondary_diagnosis = purrr::map_chr(., "secondary_diagnosis"),
@@ -292,7 +292,7 @@ analytics_posttherapy<- function(input, output, session, clinician_id, selected_
 
       )
 
-    }
+    } %>% dplyr::mutate(id = uuid::UUIDgenerate()) %>% dplyr::select(id, everything())
 
 
     })
