@@ -91,7 +91,7 @@ ui<- function(request) {
                          ),
                          
                          
-                         tabPanel(tags$strong("Select An Existing Client"),
+                         tabPanel(tags$strong("Select An Existing Client", id = "refresh_client_dropdown"),
                                   
                                   sidebarLayout(
                                     

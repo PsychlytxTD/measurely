@@ -9,6 +9,7 @@ output:
       address: 18 Stanley Street, Collingwood 3066
       phone: 03 9787 9313
       email: info@psychlytx.com.au
+    use_profile: FALSE
     logo: "logo.png"
     logo_height: 2cm
     libertine: TRUE
@@ -24,7 +25,7 @@ library(knitr)
 library(kableExtra)
 library(extrafont)
 
-opts_chunk$set(fig.width = 6, fig.height = 5, fig.pos = "H", dev = "cairo_pdf")
+opts_chunk$set(fig.width = 6, fig.height = 5, fig.pos = "H")
 
 ```
 

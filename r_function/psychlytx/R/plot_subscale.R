@@ -83,7 +83,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
 
 
   plot <-
-    ggplot(subscale_df, aes(x = date, y = score, group = 1)) + theme_bw(base_family = "Linux Libertine") + annotate(
+    ggplot(subscale_df, aes(x = date, y = score, group = 1)) + theme_bw() + annotate(
       "rect",
       xmin = -Inf,
       xmax = Inf,
@@ -165,13 +165,13 @@ plot_subscale <- function(subscale_df, subscale_info) {
         hjust = 1,
         #Style x-axis labels
         size = 11,
-        family = "Linux Libertine",
+
         colour = "black"
       ),
       axis.text.y = element_text(
         size = 11,
         #Style y-axis labels
-        family = "Linux Libertine",
+
         colour = "black"
       )
     ) + theme(
@@ -179,7 +179,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       panel.grid.minor = element_blank(),       #Remove gridlines from background
       panel.background = element_blank(),
       axis.line = element_line(colour = "black"), #Make axis lines black
-      axis.title = element_text(family = "Linux Libertine", size = 12) #Set font of axis titles
+      axis.title = element_text( size = 12) #Set font of axis titles
     ) + ggrepel::geom_label_repel(aes(label = paste0(subscale_df$score)), #Make labels for scores
                                   size = 4, family = "Linux Libertine") +
     scale_y_continuous(breaks = plotting_breaks, #Customise y-axis breaks and labels
@@ -202,7 +202,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       #Position cutoff label 1
       hjust = 0,
       nudge_y = subscale_info$plot_cutoff_label_start[1],
-      family = "Linux Libertine",
+
       size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
@@ -213,7 +213,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       #Position cutoff label 2
       hjust = 0,
       nudge_y = subscale_info$plot_cutoff_label_start[2],
-      family = "Linux Libertine",
+
       size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
@@ -224,7 +224,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       #Position cutoff label 3
       hjust = 0,
       nudge_y = subscale_info$plot_cutoff_label_start[3],
-      family = "Linux Libertine",
+
       size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
@@ -235,7 +235,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       #Position cutoff label 4
       hjust = 0,
       nudge_y = subscale_info$plot_cutoff_label_start[4],
-      family = "Linux Libertine",
+
       size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
@@ -246,7 +246,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       #Position cutoff label 5
       hjust = 0,
       nudge_y = subscale_info$plot_cutoff_label_start[5],
-      family = "Linux Libertine",
+
       size = subscale_info$plot_cutoff_label_size[1]
     ) + geom_text(
       aes(
@@ -257,13 +257,13 @@ plot_subscale <- function(subscale_df, subscale_info) {
       #Position cutoff label 6
       hjust = 0,
       nudge_y = subscale_info$plot_cutoff_label_start[6],
-      family = "Linux Libertine",
+
       size = subscale_info$plot_cutoff_label_size[1]
     )
 
 
   m_sd_sample_caption<- grid::grobTree(textGrob(paste("Mean & sd apply to the following client group:", subscale_df$population), x=0.05,  y=0.95, hjust=0,
-                            gp=gpar(col = "white", fontsize=11, fontfamily = "Linux Libertine")))
+                            gp=gpar(col = "white", fontsize=11)))
 
   plot + annotation_custom(m_sd_sample_caption) #Print plot
 
