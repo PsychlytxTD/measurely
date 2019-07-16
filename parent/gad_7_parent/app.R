@@ -101,7 +101,7 @@ ui<- function(request) {
                                       
                                       actionButton("retrieve_client_data", "Select Client", class = "submit_data"),
                                       
-                                      bsModal("show_population_modal", "Please Indicate Your Client's Stage of Assessment", "retrieve_client_data", size = "large",
+                                      shinyBS::bsModal("show_population_modal", "Please Indicate Your Client's Stage of Assessment", "retrieve_client_data", size = "large",
                                               
                                               psychlytx::apply_initial_population_UI("apply_population"),
                                               
