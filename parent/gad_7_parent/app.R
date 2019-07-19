@@ -25,13 +25,17 @@ library(car)
 library(purrrlyr)
 library(uuid)
 library(shinyBS)
+library(tibble)
+
+
+#Need to add library(tinytex)
 
 pool <- dbPool( #Set up the pool connection management
   drv = dbDriver("PostgreSQL"),
   dbname = "scaladb",
   host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
   user = "jameslovie",
-  password = Sys.getenv("PGPASSWORD")
+  password = "e2534e41-bbb6-4e2b-b687-71c5be7c7d35"          #Sys.getenv("PGPASSWORD")
 )
 
 
