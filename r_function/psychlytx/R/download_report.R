@@ -80,7 +80,7 @@ download_report<- function(input, output, session, pool, selected_client, global
 
     subscale_df <- data.frame(most_recent_client_data$value) %>%
       dplyr::group_by(subscale) %>%
-      tidyr::nest() %>% dplyr::arrange(subscale)
+      tidyr::nest() %>% dplyr::ungroup() %>% dplyr::arrange(subscale)   #added ungroup() to see if this resolves the report download fail
 
     to_keep<- names(global_subscale_info) %in% subscale_df$subscale
 
