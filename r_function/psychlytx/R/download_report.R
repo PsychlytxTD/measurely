@@ -73,6 +73,8 @@ download_report<- function(input, output, session, pool, selected_client, global
 
    report_data <- reactive({
 
+     subscale_df<- NA
+
      subscale_df<- tibble::as_tibble(most_recent_client_data$value)
 
      subscale_df$date<- as.character(format(subscale_df$date, "%d/%m/%Y"))
