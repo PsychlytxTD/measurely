@@ -2,11 +2,10 @@ development: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: jameslovie
-  password: e2534e41-bbb6-4e2b-b687-71c5be7c7d35
-  # host: <%= ENV['DATABASE_HOST'] %>
-  host: scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com
-  port: <%= ENV['DATABASE_PORT'].present? ? ENV['DATABASE_PORT'] : 5432 %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+  port: 5432
 
 development:
   <<: *default
@@ -29,8 +28,15 @@ production:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  host: scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com
+  host: <%= ENV['DATABASE_HOST'] %>
   database: <%= ENV['DATABASE_NAME'] %>
-  username: jameslovie
-  password: e2534e41-bbb6-4e2b-b687-71c5be7c7d35
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   port: 5432
+
+# Set Environment Variables in System.
+
+# export DATABASE_USERNAME=""
+# export DATABASE_PASSWORD=""
+# export DATABASE_PORT=""
+# export DATABASE_HOST=""
