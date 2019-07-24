@@ -67,7 +67,7 @@ GAD_7<- list(  title = "Generalized Anxiety Disorder 7-Item Scale (GAD-7)", #Tit
                    plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                    plot_cutoff_label_size = 3,
                    description = readr::read_file(
-                     "gad7.md"
+                     "GAD_7.md"
                    ),
                    sample_overview = list(c("4615 German males drawn from the general population."),
                                            c("5106 German females drawn from the general population."),
