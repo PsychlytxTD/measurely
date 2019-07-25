@@ -29,8 +29,6 @@ library(tibble)
 library(aws.s3)
 
 
-#Need to add library(tinytex)
-
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
   dbname = "scaladb",
