@@ -77,7 +77,7 @@ display_client_data<- function(input, output, session, pool, selected_client, me
       extensions = 'Scroller', rownames = FALSE,
       options = list(initComplete = JS(
         "function(settings, json) {",
-        "$(this.api().table().header()).css({'background-color': '#827717', 'color': '#fff'});",
+        "$(this.api().table().header()).css({'background-color': '#e5e5e5', 'color': '#d35400'});",
         "}"), deferRender = TRUE, scrollY = 200, scroller = TRUE, dom = "t" )
 
     )

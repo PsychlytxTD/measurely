@@ -16,7 +16,7 @@ make_simplified_sidebar_UI<- function(id) {
       menuItem("Home", icon = icon("line-chart"), tabName = "Home", selected = TRUE),    #Remove menu items for changing account settings etc. Clients don't need to see this.
       br(),
       div( HTML('&nbsp;'), HTML('&nbsp;'), HTML('&nbsp;'), icon("info"), HTML('&nbsp;'), HTML('&nbsp;'),
-           HTML('&nbsp;'), HTML('&nbsp;'), tags$a("About Psychlytx", href = "https:://psychlytx.com.au", style = "color:white")),
+           HTML('&nbsp;'), HTML('&nbsp;'), tags$a("About Psychlytx", href = "https:://psychlytx.com", style = "color:white")),
       br(),
       br(),
       br(),
@@ -35,8 +35,7 @@ make_simplified_sidebar_UI<- function(id) {
       br(),
       br(),
       br(),
-      tags$footer(tags$a(href = "http://psychlytx.com.au", target = "_blank", HTML("<br><center>"), "PsychlytX", tags$sup(icon("registered")), br(),
-                         "© PsychlytX 2019"))
+      tags$footer(tags$a(href = "http://psychlytx.com", target = "_blank", HTML("<br><center>"), "PsychlytX", tags$sup(icon("registered"))))
     )
   )
 

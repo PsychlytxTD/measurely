@@ -3,24 +3,30 @@ library(magrittr)
 library(purrr)
 library(tidyr)
 library(dplyr)
+library(knitr)
 library(lubridate)
 library(chron)
+library(grid)
 library(shinyjs)
 library(RPostgreSQL)
 library(DBI)
 library(pool)
 library(ggplot2)
-library(postGIStools)
+library(ggrepel)
 library(DT)
-library(shinyjs)
 library(memor)
 library(extrafont)
 library(extrafontdb)
 library(shinyhelper)
 library(shinyWidgets)
 library(shinycssloaders)
-library(grid)
 library(httr)
+library(car)
+library(purrrlyr)
+library(uuid)
+library(shinyBS)
+library(tibble)
+library(aws.s3)
 
 
 pool <- dbPool( #Set up the pool connection management
@@ -28,7 +34,7 @@ pool <- dbPool( #Set up the pool connection management
   dbname = "scaladb",
   host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
   user = "jameslovie",
-  password = "e2534e41-bbb6-4e2b-b687-71c5be7c7d35"
+  password = "e2534e41-bbb6-4e2b-b687-71c5be7c7d35" #Sys.getenv("PGPASSWORD")
 )
 
 
@@ -40,12 +46,34 @@ onStop(function() {
 
 
 
+global_subscale_info<- psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
+
+subscale_info_1<- global_subscale_info[["GAD_7"]] #Subset the global list to retrive the subscale list(s) for this particular measure
+#All of the subscale lists should be upper case acronyms with words separated by underscores
+
+
+#url<- "https://scala.au.auth0.com/userinfo"       #Will need to ammend the httr request to replace shinyproxy token
+
+
+
+
+
+#clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("static autho key?????")),
+#`Content-Type` = "application/json"))
+
+#clinician_object<- httr::content(clinician_object)
+
+#paste(clinician_object["username????"]) #Access the clinician email object
+
+clinician_email<- "timothydeitz@gmail.com" #For deployment, will need to pull this from Autho as per above (can't get it from ShinyProxy as with parent app)
+
+
 ui<- function(request) {
   
   
   dashboardPage(
     
-    header<- psychlytx::make_header_UI("header", psychlytx::GAD_7$title), #Make the header
+    header<- psychlytx::make_header_UI("header", subscale_info_1$title), #Make the header
     
     sidebar <- psychlytx::make_simplified_sidebar_UI("sidebar"), #Make the sidebar
     
@@ -65,14 +93,13 @@ ui<- function(request) {
                   
                   tabBox(id = "tabset", width = 12,
                          
-                         tabPanel(h3(tags$strong("Sign In")),
+                      
+                         tabPanel("", value = "go_questionnaire",
+                                
                                   
-                                  psychlytx::read_holding_stats_UI("read_holding_stats")
+                                 
+                                  psychlytx::read_holding_stats_UI("read_holding_stats"),
                                   
-                                  ),
-                         
-                       
-                         tabPanel(h3(tags$strong("Complete Questionnaire")), value = "go_questionnaire",
                                   
                                   h3(textOutput("client_name_message")),
                             
@@ -134,14 +161,7 @@ ui<- function(request) {
                                                            
                                                            psychlytx::generate_simplified_cutoff_widget_UI("cutoff_widget_1") #Cutoff widgets for one subscale
                                                            
-                                                  ))))))),
-                
-                column(span(tagList(icon("copyright", lib = "font-awesome")), "PsychlytX | 2019") , offset = 4, width = 12)),
-        
-        
-        about_tab<- psychlytx::make_about_tab_UI("about_tab") #Make the 'About Psychlytx' tab
-        
-      )))
+                                                  )))))))))))
   
 }
 
@@ -165,7 +185,7 @@ server <- function(input, output, session) {
   })
   
   
-  holding_data<- callModule(psychlytx::read_holding_stats, "read_holding_stats", pool, measure = psychlytx::GAD_7$measure) 
+  holding_data<- callModule(psychlytx::read_holding_stats, "read_holding_stats", pool, measure = subscale_info_1$measure) 
   
   
   output$client_name_message<- renderText({ paste("Name:", holding_data()$first_name, holding_data()$last_name )})
@@ -178,7 +198,7 @@ server <- function(input, output, session) {
   
 
   
-  aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, item_index = list( psychlytx::GAD_7$items ), 
+  aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, item_index = list( subscale_info_1$items ), 
                                 aggregation_method = "sum")   #Make a list of aggregate scores across subscales (in this case there is only one subscale)
   
   
@@ -226,8 +246,10 @@ server <- function(input, output, session) {
   #ci etc.). This dataframe will be sent to the db
   
   
-  #Use the appropriate response formatting module (one for each measure). Returns a string representing the body text to be sent.
-  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, manual_entry, simplified_measure_data)
+  #Use the appropriate response formatting module (one for each measure). Returns a string representing the body text to be sent.     
+  #Add clinician email - will need to query API to get it from simplified app (we don't automatically get it from shinyproxy clinician login)
+                                                                                                                                 #Add clinician email
+  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, simplified_measure_data)
   
   
   callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, simplified_measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db

@@ -13,11 +13,13 @@ read_holding_stats_UI<- function(id) {
 
   tagList(
 
+  fluidPage(
+
   fluidRow(
 
-  column(width = 5,
+  column(width = 6,
 
-  textInput(ns("client_id"), h3("Please sign in with your Psychlytx key.")) %>% helper( type = "inline", title = "What is my Psychlytx key?", colour = "#d35400",
+  textInput(ns("client_id"), h3("Please sign in with your Psychlytx key."), width = '100%') %>% helper( type = "inline", title = "What is my Psychlytx key?", colour = "#d35400",
   content = c("You can find your unique Psychlytx key in the email that you received from your clinician. The key contains both letters and numbers."), size = "m"
 
   ))),
@@ -28,9 +30,14 @@ read_holding_stats_UI<- function(id) {
 
   actionButton(ns("submit_key"), "Sign In")
 
-  ))
+  )),
 
+  fluidRow(
+    column(width = 12, h3(tags$strong("After signing in, please complete the questionnaire.")))
   )
+
+
+  ))
 
 }
 
