@@ -25,9 +25,11 @@ format_gad7_responses_for_email_UI<- function(id) {
 #'
 #' @param measure_data A list of values returned when clinician submits new scale responses. Of list items, only accessing the button value, to trigger the query.
 #'
+#'
+#' @param simplified A logical value indicating how the clinician_email string should be parsed (i.e. from being  reactive value or regular string).
 #' @export
 
-format_gad7_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data) {
+format_gad7_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data, simplified = FALSE) {
 
   reactive({
 
@@ -81,6 +83,20 @@ format_gad7_responses_for_email<- function(input, output, session, pool, clinici
    TRUE ~ as.character(measure_data()$score)
 
  )
+
+
+
+ if(simplified == TRUE) {
+
+   clinician_email<- clinician_email$value
+
+ } else {
+
+   clinician_email<- clinician_email
+
+ }
+
+
 
  score_severity_range<- c(measure_data()$score, severity_range)
 

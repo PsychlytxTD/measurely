@@ -60,7 +60,8 @@ write_measure_data_to_db<- function(input, ouput, session, pool, measure_data, m
       dbWriteTable(pool, "item",  as.data.frame(item_data), row.names = FALSE, append = TRUE) #Write the item-level responses to the item table.
 
 
-#Trying to send email with responses below
+
+    #Send email with item responses to clinician
 
 
 
@@ -79,14 +80,11 @@ write_measure_data_to_db<- function(input, ouput, session, pool, measure_data, m
 
 
 
-result <- httr::POST(url,                     #Send the email
+ result <- httr::POST(url,                     #Send the email
                     add_headers(headers),
                     body = body,
                     encode="json",
                     verbose())
-
-
-
 
 
 

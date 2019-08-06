@@ -102,6 +102,7 @@ read_holding_stats<- function(input, output, session, pool, measure, tabsetpanel
 
     }
 
+
     })
 
 

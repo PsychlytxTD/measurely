@@ -1,0 +1,166 @@
+PHQ_9<- list(  title = "Primary Health Questionnaire (PHQ-9)", #Title can contain white space. For insertion into widget headings, plot titles etc.
+               brief_title = "PHQ-9",
+               measure = "PHQ_9", #The overal measure (which may contain subscales)
+               subscale = "PHQ_9", #The specific subscale of the measure.
+               population_quantity = 14,
+               populations = list("General Population 14-24 Years", "General Population 25-34 Years", "General Population 35-44 Years",
+                                  "General Population 45-54 Years", "General Population 55-64 Years", "General Population 65-74 Years",
+                                  "General Population Greater 75 Years or Older", "Primary Care", "Depression", "Coronary Heart Disease",
+                                  "Diabetes", "Chronic Musculoskeletal Pain", "Cancer", "Stroke", "Other"),
+               means = list(2.3,  2.3, 2.6, 2.8, 3.2, 3.3, 4.4, 5.20, 16.65, 4.84, 7.95, 9.1, 13, 7.42, 0),
+               sds = list(3.3, 3.2, 3.5, 3.5, 3.5, 3.6,  3.9, 4.75, 4.25, 5.69, 0.46, 6.3, 6.7, 6, 0),
+               mean_sd_references = list("Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)",
+                                         "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)",
+                                         "Kocalevent, Hinz & Brähler (2013)", "Jordan, Shedden-Mora & Löwe (2017)", "Gilbody, Littlewood, Hewitt, Brierley et al (2015)",
+                                         "Stafford, Berk & Jackson (2007)", "Steenbergen-Weijenburg, Vroege, Ploeger, Brals et al. (2010)",
+                                         "Kroenke, Wu, Yu, Bair, Kean et al. (2016)", "Kroenke, Wu, Yu, Bair, Kean et al. (2016)",
+                                         "Turner, Hambridge, White, Carter et al (2012)", "Define Value"),
+               reliabilities = list(.96, .96, .96, .96, .96, .96, .96, .96, .96, .96, .96, .96, .96, .96, 0),
+               reliability_references = list("Lowe, Unützer, Callahan, Perkins & Kroenke (2004)", "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)",
+                                             "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)", "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)",
+                                             "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)", "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)",
+                                             "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)", "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)",
+                                             "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)", "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)",
+                                             "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)", "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)",
+                                             "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)", "Lowe, Unützer, Callahan, Perkins & Kroenke (2004)"),
+               cutoff_values = list(c(10, 15, 20, 2.3, 2.3 + 3.3, 2.3 + (2 * 3.3)),
+                                    c(10, 15, 20, 2.3, 2.3 + 3.2, 2.3 + (2 * 3.2)),
+                                    c(10, 15, 20, 2.6, 2.6 + 3.5, 2.6 + (2 * 3.5)),
+                                    c(10, 15, 20, 2.8, 2.8 + 3.5, 2.8 + (2 * 3.5)),
+                                    c(10, 15, 20, 3.2, 3.2 + 3.5, 3.2 + (2 * 3.5)),
+                                    c(10, 15, 20, 3.3, 3.3 + 3.6, 3.3 + (2 * 3.6)),
+                                    c(10, 15, 20, 4.4, 4.4 + 3.9, 4.4 + (2 * 3.9)),
+                                    c(10, 15, 20, 5.2, 5.2 + 4.75, 5.2 + (2 * 4.75)),
+                                    c(10, 15, 20, 2.3, 2.3 + 3.3, 2.3 + (2 * 3.3)),
+                                    c(10, 15, 20, 16,65, 16.65 + 4.25, 16.65 + (2 * 4.25)),
+                                    c(10, 15, 20, 4.84, 4.84 + 5.69, 4.84 + (2 * 5.69)),
+                                    c(10, 15, 20, 7.95, 7.95 + 0.46, 7.95 + (2 * 0.46)),
+                                    c(10, 15, 20, 9.1, 9.1 + 6.3, 9.1 + (2 * 6.3)),
+                                    c(10, 15, 20, 13, 13 + 6.7, 13+ (2 * 6.7)),
+                                    c(10, 15, 20, 7.42, 7.42 + 6, 7.42 + (2 * 6)),
+                                    c(0, 0, 0, 0, 0, 0)),
+               cutoff_labels = list(c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Population Mean: 14-24 Years", "Population Mean + 1 Sd: 14-24 Years", "Population Mean + 2 Sd: 14-24 Years"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Population Mean: 25-34 Years", "Population Mean + 1 Sd: 25-34 Years", "Population Mean + 2 Sd: 25-34 Years"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Population Mean: 35-44 Years", "Population Mean + 1 Sd: 35-44  Years", "Population Mean + 2 Sd: 35-44 Years"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Population Mean: 45-54 Years", "Population Mean + 1 Sd: 45-54 Years", "Population Mean + 2 Sd: 45-54 Years"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Population Mean: 55-64 Years", "Population Mean + 1 Sd: 55-64 Years", "Population Mean + 2 Sd: 55-64 Years"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Population Mean: 65-74 Years", "Population Mean + 1 Sd: 65-74 Years", "Population Mean + 2 Sd: 65-74 Years"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Population Mean: 75+ Years", "Population Mean + 1 Sd: 75+ Years", "Population Mean + 2 Sd: 75+ Years"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Primary Care Mean", "Primary Care Mean + 1 Sd", "Primary Care Mean + 2 Sd"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Depression Sample Mean", "Depression Sample Mean + 1 Sd", "Depression Sample Mean + 2 Sd"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Coronary Heart Disease Mean", "Coronary Heart Disease Mean + 1 Sd", "Coronary Heart Disease Mean + 2 Sd"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Diabetes Mean", "Diabetes Mean + 1 Sd", "Diabetes Mean + 2 Sd"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Chronic Pain Mean", "Chronic Pain Mean + 1 Sd", "Chronic Pain Mean + 2 Sd"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Cancer Mean", "Cancer Mean + 1 Sd", "Cancer Mean + 2 Sd"),
+                                    c("Major Depressive Episode", "Moderately Severe Depression", "Severe Depression",
+                                      "Stroke Mean", "Stroke Mean + 1 Sd", "Stroke Mean + 2 Sd")
+                                    ),
+               cutoff_references = list(
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Jordan, Shedden-Mora & Löwe (2017)", "Jordan, Shedden-Mora & Löwe (2017)", "Jordan, Shedden-Mora & Löwe (2017)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Gilbody, Littlewood, Hewitt, Brierley et al (2015)", "Gilbody, Littlewood, Hewitt, Brierley et al (2015)",
+                   "Gilbody, Littlewood, Hewitt, Brierley et al (2015)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Stafford, Berk & Jackson (2007)", "Stafford, Berk & Jackson (2007)", "Stafford, Berk & Jackson (2007)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Steenbergen-Weijenburg, Vroege, Ploeger, Brals et al. (2010)", "Steenbergen-Weijenburg, Vroege, Ploeger, Brals et al. (2010)",
+                   "Steenbergen-Weijenburg, Vroege, Ploeger, Brals et al. (2010)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kroenke, Wu, Yu, Bair, Kean et al. (2016)", "Kroenke, Wu, Yu, Bair, Kean et al. (2016)", "Kroenke, Wu, Yu, Bair, Kean et al. (2016)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Kroenke, Wu, Yu, Bair, Kean et al. (2016)", "Kroenke, Wu, Yu, Bair, Kean et al. (2016)", "Kroenke, Wu, Yu, Bair, Kean et al. (2016)"),
+                 c("Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)", "Kroenke, Spitzer & Williams (2001)",
+                   "Turner, Hambridge, White, Carter et al (2012)",  "Turner, Hambridge, White, Carter et al (2012)",
+                   "Turner, Hambridge, White, Carter et al (2012)"),
+                 c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value", "Define Value")
+                 ),
+               cutoff_quantity = 6,
+               items = 9,
+               max_score = 27,
+               min_score = 0,
+               plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
+               plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
+               plot_cutoff_label_size = 3,
+               description = readr::read_file(
+                 "PHQ_9.md"
+               ),
+               sample_overview = list(
+                 c("564 German participants from the community aged 14-24 years"),
+                 c("629 German participants from the community aged 25-34 years"),
+                 c("937 German participants from the community aged 35-44 years"),
+                 c("868 German participants from the community aged 45-54 years"),
+                 c("840 German participants from the community aged 55-64 years"),
+                 c("791 German participants from the community aged 65-74 years"),
+                 c("389 German participants from the community aged 75 years & older"),
+                 c("3404 German primary care patients"),
+                 c("691 English participants in primary care with PHQ-9 scores of 10 or greater"),
+                 c("229 Australian patients with coronary heart disease"),
+                 c("197 Dutch outpatients with diabetes"),
+                 c("250 American patients with chronic musculoskeletal pain from five primary care clinics"),
+                 c("405 patients with depression and/or cancer-related pain from 16 community-based oncology practices"),
+                 c("72 Australian patients assessed three or more weeks after stroke"),
+                 c("No sample information to provide.")
+               ),
+               journal_references = list(
+                 c("Kocalevent, R., Hinz, A., & Brähler, E. (2013). Standardization of the depression screener patient health questionnaire (PHQ-9) in the
+                   general population. General Hospital Psychiatry, 35(5), 551-555."),
+                 c("Kocalevent, R., Hinz, A., & Brähler, E. (2013). Standardization of the depression screener patient health questionnaire (PHQ-9) in the
+                   general population. General Hospital Psychiatry, 35(5), 551-555."),
+                 c("Kocalevent, R., Hinz, A., & Brähler, E. (2013). Standardization of the depression screener patient health questionnaire (PHQ-9) in the
+                   general population. General Hospital Psychiatry, 35(5), 551-555."),
+                 c("Kocalevent, R., Hinz, A., & Brähler, E. (2013). Standardization of the depression screener patient health questionnaire (PHQ-9) in the
+                   general population. General Hospital Psychiatry, 35(5), 551-555."),
+                 c("Kocalevent, R., Hinz, A., & Brähler, E. (2013). Standardization of the depression screener patient health questionnaire (PHQ-9) in the
+                   general population. General Hospital Psychiatry, 35(5), 551-555."),
+                 c("Kocalevent, R., Hinz, A., & Brähler, E. (2013). Standardization of the depression screener patient health questionnaire (PHQ-9) in the
+                   general population. General Hospital Psychiatry, 35(5), 551-555."),
+                 c("Kocalevent, R., Hinz, A., & Brähler, E. (2013). Standardization of the depression screener patient health questionnaire (PHQ-9) in the
+                   general population. General Hospital Psychiatry, 35(5), 551-555."),
+                 c("Jordan, P., Shedden-Mora, M. C., & Löwe, B. (2017), Psychometric analysis of the Generalized Anxiety Disorder scale (GAD-7) in primary care using
+                   modern item response theory. PLoS One. 12(8): e0182162. doi:10.1371/journal.pone.0182162"),
+                 c("Gilbody, S., Littlewood, E., Hewitt, C., Brierley, G., Tharmanathan, P., Araya, R., . . . REEACT Team. (2015). Computerised cognitive behaviour
+                   therapy (cCBT) as treatment for depression in primary care (REEACT trial): Large scale pragmatic randomised controlled trial. BMJ (Clinical Research Ed.),
+                   351, h5627. doi:10.1136/bmj.h5627"),
+                 c("Stafford, L., Berk, M., & Jackson, H. J. (2007). Validity of the hospital anxiety and depression scale and patient health questionnaire-9
+                   to screen for depression in patients with coronary artery disease. General Hospital Psychiatry, 29(5), 417-424."),
+                 c("Van Steenbergen-Weijenburg, K. M., de Vroege, L., Ploeger, R. R., Brals, J. W., Vloedbeld, M. G., Veneman, T. F., . . . van der Feltz-Cornelis,
+                   Christina M. (2010). Validation of the PHQ-9 as a screening instrument for depression in diabetes patients in specialized outpatient clinics.
+                   BMC Health Services Research, 10(1), 235."),
+                 c("Kroenke, K., Wu, J., Yu, Z., Bair, M. J., Kean, J., Stump, T., & Monahan, P. O. (2016). Patient health questionnaire anxiety and depression scale:
+                    Initial validation in three clinical trials. Psychosomatic Medicine, 78(6), 716-727. doi:10.1097/PSY.0000000000000322"),
+                 c("Kroenke, K., Wu, J., Yu, Z., Bair, M. J., Kean, J., Stump, T., & Monahan, P. O. (2016). Patient health questionnaire anxiety and depression scale:
+                    Initial validation in three clinical trials. Psychosomatic Medicine, 78(6), 716-727. doi:10.1097/PSY.0000000000000322"),
+                 c("Turner, A., Hambridge, J., White, J., Carter, G., Clover, K., Nelson, L., & Hackett, M. (2012). Depression screening in stroke: A comparison of
+                    alternative measures with the structured diagnostic interview for the diagnostic and statistical manual of mental disorders, fourth edition
+                    (major depressive episode) as criterion standard. Stroke, 43(4), 1000-1005. doi:10.1161/STROKEAHA.111.643296")
+                 )
+
+                )

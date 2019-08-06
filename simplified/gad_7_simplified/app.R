@@ -52,22 +52,6 @@ subscale_info_1<- global_subscale_info[["GAD_7"]] #Subset the global list to ret
 #All of the subscale lists should be upper case acronyms with words separated by underscores
 
 
-#url<- "https://scala.au.auth0.com/userinfo"       #Will need to ammend the httr request to replace shinyproxy token
-
-
-
-
-
-#clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("static autho key?????")),
-#`Content-Type` = "application/json"))
-
-#clinician_object<- httr::content(clinician_object)
-
-#paste(clinician_object["username????"]) #Access the clinician email object
-
-clinician_email<- "timothydeitz@gmail.com" #For deployment, will need to pull this from Autho as per above (can't get it from ShinyProxy as with parent app)
-
-
 ui<- function(request) {
   
   
@@ -246,10 +230,57 @@ server <- function(input, output, session) {
   #ci etc.). This dataframe will be sent to the db
   
   
+  clinician_email<- reactiveValues()       #In the simplifed app, we have no way of immediately pulling in clinician email address from ShinyProxy login.
+                                           #Therefore, we: (1) Use generic credentials (pre-defined with Autho) to request a token 
+                                           #(needed to ping API and obtain clinician email address). (2) pull in the correct clinician_id from the dataframe 
+                                           #created when a patient completes the simplified app (i.e. simplified_measure_data()). (3) Use this value and the token
+                                           #To send GET request to Autho and retrieve the clinician_email. (4) Send clinician_email to measure-specific email formatting
+                                           #module.
+  
+  observe({
+    
+    req(simplified_measure_data())
+    
+    url <- "https://scala.au.auth0.com/oauth/token"
+    
+    payload <- "grant_type=client_credentials&client_id=J0aFeSwChHWyIidxIvGggvOtNiIglaV7&client_secret=LFAsaZ4jbLowQ2ug9G38CYy7TGwAb3vkDkKuPyP7vuwXswNfROT-nzv6BY-KQxpd&audience=https%3A%2F%2Fscala.au.auth0.com%2Fapi%2Fv2%2F"
+    
+    request_body <- list(
+      grant_type = "client_credentials",
+      client_id = Sys.getenv("AUTHO_CLIENT_ID"),                                      #Use a generic client_id and client_secret to obtain token to ping Autho
+      client_secret = Sys.getenv("AUTHO_CLIENT_SECRET"),
+      audience = "https://scala.au.auth0.com/api/v2/"
+    )
+    
+    result_auth <- POST(
+      url,
+      body = request_body,
+      encode = "form"
+    )
+    
+    token_id<- httr::content(result_auth)
+  
+    token<- token_id[["access_token"]]  #Retrieve the access token
+    
+    clinician_id<- simplified_measure_data()$clinician_id  #Pull in the clinician_id for this patient, to be able to get the right email address.
+    
+    get_request_url<- paste0("https://scala.au.auth0.com/api/v2/users?q=user_id%3A%22", clinician_id, "%22&search_engine=v3", collapse = ",")
+    
+    clinician_object <- httr::GET(get_request_url, httr::add_headers(Authorization = paste("Bearer", token))) #Use the token to pull down correct email
+    
+    clinician_object<- httr::content(clinician_object)   #This line may not work - may need to delete it
+    
+    clinician_email$value<- clinician_object[[1]][1]  #Subset the object to only pull out the clinician's email address
+    
+  
+  })
+  
+  
+  
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the body text to be sent.     
   #Add clinician email - will need to query API to get it from simplified app (we don't automatically get it from shinyproxy clinician login)
                                                                                                                                  #Add clinician email
-  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, simplified_measure_data)
+  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, simplified_measure_data, simplified = TRUE)
   
   
   callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, simplified_measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
