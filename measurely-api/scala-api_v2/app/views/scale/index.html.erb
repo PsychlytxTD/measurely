@@ -47,7 +47,6 @@
                         <th scope="col">Subscale</th>
                         <th scope="col">Date</th>
                         <th scope="col">Score</th>
-                        <th scope="col">Edit Record</th>
                         <th scope="col">Delete Record</th>
                     </tr>
                 </thead>
@@ -60,7 +59,6 @@
                         <td><%= scale.subscale %></td>
                         <td><%= scale.date %></td>
                         <td><%= scale.score %></td>
-                        <td><%= link_to 'Edit', edit_scale_path(scale) %></td>
                         <td><%= link_to 'Delete', scale, method: :delete, data: { confirm: 'Are you sure?' } %></td>
                     </tr>
                     <% end %>

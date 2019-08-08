@@ -58,7 +58,7 @@ include Secured
   	@clients = Client.all
   	@clinician_id = @user['uid']
     @clinician_id.to_s
-    @clinician_id = @clinician_id[6..30]
+    @clinician_id = @clinician_id[0..30]
     clinicican = params[:clinicican]
   	@clients = @clients.where("clinician_id = '#{@clinician_id}'", clinicican)
   end

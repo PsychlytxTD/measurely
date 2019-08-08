@@ -24,7 +24,7 @@ staging:
 
 production:
   <<: *default
-  url: scaladb
+  # url: scaladb
   adapter: postgresql
   encoding: unicode
   pool: 5

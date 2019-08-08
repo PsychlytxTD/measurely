@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2019_06_28_063257) do
     t.text "sexuality"
     t.text "ethnicity"
     t.boolean "indigenous"
-    t.float "children"
+    t.integer "children"
     t.text "workforce_status"
     t.text "education"
   end
