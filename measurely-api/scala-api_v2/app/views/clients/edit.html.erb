@@ -61,7 +61,7 @@
 								<%= f.select :ethnicity, [["Caucasian", "Caucasian"], ["Latino/Hispanic", "Latino/Hispanic"], ["Middle Eastern", "Middle Eastern"], ["African", "African"], ["Caribbean", "Caribbean"], ["South Asian", "South Asian"], ["East Asian", "East Asian"], ["Mixed", "Mixed"], ["Other", "Other"]] %>
 							</p>
 							<p>
-								<%= f.select :indigenous, [["Yes", "TRUE"], ["No", "FALSE"]] %>
+								<%= f.select :indigenous, [["No", "false"], ["Yes", "true"]] %>
 							</p>
 							<p>
 								<%= f.number_field :children %>

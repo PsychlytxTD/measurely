@@ -1,6 +1,7 @@
 class ClientsController < ApplicationController
   include Secured
   before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_user
 
   # GET /clients
   def index
@@ -37,7 +38,7 @@ class ClientsController < ApplicationController
 
   # PATCH/PUT /clients/1
   def update
-    if @client.update(client_params.permit(:first_name, :last_name, :sex, :birth_date, :postcode, :marital_status, :sexuality, :ethnicity, :indigenous, :children, :workforce_status))
+    if @client.update(client_params.permit(:first_name, :last_name, :sex, :birth_date, :postcode, :marital_status, :sexuality, :ethnicity, :indigenous, :children, :workforce_status, :education))
       redirect_to clients_url, notice: 'Client was successfully updated.'
     else
       render :edit
