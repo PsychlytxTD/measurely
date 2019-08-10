@@ -27,7 +27,7 @@ sds_scale_UI<- function(id) {
                        h4("Always or nearly always")
                 ),
                 column(width = 4,
-                       radioButtons("Item_1", label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
+                       radioButtons(ns("item_1"), label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
 
               fluidRow(div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "2. Did the prospect of missing a", input$Drug_Term, "make you very anxious or worried?")))),
               fluidRow(
@@ -39,7 +39,7 @@ sds_scale_UI<- function(id) {
                        h4("Always or nearly always")
                 ),
                 column(width = 4,
-                       radioButtons("Item_2", label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
+                       radioButtons(ns("item_2"), label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
 
               fluidRow(div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "3. Did you worry about your use of",input$Drug_Name,"?")))),
               fluidRow(
@@ -51,7 +51,7 @@ sds_scale_UI<- function(id) {
                        h4("A great deal")
                 ),
                 column(width = 4,
-                       radioButtons("Item_3", label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
+                       radioButtons(ns("item_3"), label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
 
               fluidRow(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "4. Did you wish you could stop?"))),
               fluidRow(
@@ -63,7 +63,7 @@ sds_scale_UI<- function(id) {
                        h4("Always or nearly always")
                 ),
                 column(width = 4,
-                       radioButtons("Item_4", label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
+                       radioButtons(ns("item_4"), label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
 
               fluidRow(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "5. How difficult would you find it to stop or go without?"))),
               fluidRow(
@@ -75,10 +75,10 @@ sds_scale_UI<- function(id) {
                        h4("Impossible")
                 ),
                 column(width = 4,
-                       radioButtons("Item_5", label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))),
+                       radioButtons(ns("item_5"), label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))),
 
               fluidRow(
-                column(width = 12, h5("Scale Source: Gossop M, Darke S, Griffiths P, Hando J., Powis B., Hall W, Strang J (1995). The Severity of Dependence Scale (SDS): psychometric properties of the SDS in English and Australian samples of heroin, cocaine and amphetamine users. Addiction, 90(5):607-14."))
+                column(width = 12, h5("Source: Gossop M, Darke S, Griffiths P, Hando J., Powis B., Hall W, Strang J (1995). The Severity of Dependence Scale (SDS): psychometric properties of the SDS in English and Australian samples of heroin, cocaine and amphetamine users. Addiction, 90(5):607-14."))
               )
 
 

@@ -2,7 +2,7 @@ SPS<- list(  title = "Social Phobia Scale (SPS)", #Title can contain white space
                brief_title = "SPS",
                measure = "SPS", #The overal measure (which may contain subscales)
                subscale = "SPS", #The specific subscale of the measure.
-               population_quantity = 2,
+               population_quantity = 3,
                populations = list("Social Anxiety Disorder", "General Population", "University Student"),
                means = list(40, 14.4, 15.85),
                sds = list(16, 16, 12.93),
@@ -49,7 +49,7 @@ SPS<- list(  title = "Social Phobia Scale (SPS)", #Title can contain white space
                    Behaviour Research and Therapy, 36(4), 455-470."),
                  c("Mattick, R. P., & Clarke, J. C. (1998). Development and validation of measures of social phobia scrutiny fear and social interaction anxiety.
                    Behaviour Research and Therapy, 36(4), 455-470."),
-                 c( "Boyers, G. B., Broman-Fulks, J. J., Valentiner, D. P., McCraw, K., Curtin, L., & Michael, K. D. (2017). The latent structure of social anxiety disorder
+                 c("Boyers, G. B., Broman-Fulks, J. J., Valentiner, D. P., McCraw, K., Curtin, L., & Michael, K. D. (2017). The latent structure of social anxiety disorder
                     and the performance only specifier: A taxometric analysis. Cognitive Behaviour Therapy, 46(6), 507-521.")
                   )
 
