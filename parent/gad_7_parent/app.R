@@ -333,7 +333,7 @@ server <- function(input, output, session) {
                                                                                             #ci etc.). This dataframe will be sent to the db
   
 
-  #Use the appropriate response formatting module (one for each measure). Returns a string representing the body text to be sent.
+  #Use the appropriate response formatting module (one for each measure). Returns a string representing the email body text to be sent.
   formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   

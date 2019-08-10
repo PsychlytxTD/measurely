@@ -63,7 +63,7 @@ phq9_scale_UI<- function(id) {
               ),
 
               fluidRow(
-                column(width = 12, h5("Scale Source: Kroenke K., Spitzer R.L., & Williams J.B. (2001). The PHQ-9: validity of a brief depression severity measure. J. of Gen Intern Med, 16, 606-613"))
+                column(width = 12, h5("Source: Kroenke K., Spitzer R.L., & Williams J.B. (2001). The PHQ-9: validity of a brief depression severity measure. J. of Gen Intern Med, 16, 606-613"))
               )
     ))
 
