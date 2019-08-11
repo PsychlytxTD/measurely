@@ -9,11 +9,11 @@ development: &default
 
 development:
   <<: *default
-  url: scaladb_test
+  url: scaladb
 
 test:
   <<: *default
-  url: scaladb_test
+  url: scaladb
 
 staging:
   <<: *default

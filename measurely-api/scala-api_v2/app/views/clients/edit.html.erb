@@ -43,7 +43,7 @@
 								<%= f.text_field :last_name %>
 							</p>
 							<p>
-								<%= f.select :sex, [["Male", "Male"], ["Female", "Female"], ["Other", "Other"]] %>
+								<%= f.select :sex, [["Male", "Male"], ["Female", "Female"], ["Other", "Other"]], {multiple: true, :include_blank => true} %>
 							</p>
 							<p>
 								<%= f.text_field :birth_date %>
@@ -52,25 +52,25 @@
 								<%= f.text_field :postcode %>
 							</p>
 							<p>
-								<%= f.select :marital_status, [["Never Married", "Never Married"], ["Currently Married", "Currently Married"], ["Separated", "Separated"], ["Divorced", "Divorced"], ["Widowed", "Widowed"], ["Cohabiting", "Cohabiting"]] %>
+								<%= f.select :marital_status, [["Never Married", "Never Married"], ["Currently Married", "Currently Married"], ["Separated", "Separated"], ["Divorced", "Divorced"], ["Widowed", "Widowed"], ["Cohabiting", "Cohabiting"]], {multiple: true, :include_blank => true} %>
 							</p>
 							<p>
-								<%= f.select :sexuality, [["Heterosexual", "Heterosexual"], ["Gay", "Gay"], ["Bisexual", "Bisexual"], ["Lesbian", "Lesbian"], ["Transgender", "Transgender"], ["Queer", "Queer"], ["Other", "Other"] ] %>
+								<%= f.select :sexuality, [["Heterosexual", "Heterosexual"], ["Gay", "Gay"], ["Bisexual", "Bisexual"], ["Lesbian", "Lesbian"], ["Transgender", "Transgender"], ["Queer", "Queer"], ["Other", "Other"] ], {multiple: true, :include_blank => true} %>
 							</p>
 							<p>
-								<%= f.select :ethnicity, [["Caucasian", "Caucasian"], ["Latino/Hispanic", "Latino/Hispanic"], ["Middle Eastern", "Middle Eastern"], ["African", "African"], ["Caribbean", "Caribbean"], ["South Asian", "South Asian"], ["East Asian", "East Asian"], ["Mixed", "Mixed"], ["Other", "Other"]] %>
+								<%= f.select :ethnicity, [["Caucasian", "Caucasian"], ["Latino/Hispanic", "Latino/Hispanic"], ["Middle Eastern", "Middle Eastern"], ["African", "African"], ["Caribbean", "Caribbean"], ["South Asian", "South Asian"], ["East Asian", "East Asian"], ["Mixed", "Mixed"], ["Other", "Other"]], {multiple: true, :include_blank => true} %>
 							</p>
 							<p>
-								<%= f.select :indigenous, [["No", "false"], ["Yes", "true"]] %>
+								<%= f.select :indigenous, [["No", "false"], ["Yes", "true"]], {multiple: true, :include_blank => true} %>
 							</p>
 							<p>
 								<%= f.number_field :children %>
 							</p>
 							<p>
-								<%= f.select :workforce_status, [["Working Full-Time", "Working Full-Time"], ["Working Part-Time", "Working Part-Time"], ["Working Casual Hours", "Working Casual Hours"], ["Studying", "Studying"], ["Unemployed", "Unemployed"], ["Retired", "Retired"]] %>
+								<%= f.select :workforce_status, [["Working Full-Time", "Working Full-Time"], ["Working Part-Time", "Working Part-Time"], ["Working Casual Hours", "Working Casual Hours"], ["Studying", "Studying"], ["Unemployed", "Unemployed"], ["Retired", "Retired"]], {multiple: true, :include_blank => true} %>
 							</p>
 							<p>
-								<%= f.select :education, [["No Education", "No Education"], ["Primary Education", "Primary Education"], ["Secondary Education", "Secondary Education"], ["Post-Secondary/Teriary Education", "Post-Secondary/Teriary Education"], ["Bachlor or Equivalent", "Bachlor or Equivalent"], ["Master or Equivalent", "Master or Equivalent"], ["Doctoral Equivalent", "Doctoral Equivalent"]] %>
+								<%= f.select :education, [["No Education", "No Education"], ["Primary Education", "Primary Education"], ["Secondary Education", "Secondary Education"], ["Post-Secondary/Teriary Education", "Post-Secondary/Teriary Education"], ["Bachlor or Equivalent", "Bachlor or Equivalent"], ["Master or Equivalent", "Master or Equivalent"], ["Doctoral Equivalent", "Doctoral Equivalent"]], {multiple: true, :include_blank => true} %>
 							</p>
 					</div>
 				</tbody>
