@@ -85,10 +85,6 @@ format_sias_responses_for_email<- function(input, output, session, pool, clinici
     }
 
 
-
-    score_severity_range<- c(measure_data()$score, severity_range)
-
-
     body_values<- c(clinician_email, client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.
 
 

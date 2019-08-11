@@ -33,27 +33,23 @@ format_sds_responses_for_email<- function(input, output, session, pool, clinicia
 
   reactive({
 
-    formatted_item_responses<- dplyr::case_when( #Convert the client's responses from numerical form to readable responses, teo appear in the email.
+   #Convert the client's responses from numerical form to readable responses, teo appear in the email.
 
-      manual_entry()$item_scores[1:4] == 0 ~ "Never of almost never",
+    formatted_item_responses<- purrr::map_at(manual_entry()$item_scores, 1:4, ~ {
 
-      manual_entry()$item_scores[1:4] == 1 ~ "Sometimes",
+      if(.x == 0) { "Never or almost never"}
+      else if(.x == 1) {"Sometimes"}
+      else if(.x == 2) {"Often"}
+      else {"Always/nearly always"}
 
-      manual_entry()$item_scores[1:4] == 2 ~ "Often",
+    }) %>% purrr::map_at(5, ~ {
 
-      manual_entry()$item_scores[1:4] == 3 ~ "Always/Nearly Always",
+      if(.x == 0) { "Not difficult"}
+      else if(.x == 1) {"Quite difficult"}
+      else if(.x == 2) {"Very difficult"}
+      else {"Impossible"}
 
-      manual_entry()$item_scores[5] == 0 ~ "Not difficult",
-
-      manual_entry()$item_scores[5] == 1 ~ "Quite Difficult",
-
-      manual_entry()$item_scores[5] == 2 ~ "Very Difficult",
-
-      manual_entry()$item_scores[5] == 3 ~ "Impossible",
-
-      TRUE ~ as.character(manual_entry()$item_scores)
-
-    )
+    })
 
 
     #Need to retrieve client's name for the email
@@ -89,10 +85,6 @@ format_sds_responses_for_email<- function(input, output, session, pool, clinicia
       clinician_email<- clinician_email
 
     }
-
-
-
-    score_severity_range<- c(measure_data()$score, severity_range)
 
 
     body_values<- c(clinician_email, client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.

@@ -1,13 +1,13 @@
-#' Convert SPS Measure Responses
+#' Convert GDS-15 Measure Responses
 #'
-#' Convert SPS raw measure responses into a readable table, to be send in an email to the clinician.
+#' Convert GDS-15 raw measure responses into a readable table, to be send in an email to the clinician.
 #'
 #' @param id A string to create the namespace
 #'
 #' @export
 
 
-format_sps_responses_for_email_UI<- function(id) {
+format_gds15_responses_for_email_UI<- function(id) {
 
   ns<- NS(id)
 
@@ -15,9 +15,9 @@ format_sps_responses_for_email_UI<- function(id) {
 }
 
 
-#' Convert SPS Measure Responses
+#' Convert GDS-15 Measure Responses
 #'
-#' Convert SPS raw measure responses into a readable table, to be send in an email to the clinician.
+#' Convert GDS-15 raw measure responses into a readable table, to be send in an email to the clinician.
 #'
 #' @param pool A pool db connection object
 #'
@@ -29,25 +29,15 @@ format_sps_responses_for_email_UI<- function(id) {
 #' @param simplified A logical value indicating how the clinician_email string should be parsed (i.e. from being  reactive value or regular string).
 #' @export
 
-format_sps_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data, simplified = FALSE) {
+format_gds15_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data, simplified = FALSE) {
 
   reactive({
 
-    formatted_item_responses<- dplyr::case_when( #Convert the client's responses from numerical form to readable responses, teo appear in the email.
+  #Convert the client's responses from numerical form to readable responses, teo appear in the email.
 
-      manual_entry()$item_scores == 0 ~ "Not at all characteristic or true of me",
-
-      manual_entry()$item_scores == 1 ~ "Slightly characteristic or true of me",
-
-      manual_entry()$item_scores == 2 ~ "Moderately characteristic or true of me",
-
-      manual_entry()$item_scores == 3 ~ "Very characteristic or true of me",
-
-      manual_entry()$item_scores == 4 ~ "Extremely characteristic or true of me",
-
-      TRUE ~ as.character(manual_entry()$item_scores)
-
-    )
+    formatted_item_responses<- purrr::map_at(manual_entry()$item_scores, c(1,5,7,11,13), ~ifelse(.x == 0, "Yes",
+                               "No")) %>% purrr::map_at(c(2,3,4,6,8,9,10,12,14,15), ~ifelse(.x == 0, "Yes",
+                                   "No"))
 
 
     #Need to retrieve client's name for the email
@@ -73,7 +63,6 @@ format_sps_responses_for_email<- function(input, output, session, pool, clinicia
     score_severity_range<- psychlytx::find_severity_range(measure_data) #use the find_severity_range() function to make a single vector of strings
     #containing (in order) the scores and the severity range descriptions.
 
-
     if(simplified == TRUE) {
 
       clinician_email<- clinician_email$value
@@ -83,7 +72,6 @@ format_sps_responses_for_email<- function(input, output, session, pool, clinicia
       clinician_email<- clinician_email
 
     }
-
 
 
     body_values<- c(clinician_email, client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.
@@ -114,11 +102,6 @@ format_sps_responses_for_email<- function(input, output, session, pool, clinicia
                                    "response_13":"%s",
                                    "response_14":"%s",
                                    "response_15":"%s",
-                                   "response_16":"%s",
-                                   "response_17":"%s",
-                                   "response_18":"%s",
-                                   "response_19":"%s",
-                                   "response_20":"%s",
 
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",
