@@ -3,10 +3,10 @@ PHQ_9<- list(  title = "Primary Health Questionnaire (PHQ-9)", #Title can contai
                measure = "PHQ_9", #The overal measure (which may contain subscales)
                subscale = "PHQ_9", #The specific subscale of the measure.
                population_quantity = 14,
-               populations = list("General Population 14-24 Years", "General Population 25-34 Years", "General Population 35-44 Years",
-                                  "General Population 45-54 Years", "General Population 55-64 Years", "General Population 65-74 Years",
-                                  "General Population Greater 75 Years or Older", "Primary Care", "Depression", "Coronary Heart Disease",
-                                  "Diabetes", "Chronic Musculoskeletal Pain", "Cancer", "Stroke", "Other"),
+               populations = list("General_Population_14-24_Years", "General_Population_25-34_Years", "General_Population_35-44_Years",
+                                  "General Population_45-54_Years", "General_Population_55-64_Years", "General_Population_65-74_Years",
+                                  "General_Population_Greater_75_Years_Or_Older", "Primary_Care", "Depression", "Coronary_Heart_Disease",
+                                  "Diabetes", "Chronic_Musculoskeletal_Pain", "Cancer", "Stroke", "Other"),
                means = list(2.3,  2.3, 2.6, 2.8, 3.2, 3.3, 4.4, 5.20, 16.65, 4.84, 7.95, 9.1, 13, 7.42, 0),
                sds = list(3.3, 3.2, 3.5, 3.5, 3.5, 3.6,  3.9, 4.75, 4.25, 5.69, 0.46, 6.3, 6.7, 6, 0),
                mean_sd_references = list("Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)", "Kocalevent, Hinz & Brähler (2013)",

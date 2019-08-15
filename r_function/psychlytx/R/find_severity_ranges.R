@@ -49,6 +49,7 @@ find_severity_range<- function(measure_data) {
   bound_df$severity_range<- purrr::map(bound_df$severity_range, ~ as.vector(unlist(.x))) #Unlist the severity range column
 
   flattened_score<- purrr::flatten_dbl(bound_df$score)
+
   flattened_severity_ranges<- purrr::flatten_chr(bound_df$severity_range)
 
   body_string<- list(flattened_score, flattened_severity_ranges) %>% purrr::flatten()

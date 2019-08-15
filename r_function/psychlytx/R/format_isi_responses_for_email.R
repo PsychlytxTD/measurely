@@ -1,13 +1,13 @@
-#' Convert SDS Measure Responses
+#' Convert ISI Measure Responses
 #'
-#' Convert SDS raw measure responses into a readable table, to be send in an email to the clinician.
+#' Convert ISI raw measure responses into a readable table, to be send in an email to the clinician.
 #'
 #' @param id A string to create the namespace
 #'
 #' @export
 
 
-format_sds_responses_for_email_UI<- function(id) {
+format_isi_responses_for_email_UI<- function(id) {
 
   ns<- NS(id)
 
@@ -15,9 +15,9 @@ format_sds_responses_for_email_UI<- function(id) {
 }
 
 
-#' Convert SDS Measure Responses
+#' Convert ISI Measure Responses
 #'
-#' Convert SDS raw measure responses into a readable table, to be send in an email to the clinician.
+#' Convert ISI raw measure responses into a readable table, to be send in an email to the clinician.
 #'
 #' @param pool A pool db connection object
 #'
@@ -29,30 +29,23 @@ format_sds_responses_for_email_UI<- function(id) {
 #' @param simplified A logical value indicating how the clinician_email string should be parsed (i.e. from being  reactive value or regular string).
 #' @export
 
-format_sds_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data, simplified = FALSE) {
+format_isi_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data, simplified = FALSE) {
 
   reactive({
 
-   #Convert the client's responses from numerical form to readable responses, teo appear in the email.
+    formatted_item_responses<- dplyr::case_when( #Convert the client's responses from numerical form to readable responses, teo appear in the email.
 
+      manual_entry()$item_scores == 0 ~ "Not at all",
 
-    formatted_item_responses<- purrr::map_at(manual_entry()$item_scores, 1:4, ~ {
+      manual_entry()$item_scores == 1 ~ "Several days",
 
-      if(.x == 0) { "Never or almost never"}
-      else if(.x == 1) {"Sometimes"}
-      else if(.x == 2) {"Often"}
-      else {"Always/nearly always"}
+      manual_entry()$item_scores == 2 ~ "More than half the days",
 
-    }) %>% purrr::map_at(5, ~ {
+      manual_entry()$item_scores == 3 ~ "Nearly every day",
 
-      if(.x == 0) { "Not difficult"}
-      else if(.x == 1) {"Quite difficult"}
-      else if(.x == 2) {"Very difficult"}
-      else {"Impossible"}
+      TRUE ~ as.character(manual_entry()$item_scores)
 
-    }) %>% unlist()
-
-
+    )
 
 
     #Need to retrieve client's name for the email
@@ -74,9 +67,23 @@ format_sds_responses_for_email<- function(input, output, session, pool, clinicia
     #the severity range descriptions for the other subscales. In that case, would need to pass subsetted measure_data into the function
     #and would need to join that function output with the output produced by the custom method.
 
-    measure_data<- measure_data()
-    score_severity_range<- psychlytx::find_severity_range(measure_data) #use the find_severity_range() function to make a single vector of strings
+    #measure_data<- measure_data()
+    #score_severity_range<- psychlytx::find_severity_range(measure_data) #use the find_severity_range() function to make a single vector of strings
     #containing (in order) the scores and the severity range descriptions.
+
+
+    severity_range<- dplyr::case_when(
+
+      measure_data()$score >= 8 & measure_data()$score < 15 ~ "Subthreshold Insomnia",
+
+      measure_data()$score >= 15 & measure_data()$score < 22 ~ "Clinical Insomnia (Moderate)",
+
+      measure_data()$score >= 22 ~ "Clinical Insomnia (Severe)",
+
+      TRUE ~ as.character(measure_data()$score)
+
+    )
+
 
 
     if(simplified == TRUE) {
@@ -88,6 +95,10 @@ format_sds_responses_for_email<- function(input, output, session, pool, clinicia
       clinician_email<- clinician_email
 
     }
+
+
+
+    score_severity_range<- c(measure_data()$score, severity_range)
 
 
     body_values<- c(clinician_email, client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.
@@ -108,6 +119,8 @@ format_sds_responses_for_email<- function(input, output, session, pool, clinicia
                                    "response_3":"%s",
                                    "response_4":"%s",
                                    "response_5":"%s",
+                                   "response_6":"%s",
+                                   "response_7":"%s",
 
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",

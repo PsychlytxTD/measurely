@@ -35,9 +35,13 @@ format_gds15_responses_for_email<- function(input, output, session, pool, clinic
 
   #Convert the client's responses from numerical form to readable responses, teo appear in the email.
 
-    formatted_item_responses<- purrr::map_at(manual_entry()$item_scores, c(1,5,7,11,13), ~ifelse(.x == 0, "Yes",
+    manual_entry_item_scores<- as.list(manual_entry()$item_scores)
+
+    formatted_item_responses<- purrr::map_at(manual_entry_item_scores, c(1,5,7,11,13), ~ifelse(.x == 0, "Yes",
                                "No")) %>% purrr::map_at(c(2,3,4,6,8,9,10,12,14,15), ~ifelse(.x == 0, "Yes",
                                    "No"))
+
+    formatted_item_responses<- unlist(formatted_item_responses)
 
 
     #Need to retrieve client's name for the email

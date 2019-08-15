@@ -3,8 +3,8 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                measure = "SDS", #The overal measure (which may contain subscales)
                subscale = "SDS", #The specific subscale of the measure.
                population_quantity = 8,
-               populations = list("Alcohol Use", "Cannabis Use", "Heroin Use", "Cocaine Use", "Amphetamine Use", "Benzodiazepine Use", "Opiate Use",
-                                  "Ketamine Use"),
+               populations = list("Alcohol_Use", "Cannabis_Use", "Heroin_Use", "Cocaine_Use", "Amphetamine_Use", "Benzodiazepine_Use", "Opiate_Use",
+                                  "Ketamine_Use"),
                means = list(3.6, 3.4, 8.7, 4.2, 4.3, 6.4, 3.3, 7.7),
                sds = list(4.4, 3.7, 4, 3.3, 3.2, 3.8, 3.2, 3.8),
                mean_sd_references = list("Lawrinson, Copeland, Gerber & Gilmour (2000)", "Martin, Copeland, Gates & Gilmour (2006)",
