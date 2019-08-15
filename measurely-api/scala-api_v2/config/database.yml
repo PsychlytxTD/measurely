@@ -34,6 +34,10 @@ production:
   password: <%= ENV['DATABASE_PASSWORD'] %>
   port: 5432
 
+production:
+  <<: *default
+  url: scaladb
+
 # Set Environment Variables in System.
 
 # export DATABASE_USERNAME=""
