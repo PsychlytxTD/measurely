@@ -7,9 +7,8 @@ global_subscale_info_list<- list(
   PDSS_SR = readRDS("PDSS_SR.rds"),
   PHQ_9 = readRDS("PHQ_9.rds"),
   SDS = readRDS("SDS.rds"),
-  SPS = readRDS("SPS.rds")
+  SPS = readRDS("SPS.rds"),
   SSD_12 = readRDS("SSD_12.rds")
-
 
 )
 
