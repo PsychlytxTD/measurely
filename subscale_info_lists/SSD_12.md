@@ -1,4 +1,4 @@
-**Information About the Generalized Anxiety Disorder 7-Item Scale (GAD-7)**
+**Information About the Somatic Symptom Disorder - B Criteria Scale (SSD-12)**
 
 ## What it Measures:
 * Criterion B symptoms of Somatic Symptom Disorder, as outlined in the Diagnostic and Statistical Manual of Mental Disorders (DSM-5) (i.e. excessive and disproportionate thoughts, feelings and behaviours relating to distressing somatic symptoms). 

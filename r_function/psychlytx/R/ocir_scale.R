@@ -136,7 +136,9 @@ ocir_scale_UI<- function(id) {
 #'
 ocir_scale<- function(input, output, session) {
 
-  scale_entry <- reactive({ paste(input$item_1, input$item_2, input$item_3, input$item_4, input$item_5, input$item_6, input$item_7, sep = ",") })
+  scale_entry <- reactive({ paste(input$item_1, input$item_2, input$item_3, input$item_4, input$item_5, input$item_6, input$item_7,
+                                  input$item_8, input$item_9, input$item_10, input$item_11, input$item_12, input$item_13, input$item_14,
+                                  input$item_15, input$item_16, input$item_17, input$item_18, input$item_19, input$item_20, sep = ",") })
 
   return(scale_entry)
 

@@ -1,4 +1,4 @@
-**Information About the Generalized Anxiety Disorder 7-Item Scale (GAD-7)**
+**Information About the Insomnia Severity Index (ISI)**
 
 ## What it Measures:
 * The perceived severity of insomnia symptoms as well as the extent to which those symptoms cause distress and daytime impairment.

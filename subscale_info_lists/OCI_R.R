@@ -51,7 +51,7 @@ OCI_R- list(  title = "Obsessive Compulsive Inventory - Revised (OCI-R)", #Title
 
 OCI_R_Washing<- list(  title = "OCI-R Washing", #Title can contain white space. For insertion into widget headings, plot titles etc.
               brief_title = "OCI-R Washing",
-              measure = "OCI_R_Washing", #The overal measure (which may contain subscales)
+              measure = "OCI_R", #The overal measure (which may contain subscales)
               subscale = "OCI_R_Washing", #The specific subscale of the measure.
               population_quantity = 2,
               populations = list("OCD", "University_Student"),
@@ -105,7 +105,7 @@ OCI_R_Washing<- list(  title = "OCI-R Washing", #Title can contain white space. 
 
 OCI_R_Checking<- list(  title = "OCI-R Checking", #Title can contain white space. For insertion into widget headings, plot titles etc.
                        brief_title = "OCI-R Checking",
-                       measure = "OCI_R_Checking", #The overal measure (which may contain subscales)
+                       measure = "OCI_R", #The overal measure (which may contain subscales)
                        subscale = "OCI_R_Checking", #The specific subscale of the measure.
                        population_quantity = 2,
                        populations = list("OCD", "University_Student"),
@@ -159,7 +159,7 @@ OCI_R_Checking<- list(  title = "OCI-R Checking", #Title can contain white space
 
 OCI_R_Ordering<- list(  title = "OCI-R Ordering", #Title can contain white space. For insertion into widget headings, plot titles etc.
                         brief_title = "OCI-R Ordering",
-                        measure = "OCI_R_Ordering", #The overal measure (which may contain subscales)
+                        measure = "OCI_R", #The overal measure (which may contain subscales)
                         subscale = "OCI_R_Ordering", #The specific subscale of the measure.
                         population_quantity = 2,
                         populations = list("OCD", "University_Student"),
@@ -213,7 +213,7 @@ OCI_R_Ordering<- list(  title = "OCI-R Ordering", #Title can contain white space
 
 OCI_R_Obsessing<- list(  title = "OCI-R Obsessing", #Title can contain white space. For insertion into widget headings, plot titles etc.
                         brief_title = "OCI-R Obsessing",
-                        measure = "OCI_R_Obsessing", #The overal measure (which may contain subscales)
+                        measure = "OCI_R", #The overal measure (which may contain subscales)
                         subscale = "OCI_R_Obsessing", #The specific subscale of the measure.
                         population_quantity = 2,
                         populations = list("OCD", "University_Student"),
@@ -267,7 +267,7 @@ OCI_R_Obsessing<- list(  title = "OCI-R Obsessing", #Title can contain white spa
 
 OCI_R_Hoarding<- list(  title = "OCI-R Hoarding", #Title can contain white space. For insertion into widget headings, plot titles etc.
                          brief_title = "OCI-R Hoarding",
-                         measure = "OCI_R_Hoarding", #The overal measure (which may contain subscales)
+                         measure = "OCI_R", #The overal measure (which may contain subscales)
                          subscale = "OCI_R_Hoarding", #The specific subscale of the measure.
                          population_quantity = 2,
                          populations = list("OCD", "University_Student"),
@@ -322,7 +322,7 @@ OCI_R_Hoarding<- list(  title = "OCI-R Hoarding", #Title can contain white space
 
 OCI_R_Neutralizing<- list(  title = "OCI-R Neutralizing", #Title can contain white space. For insertion into widget headings, plot titles etc.
                          brief_title = "OCI-R Neutralizing",
-                         measure = "OCI_R_Neutralizing", #The overal measure (which may contain subscales)
+                         measure = "OCI_R", #The overal measure (which may contain subscales)
                          subscale = "OCI_R_Neutralizing", #The specific subscale of the measure.
                          population_quantity = 2,
                          populations = list("OCD", "University_Student"),

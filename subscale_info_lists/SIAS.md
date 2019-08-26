@@ -1,4 +1,4 @@
-**Information About the Generalized Anxiety Disorder 7-Item Scale (GAD-7)**
+**Information About the Social Interaction Anxiety Scale (SIAS)**
 
 ## What it Measures:
 * Anxiety about initiating and maintaining social interactions.

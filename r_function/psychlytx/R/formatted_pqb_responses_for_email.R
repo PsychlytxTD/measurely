@@ -1,13 +1,13 @@
-#' Convert OCI-R Measure Responses
+#' Convert PQ-B Measure Responses
 #'
-#' Convert OCI-R raw measure responses into a readable table, to be send in an email to the clinician.
+#' Convert PQ-B raw measure responses into a readable table, to be send in an email to the clinician.
 #'
 #' @param id A string to create the namespace
 #'
 #' @export
 
 
-format_ocir_responses_for_email_UI<- function(id) {
+format_pqb_responses_for_email_UI<- function(id) {
 
   ns<- NS(id)
 
@@ -15,9 +15,9 @@ format_ocir_responses_for_email_UI<- function(id) {
 }
 
 
-#' Convert OCI-R Measure Responses
+#' Convert PQ-B Measure Responses
 #'
-#' Convert OCI-R raw measure responses into a readable table, to be send in an email to the clinician.
+#' Convert PQ-B raw measure responses into a readable table, to be send in an email to the clinician.
 #'
 #' @param pool A pool db connection object
 #'
@@ -29,23 +29,48 @@ format_ocir_responses_for_email_UI<- function(id) {
 #' @param simplified A logical value indicating how the clinician_email string should be parsed (i.e. from being  reactive value or regular string).
 #' @export
 
-format_ocir_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data, simplified = FALSE) {
+format_pqb_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data, simplified = FALSE) {
 
   reactive({
 
-    formatted_item_responses<- dplyr::case_when( #Convert the client's responses from numerical form to readable responses, teo appear in the email.
 
-      manual_entry()$item_scores == 0 ~ "Not at all",
+    #Separate the dichotomous (yes-no) items from the distress items
 
-      manual_entry()$item_scores == 1 ~ "A little",
+    dichotomous_items<- manual_entry()$item_scores[1:21]
 
-      manual_entry()$item_scores == 2 ~ "A lot",
+    distress_items<- manual_entry()$item_scores[22:42]
 
-      manual_entry()$item_scores == 3 ~ "Extremely",
 
-      TRUE ~ as.character(manual_entry()$item_scores)
+    formatted_dichotomous_item_responses<- dplyr::case_when( #Convert the client's responses from numerical form to readable responses, teo appear in the email.
+
+      dichotomous_items == 0 ~ "No",
+
+      dichotomous_items == 1 ~ "Yes",
+
+      TRUE ~ as.character(dichotomous_items)
 
     )
+
+    formatted_distress_item_responses<- dplyr::case_when( #Convert the client's responses from numerical form to readable responses, teo appear in the email.
+
+      distress_items == 1 ~ "Strongly Disagree",
+
+      distress_items == 2 ~ "Disagree",
+
+      distress_items == 3 ~ "Neutral",
+
+      distress_items == 4 ~ "Agree",
+
+      distress_items == 5 ~ "Strongly Agree",
+
+      TRUE ~ "N/A"
+
+    )
+
+    #Join the dichotomous and distress item responses into one vector
+
+    formatted_item_responses<- c(formatted_dichotomous_item_responses, formatted_distress_item_responses)
+
 
 
     #Need to retrieve client's name for the email
@@ -67,43 +92,35 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
     #the severity range descriptions for the other subscales. In that case, would need to pass subsetted measure_data into the function
     #and would need to join that function output with the output produced by the custom method.
 
-    measure_data<- measure_data()
-
-    score_severity_range<- psychlytx::find_severity_range(measure_data) #use the find_severity_range() function to make a single vector of strings
+    #measure_data<- measure_data()
+    #score_severity_range<- psychlytx::find_severity_range(measure_data) #use the find_severity_range() function to make a single vector of strings
     #containing (in order) the scores and the severity range descriptions.
 
-    #Use the find_severity_range() function to generate a vector of scores and cutoff severity descriptions in order.
-    #Then, add helpful, simplified information to the cutoff severity descriptions to replace the descriptions for total scale and hoarding subscale.
-    #For these scales - there is diagnostic info that needs to be conveyed.
 
+    severity_range_dichotomous<- dplyr::case_when(    #Create simplified severity descriptors for dichotomouse and distress subscales
 
-    simplified_cutoff_descriptor_total<- dplyr::case_when(
+      measure_data()$Score[1] < 9 ~ "Below Clinical High Risk Status"
 
-      as.numeric(score_severity_range[1]) < 21 ~ "Below OCD threshold",
+      measure_data()$Score[1] >= 9 ~ "Clinical High Risk Status"
 
-      as.numeric(score_severity_range[1]) >= 21 ~ "Likely OCD",
+      TRUE ~ as.character(measure_data()$score)
 
-      TRUE ~ as.character(as.numeric(score_severity_range[1]))
+    )
+
+    severity_range_distress<- dplyr::case_when(
+
+      measure_data()$Score[2] < 18 ~ "Below Clinical High Risk Status"
+
+      measure_data()$Score[2] >= 18 ~ "Clinical High Risk Status"
+
+      TRUE ~ as.character(measure_data()$score)
+
 
     )
 
 
-    simplified_cutoff_descriptor_hoarding_subscale<-
+    severity_range<- c(severity_range_dichotomous, severity_range_distress) #Join the two simplified severity range descriptor strings together
 
-      dplyr::case_when(
-
-        as.numeric(score_severity_range[6]) < 6 ~ "Below Hoarding Disorder threshold",
-
-        as.numeric(score_severity_range[6]) >= 6 ~ "Likely Hoarding Disorder",
-
-        TRUE ~ as.character(as.numeric(score_severity_range[1]))
-
-      )
-
-
-    score_severity_range[8]<- simplified_cutoff_descriptor_total      #Replace the original cutoff descriptions with the simplified info for the two scales
-
-    score_severity_range[15]<- simplified_cutoff_descriptor_hoarding
 
 
 
@@ -119,6 +136,9 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
 
 
 
+    score_severity_range<- c(measure_data()$score, severity_range)
+
+
     body_values<- c(clinician_email, client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.
 
 
@@ -131,18 +151,8 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
 
                                    "score_1": "%s",
                                    "score_2": "%s",
-                                   "score_3": "%s",
-                                   "score_4": "%s",
-                                   "score_5": "%s",
-                                   "score_6": "%s",
-                                   "score_7": "%s",
                                    "severity_range_1": "%s",
                                    "severity_range_2": "%s",
-                                   "severity_range_3": "%s",
-                                   "severity_range_5": "%s",
-                                   "severity_range_5": "%s",
-                                   "severity_range_6": "%s",
-                                   "severity_range_7": "%s",
 
                                    "response_1":"%s",
                                    "response_2":"%s",
@@ -162,6 +172,31 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
                                    "response_16":"%s",
                                    "response_17":"%s",
                                    "response_18":"%s",
+                                   "response_19":"%s",
+                                   "response_20":"%s",
+                                   "response_21":"%s",
+
+                                   "response_22":"%s",
+                                   "response_23":"%s",
+                                   "response_24":"%s",
+                                   "response_25":"%s",
+                                   "response_26":"%s",
+                                   "response_27":"%s",
+                                   "response_28":"%s",
+                                   "response_29":"%s",
+                                   "response_30":"%s",
+                                   "response_31":"%s",
+                                   "response_32":"%s",
+                                   "response_33":"%s",
+                                   "response_34":"%s",
+                                   "response_35":"%s",
+                                   "response_36":"%s",
+                                   "response_37":"%s",
+                                   "response_38":"%s",
+                                   "response_39":"%s",
+                                   "response_40":"%s",
+                                   "response_41":"%s",
+                                   "response_42":"%s",
 
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",
