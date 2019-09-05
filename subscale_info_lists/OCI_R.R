@@ -1,4 +1,4 @@
-OCI_R- list(  title = "Obsessive Compulsive Inventory - Revised (OCI-R)", #Title can contain white space. For insertion into widget headings, plot titles etc.
+OCI_R<- list(  title = "Obsessive Compulsive Inventory - Revised (OCI-R)", #Title can contain white space. For insertion into widget headings, plot titles etc.
                brief_title = "OCI-R",
                measure = "OCI_R", #The overal measure (which may contain subscales)
                subscale = "OCI_R", #The specific subscale of the measure.

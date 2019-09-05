@@ -103,7 +103,7 @@ PHQ_9<- list(  title = "Primary Health Questionnaire (PHQ-9)", #Title can contai
                  c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value", "Define Value")
                  ),
                cutoff_quantity = 6,
-               items = 9,
+               items = 1:9,
                max_score = 27,
                min_score = 0,
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap

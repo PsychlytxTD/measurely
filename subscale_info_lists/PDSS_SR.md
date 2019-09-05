@@ -1,4 +1,4 @@
-**Information About the Generalized Anxiety Disorder 7-Item Scale (GAD-7)**
+**Information About the Panic Disorder Severity Scale (PDSS)**
 
 ## What it Measures:
 * The severity of Panic Disorder symptoms during the past month.

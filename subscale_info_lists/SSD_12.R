@@ -58,7 +58,7 @@ SSD_12<- list(  title = "Somatic Symptom Disorder - B Criteria Scale (SSD-12)", 
                    "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)")
                ),
                cutoff_quantity = 6,
-               items = 12,
+               items = 1:12,
                max_score = 48 ,
                min_score = 0,
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap

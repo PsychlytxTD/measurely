@@ -99,9 +99,9 @@ format_pqb_responses_for_email<- function(input, output, session, pool, clinicia
 
     severity_range_dichotomous<- dplyr::case_when(    #Create simplified severity descriptors for dichotomouse and distress subscales
 
-      measure_data()$Score[1] < 9 ~ "Below Clinical High Risk Status"
+      measure_data()$Score[1] < 9 ~ "Below Clinical High Risk Status",
 
-      measure_data()$Score[1] >= 9 ~ "Clinical High Risk Status"
+      measure_data()$Score[1] >= 9 ~ "Clinical High Risk Status",
 
       TRUE ~ as.character(measure_data()$score)
 
@@ -109,9 +109,9 @@ format_pqb_responses_for_email<- function(input, output, session, pool, clinicia
 
     severity_range_distress<- dplyr::case_when(
 
-      measure_data()$Score[2] < 18 ~ "Below Clinical High Risk Status"
+      measure_data()$Score[2] < 18 ~ "Below Clinical High Risk Status",
 
-      measure_data()$Score[2] >= 18 ~ "Clinical High Risk Status"
+      measure_data()$Score[2] >= 18 ~ "Clinical High Risk Status",
 
       TRUE ~ as.character(measure_data()$score)
 

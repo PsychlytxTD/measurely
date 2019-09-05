@@ -9,8 +9,8 @@
 
 ## Scale Quality:
 * At least four investigations, including a large-scale population study, suggest that the SSD-12 has strong psychometric properties 
-(Barsky, 2015; Toussaint, Löwe, Brähler & Jordan, 2017; Toussaint, Murray, Voigt, Herzog, Gierk, Kroenke, Rief, Henningsen & Löwe, 2016;
-Toussaint, Riedl, Kehrer, Schneider, Löwer & Linde, 2017).
+(Barsky, 2015; Toussaint, L?we, Br?hler & Jordan, 2017; Toussaint, Murray, Voigt, Herzog, Gierk, Kroenke, Rief, Henningsen & L?we, 2016;
+Toussaint, Riedl, Kehrer, Schneider, L?wer & Linde, 2017).
 
 ##Scale Structure:
-* Research has supported a general factor structure (Toussaint, Löwe, Brähler & Jordan, 2017; Toussaint, Murray, Voigt, Herzog, Gierk, Kroenke, Rief, Henningsen & Löwe, 2016;Toussaint, Riedl, Kehrer, Schneider, Löwer & Linde, 2017). 
+* Research has supported a general factor structure (Toussaint, Lowe, Br?hler & Jordan, 2017; Toussaint, Murray, Voigt, Herzog, Gierk, Kroenke, Rief, Henningsen & L?we, 2016;Toussaint, Riedl, Kehrer, Schneider, L?wer & Linde, 2017). 

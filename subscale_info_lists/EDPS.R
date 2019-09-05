@@ -29,7 +29,7 @@ EDPS<- list(  title = "Edinburgh Postnatal Depression Scale (EDPS)", #Title can 
                    "Matthey, Barnett, Kavanagh & Howie (2001)", "Matthey, Barnett, Kavanagh & Howie (2001)", "Matthey, Barnett, Kavanagh & Howie (2001)")
                ),
                cutoff_quantity = 6,
-               items = 10,
+               items = 1:10,
                max_score = 30,
                min_score = 0,
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap

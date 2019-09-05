@@ -30,7 +30,7 @@ SPS<- list(  title = "Social Phobia Scale (SPS)", #Title can contain white space
 
                ),
                cutoff_quantity = 6,
-               items = 20,
+               items = 1:20,
                max_score = 80,
                min_score = 0,
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap

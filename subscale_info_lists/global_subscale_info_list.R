@@ -11,14 +11,18 @@ global_subscale_info_list<- list(
   OCI_R_Obsessing = readRDS("OCI_R_Obsessing.rds"),
   OCI_R_Hoarding = readRDS("OCI_R_Hoarding.rds"),
   OCI_R_Neutralizing = readRDS("OCI_R_Neutralizing.rds"),
+  PCL_5 = readRDS("PCL_5.rds"),
+  PCL_5_Intrusion = readRDS("PCL_5_Intrusion.rds"),
+  PCL_5_Cognition_Mood = readRDS("PCL_5_Cognition_Mood.rds"),
+  PCL_5_Hyperarousal = readRDS("PCL_5_Hyperarousal.rds"),
+  PCL_5_Avoidance = readRDS("PCL_5_Avoidance.rds"),
   PDSS_SR = readRDS("PDSS_SR.rds"),
   PHQ_9 = readRDS("PHQ_9.rds"),
   PQ_B = readRDS("PQ_B.rds"),
-  PQB_Distress = readRDS("PQ_B_Distress.rds")
+  PQ_B_Distress = readRDS("PQ_B_Distress.rds"),
   SDS = readRDS("SDS.rds"),
   SPS = readRDS("SPS.rds"),
   SSD_12 = readRDS("SSD_12.rds")
-
 
 )
 

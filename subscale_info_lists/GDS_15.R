@@ -33,7 +33,7 @@ GDS_15<- list(  title = "Geriatric Depression Scale - 15 (GDS-15)", #Title can c
                                           "Brown, Woods & Storandt (2007)", "Brown, Woods & Storandt (2007)", "Brown, Woods & Storandt (2007)")
                                         ),
                cutoff_quantity = 6,
-               items = 15,
+               items = 1:15,
                max_score = 15,
                min_score = 0,
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap

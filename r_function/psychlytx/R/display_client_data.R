@@ -91,11 +91,11 @@ display_client_data<- function(input, output, session, pool, selected_client, me
 
     if(length(selected_client_data()) >= 1) {
 
-      "Client selected."
+      glue::glue("Client selected. Note: only your client's outcome data for the {measure} are displayed.")
 
     } else {
 
-      "Client selected. No data to show yet."
+      glue::glue("Client selected. No data to show yet for this measure. Note: only your client's outcome data for the {measure} are displayed.")
 
     }
 

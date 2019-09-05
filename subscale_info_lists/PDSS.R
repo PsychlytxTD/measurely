@@ -24,7 +24,7 @@ PDSS_SR<- list(  title = "Panic Disorder Severity Scale-Self-Report (PDSS-SR)", 
                    "Keough, Hoge, Pollack & Shear (2012)", "Keough, Hoge, Pollack & Shear (2012)", "Keough, Hoge, Pollack & Shear (2012)")
                ),
                cutoff_quantity = 6,
-               items = 7,
+               items = 1:7,
                max_score = 28,
                min_score = 0,
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap

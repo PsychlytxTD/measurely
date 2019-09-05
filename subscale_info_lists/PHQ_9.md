@@ -1,4 +1,4 @@
-**Information About the Generalized Anxiety Disorder 7-Item Scale (GAD-7)**
+**Patient Health Questionnaire 9-Item Scale (PHQ-9)**
 
 ## What it Measures:
 * Symptoms of Depression over the previous 2 weeks.

@@ -60,7 +60,7 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                                           "Tang, Morgan, Lau, Liang, Tang et al. (2015)", "Tang, Morgan, Lau, Liang, Tang et al. (2015)")
                ),
                cutoff_quantity = 6,
-               items = 5,
+               items = 1:5,
                max_score = 20,
                min_score = 0,
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap

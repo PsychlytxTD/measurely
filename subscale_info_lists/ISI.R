@@ -35,7 +35,7 @@ ISI<- list(  title = "Insomnia Severity Index (ISI)", #Title can contain white s
                    "Bastien, Vallières & Morin (2001)", "Savard, Savard, Simard & Ivers (2005)", "Savard, Savard, Simard & Ivers (2005)")
                ),
                cutoff_quantity = 6,
-               items = 7,
+               items = 1:7,
                max_score = 28,
                min_score = 0,
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
