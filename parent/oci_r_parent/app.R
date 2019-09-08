@@ -59,14 +59,14 @@ subscale_info_7<- global_subscale_info[["OCI_R_Neutralizing"]]
 
 clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
 
-url<- "https://scala.au.auth0.com/userinfo"
+#url<- "https://scala.au.auth0.com/userinfo"
 
-clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
-`Content-Type` = "application/json"))
+#clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
+#`Content-Type` = "application/json"))
 
-clinician_object<- httr::content(clinician_object)
+#clinician_object<- httr::content(clinician_object)
 
-clinician_id<- paste(clinician_object["sub"]) #Access the id object
+clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
 
 
 
@@ -207,7 +207,7 @@ ui<- function(request) {
                                                            psychlytx::generate_sd_widget_UI("sd_widget_4"),
                                                            psychlytx::generate_sd_widget_UI("sd_widget_5"),
                                                            psychlytx::generate_sd_widget_UI("sd_widget_6"),
-                                                           psychlytx::generate_sd_widget_UI("sd_widget_7"),
+                                                           psychlytx::generate_sd_widget_UI("sd_widget_7")
                                                   ),
                                                   
                                                   tabPanel("Test-Retest Reliability", width = 12,
