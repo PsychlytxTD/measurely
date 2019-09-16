@@ -55,14 +55,14 @@ subscale_info_1<- global_subscale_info[["SDS"]] #Subset the global list to retri
 
 clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
 
-<- "https://scala.au.auth0.com/userinfo"
+#url<- #"https://scala.au.auth0.com/userinfo"
 
-clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
-`Content-Type` = "application/json"))
+#clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
+#`Content-Type` = "application/json"))
 
-clinician_object<- httr::content(clinician_object)
+#clinician_object<- httr::content(clinician_object)
 
-clinician_id<- paste(clinician_object["sub"]) #Access the id object
+clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
 
 
 

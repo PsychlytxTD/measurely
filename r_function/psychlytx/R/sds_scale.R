@@ -12,12 +12,39 @@ sds_scale_UI<- function(id) {
 
   tagList(
 
+  wellPanel(
+  fluidRow(
+    column(width = 4, offset = 2, textInput(ns("drug_name"), h5(tags$strong("Drug name")), value = "alcohol", width = '400px')),
+    column(width = 4, textInput(ns("drug_term"), h5(tags$strong("Word to describe use (smoke/snort/hit/etc.)")), value = "drink", width = '400px'))
+  )),
+
+ uiOutput(ns("sds_scale_out"))
+
+  )
+
+}
+
+#' SDS Scale
+#'
+#' Generates the SDS for data entry
+#'
+#'@export
+#'
+sds_scale<- function(input, output, session) {
+
+ output$sds_scale_out<- renderUI({
+
+    ns <- session$ns
+
+    tagList(
+
     wellPanel(style = "background-color: #ffffff; color: black",
+              br(),
               h3(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "Severity of Dependence Scale (SDS)")),
               hr(),
-              div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "Circle the answer that best applies to how you have felt about your use of", input$Drug_Name, "over the last month."))),
+              div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "Circle the answer that best applies to how you have felt about your use of", input$drug_name, "over the last month."))),
               br(),
-              fluidRow(div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "1. Did you ever think your use of", input$Drug_Name, "was out of control?")))),
+              fluidRow(div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "1. Did you ever think your use of", input$drug_name, "was out of control?")))),
               fluidRow(
                 column(width = 3),
                 column(width = 4,
@@ -29,7 +56,7 @@ sds_scale_UI<- function(id) {
                 column(width = 4,
                        radioButtons(ns("item_1"), label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
 
-              fluidRow(div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "2. Did the prospect of missing a", input$Drug_Term, "make you very anxious or worried?")))),
+              fluidRow(div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "2. Did the prospect of missing a", input$drug_term, "make you very anxious or worried?")))),
               fluidRow(
                 column(width = 3),
                 column(width = 4,
@@ -41,7 +68,7 @@ sds_scale_UI<- function(id) {
                 column(width = 4,
                        radioButtons(ns("item_2"), label = NULL, choices = c("0", "1", "2", "3"), selected = character(0)))), br(),
 
-              fluidRow(div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "3. Did you worry about your use of",input$Drug_Name,"?")))),
+              fluidRow(div(h4(tags$strong(HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'),HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), HTML('&emsp;'), "3. Did you worry about your use of",input$drug_name,"?")))),
               fluidRow(
                 column(width = 3),
                 column(width = 4,
@@ -84,15 +111,10 @@ sds_scale_UI<- function(id) {
 
     ))
 
-}
 
-#' SDS Scale
-#'
-#' Generates the SDS for data entry
-#'
-#'@export
-#'
-sds_scale<- function(input, output, session) {
+  })
+
+
 
   scale_entry <- reactive({ paste(input$item_1, input$item_2, input$item_3, input$item_4, input$item_5, sep = ",") })
 

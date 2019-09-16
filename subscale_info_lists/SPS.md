@@ -20,5 +20,5 @@ in an elevator).
 * Contains 20 items.
 * 5-Point Likert scale.
 * Respondents rate to what extent (0 = "Not at all"; 4 = "Extremely") each item is characteristic of them (e.g. "I fear I may blush when I am with others").
-* Items have been shown to load on a single factor (Mörtberg et al., 2017) and also on a general factor (when items are combined with those of the SIAS; Gomez & Watson, 2017).
+* Items have been shown to load on a single factor (Mortberg et al., 2017) and also on a general factor (when items are combined with those of the SIAS; Gomez & Watson, 2017).
 

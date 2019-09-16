@@ -2,28 +2,31 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                brief_title = "SDS",
                measure = "SDS", #The overal measure (which may contain subscales)
                subscale = "SDS", #The specific subscale of the measure.
-               population_quantity = 8,
+               population_quantity = 10,
                populations = list("Alcohol_Use", "Cannabis_Use", "Heroin_Use", "Cocaine_Use", "Amphetamine_Use", "Benzodiazepine_Use", "Opiate_Use",
-                                  "Ketamine_Use"),
-               means = list(3.6, 3.4, 8.7, 4.2, 4.3, 6.4, 3.3, 7.7),
-               sds = list(4.4, 3.7, 4, 3.3, 3.2, 3.8, 3.2, 3.8),
+                                  "Ketamine_Use", "Other"),
+               means = list(3.6, 3.4, 8.7, 4.2, 4.3, 6.4, 3.3, 7.7, 0),
+               sds = list(4.4, 3.7, 4, 3.3, 3.2, 3.8, 3.2, 3.8, 0),
                mean_sd_references = list("Lawrinson, Copeland, Gerber & Gilmour (2000)", "Martin, Copeland, Gates & Gilmour (2006)",
                                          "Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
                                          "Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "de las Cuevas, Sanz, de la Fuente, Padilla & Berenguer (2000)",
-                                         "Castillo, Saiz, Rojas, Vázquez & Lerma (2010)", "Tang, Morgan, Lau, Liang, Tang et al. (2015)"),
-               reliabilities = list(.89, .89, .89, .89, .89, .89, .89, .89),
-               reliability_references = list("Reference: Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Reference: Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
-                                             "Reference: Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Reference: Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
-                                             "Reference: Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Reference: Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
-                                             "Reference: Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Reference: Gossop, Darke, Griffiths, Hando, Powis et al (1995)"),
-               cutoff_values = list(c(3, 3.6, 3.6 + 4.4, 3.6 + (2 * 4.4), 3.6 + (3 * 4.4)), 3.6 + (4 * 4.4),
+                                         "Castillo, Saiz, Rojas, Vázquez & Lerma (2010)", "Tang, Morgan, Lau, Liang, Tang et al. (2015)",
+                                         "Define Value"),
+               reliabilities = list(.89, .89, .89, .89, .89, .89, .89, .89, 0),
+               reliability_references = list("Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
+                                             "Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
+                                             "Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
+                                             "Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
+                                             "Define Value"),
+               cutoff_values = list(c(3, 3.6, 3.6 + 4.4, 3.6 + (2 * 4.4), 3.6 + (3 * 4.4), 3.6 + (4 * 4.4)),
                                     c(3, 3.4, 7, 3.4 + (1.5 * 3.7), 3.4 + (2.5 * 3.7), 3.4 + (3.5 * 3.7)),
                                     c(8.7, 8.7 + (0.5 * 4), 8.7 + 4, 8.7 + (1.5 * 4), 8.7 + (2 * 4), 8.7 + (2.5 * 4)),
                                     c(3, 4.2, 4.2 + 3.3, 4.2 + (2 * 3.3), 4.2 + (3 * 3.3), 4.2 + (4 * 3.3)),
                                     c(4.3, 5, 4.3 + 3.2, 4.3 + (2 * 3.2), 4.3 + (3 * 3.2), 4.3 + (4 * 3.2)),
                                     c(6.4, 7, 6.4 + 3.8, 6.4 + (1.5 * 3.8), 6.4 + (2 * 3.8), 6.4 + (3 * 3.8)),
                                     c(3.3, 5, 3.3 + 3.2, 3.3 + (2 * 3.2), 3.3 + (3 * 3.2), 3.3 + (4 * 3.2)),
-                                    c(4, 7.7, 7.7 + 3.8, 7.7 + (1.5 * 3.8), 7.7 + (2 * 3.8), 7.7 + (3 * 3.8))
+                                    c(4, 7.7, 7.7 + 3.8, 7.7 + (1.5 * 3.8), 7.7 + (2 * 3.8), 7.7 + (3 * 3.8)),
+                                    c(0, 0, 0, 0, 0, 0)
                                     ),
                cutoff_labels = list(c("Alcohol Dependence", "Mean", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 4 Sd"),
                                     c("Moderate Dependence", "Mean", "Severe Dependence", "Mean + 1.5 Sd", "Mean + 2.5 Sd", "Mean + 3.5 Sd"),
@@ -32,7 +35,9 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                                     c("Mean", "Amphetamine Dependence", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 4 Sd"),
                                     c("Mean", "Benzodiazepine Dependence", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd", "Mean + 3 Sd"),
                                     c("Mean", "Opiate Dependence", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 4 Sd"),
-                                    c("Ketamine Dependence", "Mean", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd", "Mean + 3 Sd")
+                                    c("Ketamine Dependence", "Mean", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd", "Mean + 3 Sd"),
+                                    c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value",
+                                      "Define Value")
                                     ),
                cutoff_references = list(c("Lawrinson, Copeland, Gerber & Gilmour (2000)", "Lawrinson, Copeland, Gerber & Gilmour (2000)",
                                           "Lawrinson, Copeland, Gerber & Gilmour (2000)", "Lawrinson, Copeland, Gerber & Gilmour (2000)",
@@ -57,7 +62,8 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                                           "Castillo, Saiz, Rojas, Vázquez & Lerma (2010)", "Castillo, Saiz, Rojas, Vázquez & Lerma (2010)"),
                                         c("Fernández-Calderón, Vidal-Giné, López-Guerrero, Lozano-Rojas (2016)", "Tang, Morgan, Lau, Liang, Tang et al. (2015)",
                                           "Tang, Morgan, Lau, Liang, Tang et al. (2015)", "Tang, Morgan, Lau, Liang, Tang et al. (2015)",
-                                          "Tang, Morgan, Lau, Liang, Tang et al. (2015)", "Tang, Morgan, Lau, Liang, Tang et al. (2015)")
+                                          "Tang, Morgan, Lau, Liang, Tang et al. (2015)", "Tang, Morgan, Lau, Liang, Tang et al. (2015)"),
+                                        c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value", "Define Value")
                ),
                cutoff_quantity = 6,
                items = 1:5,
@@ -78,7 +84,8 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                  c("100 Canary Islands residents with a neurotic diagnosis, continuous use of benzodiazepines daily for 3 months or greater, &
                    stable maintenance dose of their benzodiazepine equivalent to 5-50mg/day of diazepam"),
                  c("89 Spanish opiate users"),
-                 c("145 Hong Kong Ketamine users (youth)")
+                 c("145 Hong Kong Ketamine users (youth)"),
+                 c("No sample information to provide.")
                ),
                journal_references = list(
                  c("Lawrinson, P., Copeland, J., Gerber, S., & Gilmour, S. (2007). Determining a cut-off on the severity of dependence scale (SDS) for alcohol
@@ -96,7 +103,9 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                  c("Lerma, J. (2010). Estimation of cutoff for the severity of dependence scale (SDS) for opiate dependence by ROC analysis.
                    Actas Esp Psiquiatr, 38(5), 270-277."),
                  c("Tang, W. K., Morgan, C. J., Lau, G. C., Liang, H. J., Tang, A., & Ungvari, G. S. (2015). Psychiatric morbidity in ketamine users
-                   attending counselling and youth outreach services. Substance Abuse, 36(1), 67-74.")
+                   attending counselling and youth outreach services. Substance Abuse, 36(1), 67-74."),
+                 c("No sample information to provide.")
                )
 
                 )
+

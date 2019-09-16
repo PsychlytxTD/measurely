@@ -6,11 +6,11 @@ ISI<- list(  title = "Insomnia Severity Index (ISI)", #Title can contain white s
                populations = list("Insomnia", "Primary_Care", "Chronic_Pain", "Cancer"),
                means = list(19.7, 8.27, 9.93, 7.3),
                sds = list(14.1, 6.33, 4.1, 6.3),
-               mean_sd_references = list("Bastien, Vallières & Morin (2001)", "Gagnon, Bélanger, Ivers & Morin (2013)", "Dragioti, Wiklund, Alföldi & Gerdle (2015)",
+               mean_sd_references = list("Bastien, Vallieres & Morin (2001)", "Gagnon, Belanger, Ivers & Morin (2013)", "Dragioti, Wiklund, Alfoldi & Gerdle (2015)",
                                          "Savard, Savard, Simard & Ivers (2005)"),
                reliabilities = list(.91, .91, .91, .91),
-               reliability_references = list("Morin, Belleville, Bélanger & Ivers (2011)", "Morin, Belleville, Bélanger & Ivers (2011)",
-                                             "Morin, Belleville, Bélanger & Ivers (2011)", "Morin, Belleville, Bélanger & Ivers (2011)"),
+               reliability_references = list("Morin, Belleville, Belanger & Ivers (2011)", "Morin, Belleville, Belanger & Ivers (2011)",
+                                             "Morin, Belleville, Belanger & Ivers (2011)", "Morin, Belleville, Belanger & Ivers (2011)"),
                cutoff_values = list(
                  c(8, 15, 19.7, 22, 19.7 + 14.1, 19.7 + (2 * 14.1)),
                  c(8, 15, 8.27 + (1.5 * 6.33), 8.27 + (2 * 6.33), 22, 8.27 + (3 * 6.33)),
@@ -25,14 +25,14 @@ ISI<- list(  title = "Insomnia Severity Index (ISI)", #Title can contain white s
                  c("Subthreshold Insomnia", "Clinical Insomnia (Moderate)", "Mean + 2 Sd", "Clinical Insomnia (Severe)", "Mean + 3 Sd", "Mean + 4 Sd")
                ),
                cutoff_references = list(
-                 c("Bastien, Vallières & Morin (2001)", "Bastien, Vallières & Morin (2001)", "Bastien, Vallières & Morin (2001)", "Bastien, Vallières & Morin (2001)",
-                   "Bastien, Vallières & Morin (2001)", "Bastien, Vallières & Morin (2001)"),
-                 c("Bastien, Vallières & Morin (2001)", "Bastien, Vallières & Morin (2001)", "Gagnon, Bélanger, Ivers & Morin (2013)",
-                   "Gagnon, Bélanger, Ivers & Morin (2013)", "Bastien, Vallières & Morin (2001)", "Gagnon, Bélanger, Ivers & Morin (2013)"),
-                 c("Bastien, Vallières & Morin (2001)", "Dragioti, Wiklund, Alföldi & Gerdle (2015)", "Bastien, Vallières & Morin (2001)",
-                   "Dragioti, Wiklund, Alföldi & Gerdle (2015)", "Dragioti, Wiklund, Alföldi & Gerdle (2015)", "Bastien, Vallières & Morin (2001)"),
-                 c("Bastien, Vallières & Morin (2001)", "Bastien, Vallières & Morin (2001)", "Savard, Savard, Simard & Ivers (2005)",
-                   "Bastien, Vallières & Morin (2001)", "Savard, Savard, Simard & Ivers (2005)", "Savard, Savard, Simard & Ivers (2005)")
+                 c("Bastien, Vallieres & Morin (2001)", "Bastien, Vallieres & Morin (2001)", "Bastien, Vallieres & Morin (2001)", "Bastien, Vallieres & Morin (2001)",
+                   "Bastien, Vallieres & Morin (2001)", "Bastien, Vallieres & Morin (2001)"),
+                 c("Bastien, Vallieres & Morin (2001)", "Bastien, Vallieres & Morin (2001)", "Gagnon, Belanger, Ivers & Morin (2013)",
+                   "Gagnon, Belanger, Ivers & Morin (2013)", "Bastien, Vallieres & Morin (2001)", "Gagnon, Belanger, Ivers & Morin (2013)"),
+                 c("Bastien, Vallieres & Morin (2001)", "Dragioti, Wiklund, Alfoldi & Gerdle (2015)", "Bastien, Vallieres & Morin (2001)",
+                   "Dragioti, Wiklund, Alfoldi & Gerdle (2015)", "Dragioti, Wiklund, Alfoldi & Gerdle (2015)", "Bastien, Vallieres & Morin (2001)"),
+                 c("Bastien, Vallieres & Morin (2001)", "Bastien, Vallieres & Morin (2001)", "Savard, Savard, Simard & Ivers (2005)",
+                   "Bastien, Vallieres & Morin (2001)", "Savard, Savard, Simard & Ivers (2005)", "Savard, Savard, Simard & Ivers (2005)")
                ),
                cutoff_quantity = 6,
                items = 1:7,
