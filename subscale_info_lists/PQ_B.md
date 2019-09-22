@@ -12,7 +12,7 @@
 * Higher scores on the total scale and distress subscale suggest **increased risk for developing a psychotic disorder.** However, it is important to note that among the general population, psychotic-like experiences can be present in up to 20 percent of adults, frequently in the absence of a full psychotic disorder (Hanssen et al., 2003). Importantly, individuals who are more distressed by psychotic-like experiences appear at greater risk for the development of a psychotic disorder.
 
 ## Scale Quality:
-* Psychometric research supports the PQ-B, which is widely used, as a reliable tool for identifying adolescents at risk for psychosis (Fonseca-Pedrero, Gooding, Ortuño-Sierra & Paino, 2016). 
+* Psychometric research supports the PQ-B, which is widely used, as a reliable tool for identifying adolescents at risk for psychosis (Fonseca-Pedrero, Gooding, Ortuno-Sierra & Paino, 2016). 
 
 ##Scale Structure:
 * Contains 21 items. Each item is paired with a distress item. 

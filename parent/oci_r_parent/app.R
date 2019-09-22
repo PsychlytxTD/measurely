@@ -142,7 +142,13 @@ ui<- function(request) {
                          tabPanel(tags$strong("Complete Measure"), 
                                   
                                   
-                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_1"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_2"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_3"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_4"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_5"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_6"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_7"),
                                   
                                   psychlytx::combine_all_holding_data_UI("combine_all_holding_data"),
                                   
@@ -484,38 +490,38 @@ server <- function(input, output, session) {
   
 
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the email body text to be sent.
-  formatted_response_body_for_email<- callModule(psychlytx::format_ocir_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, measure_data)
+  formatted_response_body_for_email<- callModule(psychlytx::format_ocir_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
   callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
   
   
   
-  holding_statistics_list_1<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_1<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_1", clinician_id, client_id = selected_client, 
                                   measure = subscale_info_1$measure, subscale = subscale_info_1$subscale, mean_input_1, sd_input_1, reliability_input_1,
                                   confidence, method, input_population, cutoff_input_1, subscale_number = 1)
   
-  holding_statistics_list_2<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_2<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_2", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_2$measure, subscale = subscale_info_2$subscale, mean_input_2, sd_input_2, reliability_input_2,
                                          confidence, method, input_population, cutoff_input_2, subscale_number = 2)
   
-  holding_statistics_list_3<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_3<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_3", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_3$measure, subscale = subscale_info_3$subscale, mean_input_3, sd_input_3, reliability_input_3,
                                          confidence, method, input_population, cutoff_input_3, subscale_number = 3)
   
-  holding_statistics_list_4<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_4<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_4", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_4$measure, subscale = subscale_info_4$subscale, mean_input_4, sd_input_4, reliability_input_4,
                                          confidence, method, input_population, cutoff_input_4, subscale_number = 4)
   
-  holding_statistics_list_5<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_5<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_5", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_5$measure, subscale = subscale_info_5$subscale, mean_input_5, sd_input_5, reliability_input_5,
                                          confidence, method, input_population, cutoff_input_5, subscale_number = 5)
   
-  holding_statistics_list_6<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_6<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_6", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_6$measure, subscale = subscale_info_6$subscale, mean_input_6, sd_input_6, reliability_input_6,
                                          confidence, method, input_population, cutoff_input_6, subscale_number = 6)
   
-  holding_statistics_list_7<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_7<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_7", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_7$measure, subscale = subscale_info_7$subscale, mean_input_7, sd_input_7, reliability_input_7,
                                          confidence, method, input_population, cutoff_input_7, subscale_number = 7)
   

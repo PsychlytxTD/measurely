@@ -27,9 +27,7 @@ PQ_B<- list(  title = "Prodromal Questionnaire - Brief Version", #Title can cont
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                plot_cutoff_label_size = 3,
-               description = readr::read_file(
-                 "PQ_B.md"
-               ),
+               description = NULL,
                sample_overview = list(
                  c("449 Spanish high-school students aged 12-19.")
                ),

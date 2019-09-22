@@ -75,7 +75,7 @@ combine_all_holding_data<- function(input, output, session, holding_statistics_l
 
       )
 
-    } %>% dplyr::mutate(id = uuid::UUIDgenerate()) %>% dplyr::select(id, everything())
+    } %>% dplyr::mutate(entry_id = uuid::UUIDgenerate()) %>% dplyr::select(entry_id, everything())
 
     return(holding_statistics_data)
 

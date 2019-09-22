@@ -54,8 +54,8 @@ write_measure_data_to_db<- function(input, ouput, session, pool, measure_data, m
       items<- as.list( manual_entry()$item_scores)
       item_names<- c(paste("item", "_", 1:length(items), sep = "")) #create labels for each item, corresponding to the column names in item table (item_1, item_2, etc.)
       named_items<- items %>% purrr::set_names(item_names)
-      item_data<- list( date = as.character(lubridate::as_date(manual_entry()$date)), id = measure_data()$id[1], measure = measure_data()$measure[1], clinician_id = measure_data()$clinician_id,
-                        client_id = measure_data()$client_id, named_items ) %>% purrr::flatten()
+      item_data<- list( date = as.character(lubridate::as_date(manual_entry()$date)), entry_id = measure_data()$entry_id[1], measure = measure_data()$measure[1], clinician_id = measure_data()$clinician_id[1],
+                        client_id = measure_data()$client_id[1], named_items ) %>% purrr::flatten()
 
       dbWriteTable(pool, "item",  as.data.frame(item_data), row.names = FALSE, append = TRUE) #Write the item-level responses to the item table.
 

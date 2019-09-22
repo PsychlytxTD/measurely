@@ -5,16 +5,16 @@ SSD_12<- list(  title = "Somatic Symptom Disorder - B Criteria Scale (SSD-12)", 
                population_quantity = 7,
                populations = list("General_Population:_14-24_Years", "General_Population:_25-34_Years", "General_Population:_35-44_Years",
                                   "General_Population:_45-54_Years", "General_Population:_55-64_Years", "General_Population:_65-74_Years",
-                                  "General_Population:_Above_74_Years", "Primary_Care", "Psychosomatic_Outpatient"),
-               means = list(7.85, 7.85, 7.85, 7.85, 7.85, 7.85, 7.85),
-               sds = list(9.3, 9.3, 9.3, 9.3, 9.3, 9.3, 9.3),
+                                  "General_Population:_Above_74_Years", "Other"),
+               means = list(7.85, 7.85, 7.85, 7.85, 7.85, 7.85, 7.85, 0),
+               sds = list(9.3, 9.3, 9.3, 9.3, 9.3, 9.3, 9.3, 0),
                mean_sd_references = list("Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)",
                                          "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)",
-                                         "Toussaint, Löwe, Brähler & Jordan (2017)"),
-               reliabilities = list(.95, .95, .95, .95, .95, .95, .95),
+                                         "Toussaint, Löwe, Brähler & Jordan (2017)", "Define Value"),
+               reliabilities = list(.95, .95, .95, .95, .95, .95, .95, 0),
                reliability_references = list("Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)",
                                              "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)",
-                                             "Toussaint, Löwe, Brähler & Jordan (2017)"),
+                                             "Toussaint, Löwe, Brähler & Jordan (2017)", "Define Value"),
                cutoff_values = list(
                  c(6, 9, 12, 15, 17, 20),
                  c(9, 12, 14, 18, 20, 23),
@@ -22,7 +22,8 @@ SSD_12<- list(  title = "Somatic Symptom Disorder - B Criteria Scale (SSD-12)", 
                  c(13, 16, 19, 22, 25, 28),
                  c(15, 18, 21, 25, 27, 30),
                  c(17, 20, 24, 27, 29, 32),
-                 c(20, 23, 26, 29, 32, 35)
+                 c(20, 23, 26, 29, 32, 35),
+                 c(0, 0, 0, 0, 0, 0)
                ),
                cutoff_labels = list(
                  c("Medium Psychological Burden (Male)", "Medium Psychological Burden (Female)", "High Psychological Burden (Male)",
@@ -38,7 +39,9 @@ SSD_12<- list(  title = "Somatic Symptom Disorder - B Criteria Scale (SSD-12)", 
                  c("Medium Psychological Burden (Male)", "Medium Psychological Burden (Female)", "High Psychological Burden (Male)",
                    "High Psychological Burden (Female)", "Very High Psychological Burden (Male)", "Very High Psychological Burden (Female)"),
                  c("Medium Psychological Burden (Male)", "Medium Psychological Burden (Female)", "High Psychological Burden (Male)",
-                   "High Psychological Burden (Female)", "Very High Psychological Burden (Male)", "Very High Psychological Burden (Female)")
+                   "High Psychological Burden (Female)", "Very High Psychological Burden (Male)", "Very High Psychological Burden (Female)"),
+                 c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value",
+                   "Define Value")
 
                ),
                cutoff_references = list(
@@ -55,7 +58,9 @@ SSD_12<- list(  title = "Somatic Symptom Disorder - B Criteria Scale (SSD-12)", 
                  c("Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)",
                    "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)"),
                  c("Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)",
-                   "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)")
+                   "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)", "Toussaint, Löwe, Brähler & Jordan (2017)"),
+                 c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value",
+                   "Define Value")
                ),
                cutoff_quantity = 6,
                items = 1:12,
@@ -74,7 +79,8 @@ SSD_12<- list(  title = "Somatic Symptom Disorder - B Criteria Scale (SSD-12)", 
                  c("488 Germans aged 45-54 years, representative of the general population."),
                  c("462 Germans aged 55-64 years, representative of the general population."),
                  c("335 Germans aged 65-74 years, representative of the general population."),
-                 c("218 Germans aged above 74 years, representative of the general population.")
+                 c("218 Germans aged above 74 years, representative of the general population."),
+                 c("No sample information to provide.")
                ),
                journal_references = list(
                  c("Toussaint, A., Löwe, B, Bräler, E., & Jordan, P. (2017). The Somatic Symptom Disorder - B Criteria Scale (SSD-12): Factorial structure,
@@ -90,7 +96,8 @@ SSD_12<- list(  title = "Somatic Symptom Disorder - B Criteria Scale (SSD-12)", 
                  c("Toussaint, A., Löwe, B, Bräler, E., & Jordan, P. (2017). The Somatic Symptom Disorder - B Criteria Scale (SSD-12): Factorial structure,
                    validity and population-based norms. Journal of Psychosomatic Research, 97, 9-17."),
                  c("Toussaint, A., Löwe, B, Bräler, E., & Jordan, P. (2017). The Somatic Symptom Disorder - B Criteria Scale (SSD-12): Factorial structure,
-                   validity and population-based norms. Journal of Psychosomatic Research, 97, 9-17.")
+                   validity and population-based norms. Journal of Psychosomatic Research, 97, 9-17."),
+                 c("No sample information to provide.")
                )
 
                 )

@@ -105,7 +105,7 @@ combine_all_input<- function(input, output, session, input_list) {
 
       #Use UUIDgenerate to make unique entry id for scale table called scale_id. Need this for lookup using Ruby API.
 
-    ) %>% dplyr::mutate_if(is.numeric, round, 2) %>% dplyr::mutate(id = uuid::UUIDgenerate()) %>%  dplyr::select(clinician_id, client_id, measure, subscale, date, score, pts, se, ci, ci_upper, ci_lower, everything())
+    ) %>% dplyr::mutate_if(is.numeric, round, 2) %>% dplyr::mutate(entry_id = uuid::UUIDgenerate()) %>%  dplyr::select(entry_id, clinician_id, client_id, measure, subscale, date, score, pts, se, ci, ci_upper, ci_lower, everything())
 
 
 

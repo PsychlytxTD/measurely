@@ -21,6 +21,7 @@ global_subscale_info_list<- list(
   PQ_B = readRDS("PQ_B.rds"),
   PQ_B_Distress = readRDS("PQ_B_Distress.rds"),
   SDS = readRDS("SDS.rds"),
+  SIAS = readRDS("SIAS.rds"),
   SPS = readRDS("SPS.rds"),
   SSD_12 = readRDS("SSD_12.rds")
 

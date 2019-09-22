@@ -55,16 +55,16 @@ subscale_info_3<- global_subscale_info[["PCL_5_Cognition_Mood"]]
 subscale_info_4<- global_subscale_info[["PCL_5_Hyperarousal"]]
 subscale_info_5<- global_subscale_info[["PCL_5_Avoidance"]]
 
-clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
+clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
 
-url<- "https://scala.au.auth0.com/userinfo"
+#url<- "https://scala.au.auth0.com/userinfo"
 
-clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
-`Content-Type` = "application/json"))
+#clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
+#`Content-Type` = "application/json"))
 
-clinician_object<- httr::content(clinician_object)
+#clinician_object<- httr::content(clinician_object)
 
-clinician_id<- paste(clinician_object["sub"]) #Access the id object
+clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
 
 
 
@@ -140,19 +140,23 @@ ui<- function(request) {
                          tabPanel(tags$strong("Complete Measure"), 
                                   
                                   
-                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_1"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_2"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_3"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_4"),
+                                  psychlytx::extract_holding_statistics_UI("extract_holding_statistics_5"),
                                   
                                   psychlytx::combine_all_holding_data_UI("combine_all_holding_data"),
                                   
                                   psychlytx::write_statistics_to_holding_UI("write_holding_statistics_to_db"),
 
-                                  psychlytx::ocir_scale_UI("ocir_scale"), #Item of the specific measure
+                                  psychlytx::pcl5_scale_UI("pcl5_scale"), #Item of the specific measure
                                   
                                   psychlytx::write_posttherapy_to_db_UI("write_posttherapy_to_db"),
                                 
                                   psychlytx::manual_data_UI("manual_data"), #Items of the specific measure are passed here as a string of numbers
                                   
-                                  psychlytx::format_ocir_responses_for_email_UI("format_repsonses_for_email"),
+                                  psychlytx::format_pcl5_responses_for_email_UI("format_responses_for_email"),
                                   
                                   psychlytx::calculate_subscale_UI("calculate_subscales"), #Calculate all aggregate subscale scores for the measure
                                   
@@ -305,7 +309,7 @@ server <- function(input, output, session) {
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client
   
   
-  scale_entry<- callModule(psychlytx::ocir_scale, "ocir_scale") #Return the raw responses to the online scale
+  scale_entry<- callModule(psychlytx::pcl5_scale, "pcl5_scale") #Return the raw responses to the online scale
   
   
   manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry) #Raw item responses are stored as vector manual_entry to be used downstream
@@ -313,7 +317,7 @@ server <- function(input, output, session) {
   
   aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, 
                                 item_index = list( subscale_info_1$items, subscale_info_2$items, subscale_info_3$items, subscale_info_4$items,
-                                                   subscale_info_5$items, subscale_info_6$items, subscale_info_7$items), 
+                                                   subscale_info_5$items), 
                                 aggregation_method = "sum")   #Make a list of aggregate scores across subscales (in this case there is only one subscale)
   
 
@@ -420,7 +424,7 @@ server <- function(input, output, session) {
   #Have to store the list of sublists as a reactive object
   
   
-  input_list<- reactive({ list( input_list_1(), input_list_2(), input_list_3(), input_list_3(),
+  input_list<- reactive({ list( input_list_1(), input_list_2(), input_list_3(), input_list_4(),
                                 input_list_5() ) })  
   #Store each list of input values in a larger list object. If there were more than one 
   #subscale it would look like this: input_list<- reactive({ list( input_list_1(), input_list_2(), etc. ) })
@@ -434,30 +438,30 @@ server <- function(input, output, session) {
   
 
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the email body text to be sent.
-  formatted_response_body_for_email<- callModule(psychlytx::format_ocir_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, measure_data)
+  formatted_response_body_for_email<- callModule(psychlytx::format_pcl5_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
   callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
   
   
   
-  holding_statistics_list_1<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_1<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_1", clinician_id, client_id = selected_client, 
                                   measure = subscale_info_1$measure, subscale = subscale_info_1$subscale, mean_input_1, sd_input_1, reliability_input_1,
                                   confidence, method, input_population, cutoff_input_1, subscale_number = 1)
   
-  holding_statistics_list_2<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_2<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_2", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_2$measure, subscale = subscale_info_2$subscale, mean_input_2, sd_input_2, reliability_input_2,
                                          confidence, method, input_population, cutoff_input_2, subscale_number = 2)
   
-  holding_statistics_list_3<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_3<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_3", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_3$measure, subscale = subscale_info_3$subscale, mean_input_3, sd_input_3, reliability_input_3,
                                          confidence, method, input_population, cutoff_input_3, subscale_number = 3)
   
-  holding_statistics_list_4<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_4<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_4", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_4$measure, subscale = subscale_info_4$subscale, mean_input_4, sd_input_4, reliability_input_4,
                                          confidence, method, input_population, cutoff_input_4, subscale_number = 4)
   
-  holding_statistics_list_5<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
+  holding_statistics_list_5<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_5", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_5$measure, subscale = subscale_info_5$subscale, mean_input_5, sd_input_5, reliability_input_5,
                                          confidence, method, input_population, cutoff_input_5, subscale_number = 5)
   
