@@ -82,6 +82,39 @@ plot_subscale <- function(subscale_df, subscale_info) {
   plotting_break_labels <- paste( plotting_breaks )
 
 
+
+  #Store the upper and lower bounds of the shaded rectangles (severity bands) as separate lists to iterate over
+
+  lower_bounds<- list(ymin_cutoff_1, ymin_cutoff_2, ymin_cutoff_3,
+                      ymin_cutoff_4,ymin_cutoff_5)
+
+  upper_bounds<- list(ymax_cutoff_1, ymax_cutoff_2, ymax_cutoff_3, ymax_cutoff_4,
+                      ymax_cutoff_5)
+
+  #Create vector of numeric values representing the midpoints of the shaded rectangles
+
+  cutoff_text_position<- purrr::map2_dbl(lower_bounds, upper_bounds, ~psychlytx::position_cutoff_label(.x, .y))
+
+  #The last value needs to be added manually because the upper bound is inf (can't subtract a value from this to find midpoint)
+
+  cutoff_text_position[6]<-  ymin_cutoff_6 + 1
+
+  #Make a df consisting of cutoff labels, values and the x-expansion factor to add a layer of data to the plot
+  #Will use the df to add the cutoff labels
+
+
+  cutoff_labs<- c(subscale_df$cutoff_label_1, subscale_df$cutoff_label_2, subscale_df$cutoff_label_3,
+                  subscale_df$cutoff_label_4, subscale_df$cutoff_label_5, subscale_df$cutoff_label_6)
+
+  cutoff_vals<- c(subscale_df$cutoff_value_1, subscale_df$cutoff_value_2, subscale_df$cutoff_value_3,
+                  subscale_df$cutoff_value_4, subscale_df$cutoff_value_5, subscale_df$cutoff_value_6)
+
+  x_expansion<- c(x_axis_lower_expansion)
+
+
+  cutoff_text_df<- tibble::tibble(cutoff_labs, cutoff_vals, x_expansion)
+
+
   plot <-
     ggplot(subscale_df, aes(x = date, y = score, group = 1)) + theme_bw(base_family = "Linux Libertine") + annotate(
       "rect",
@@ -137,7 +170,8 @@ plot_subscale <- function(subscale_df, subscale_info) {
       ymax = ymax_cutoff_6,
       alpha = 0.8,
       fill = "#993404"
-    ) + geom_errorbar(
+    ) + geom_hline(yintercept = cutoff_vals,
+        color = "white") + geom_errorbar(
       aes(ymin = ci_lower, ymax = ci_upper),
       #Make error bars
       width = 10,
@@ -148,8 +182,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
       fill = "#00004c",
       color = "#00004c",
       #Make points and line
-      size =
-        4        #Expand y limits
+      size = 4        #Expand y limits
     ) +
     expand_limits(y = c(y_axis_lower_expansion, y_axis_upper_expansion)) +
     theme(
@@ -186,33 +219,8 @@ plot_subscale <- function(subscale_df, subscale_info) {
                        labels = plotting_break_labels) +
     scale_x_chron(breaks = subscale_df$date, #Customise x-axis date breaks and labels to be the same as the data
                   format = "%d/%m/%Y") +
-    xlab(NULL) +
+    xlab("Date") +
     ylab(paste(subscale_info$brief_title, "Score")) #Make x and y plot labels sentence case
-
-
-  #Position cutoff labels
-
-  lower_bounds<- list(ymin_cutoff_1, ymin_cutoff_2, ymin_cutoff_3,
-                      ymin_cutoff_4,ymin_cutoff_5)
-
-  upper_bounds<- list(ymax_cutoff_1, ymax_cutoff_2, ymax_cutoff_3, ymax_cutoff_4,
-                                        ymax_cutoff_5)
-
-  cutoff_text_position<- purrr::map2_dbl(lower_bounds, upper_bounds, ~psychlytx::position_cutoff_label(.x, .y))
-
-  cutoff_text_position[6]<-  ymax_cutoff_6 + 1
-
-
-  cutoff_labs<- c(subscale_df$cutoff_label_1, subscale_df$cutoff_label_2, subscale_df$cutoff_label_3,
-                  subscale_df$cutoff_label_4, subscale_df$cutoff_label_5, subscale_df$cutoff_label_6)
-
-  cutoff_vals<- c(subscale_df$cutoff_value_1, subscale_df$cutoff_value_2, subscale_df$cutoff_value_3,
-                  subscale_df$cutoff_value_4, subscale_df$cutoff_value_5, subscale_df$cutoff_value_6)
-
-  x_expansion<- c(x_axis_lower_expansion)
-
-
-  cutoff_text_df<- tibble::tibble(cutoff_labs, cutoff_vals, x_expansion)
 
 
   plot <-
@@ -222,9 +230,7 @@ plot_subscale <- function(subscale_df, subscale_info) {
           x = as.Date(x_expansion),
           y = cutoff_text_position
       ),
-      #Position cutoff label 1
       hjust = 0,
-      #nudge_y = subscale_info$plot_cutoff_label_start[1],
       family = "Linux Libertine",
       size = subscale_info$plot_cutoff_label_size[1]
     )
