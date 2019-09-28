@@ -107,8 +107,8 @@ PHQ_9<- list(  title = "Primary Health Questionnaire (PHQ-9)", #Title can contai
                items = 1:9,
                max_score = 27,
                min_score = 0,
-               plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
-               plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
+               plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Redundant
+               plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Redundant
                plot_cutoff_label_size = 3,
                description = readr::read_file(
                  "PHQ_9.md"

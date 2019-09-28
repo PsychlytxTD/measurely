@@ -17,17 +17,17 @@ GAD_7<- list(  title = "Generalized Anxiety Disorder 7-Item Scale (GAD-7)", #Tit
                                                  "Spitzer, Kroenke, Williams & Löwe (2006)", "Spitzer, Kroenke, Williams & Löwe (2006)", "Spitzer, Kroenke, Williams & Löwe (2006)",
                                                  "Spitzer, Kroenke, Williams & Löwe (2006)", "Spitzer, Kroenke, Williams & Löwe (2006)", "Spitzer, Kroenke, Williams & Löwe (2006)",
                                                  "Spitzer, Kroenke, Williams & Löwe (2006)", "Spitzer, Kroenke, Williams & Löwe (2006)", "Define Value"),
-                   cutoff_values = list(c(5, 10, 15, 3.01, 3.01 + 3.12, 3.01 + (2 * 3.12)), c(5, 10, 15, 4.07, 4.07 + 3.53, 4.07 + (2 * 3.53)),
-                                        c(5, 10, 15, 2, 2 + 2.88, 2 + (2 * 2.88)), c(5, 10, 15, 6.75, 5.75 + 4.76, 5.75 + (2 *4.76)),
-                                        c(5, 10, 15, 10.86, 10.86 + 5.62, 10.86 + (2 * 5.62)), c(5, 10, 15, 12.59, 12.59 + 3.96, 12.59 + (2 * 3.96)),
-                                        c(5, 10, 15, 2.6, 2.6 + 2.3, 2.6 + (2 * 2.3)), c(5, 10, 15, 11.9, 11.9 + 5.3, 11.9 + (2 * 5.3)),
-                                        c(5, 10, 15, 4.7, 4.7 + 4.6, 4.7 + (2 * 4.6)), c(5, 10, 15, 4.5, 4.5 + 4.9, 4.5 + (2 * 4.9)),
+                   cutoff_values = list(c(5, 10, 15, 3.01, 3.01 + 3.12, 3.01 + (2.5 * 3.12)), c(5, 10, 15, 4.07, 4.07 + 3.53, 4.07 + (2 * 3.53)),
+                                        c(5, 10, 15, 2, 2 + (3.5 * 2.88), 2 + (2 * 2.88)), c(5, 10, 15, 6.75, 5.75 + (1.5 * 4.76), 5.75 + (3 * 4.76)),
+                                        c(5, 10, 15, 10.86 + (1.5 * 5.62), 10.86 + 5.62, 10.86 + (1.5 * 5.62)), c(5, 10, 15, 12.59, 12.59 + 3.96, 12.59 + (2 * 3.96)),
+                                        c(5, 10, 15, 2.6, 2.6 + (4 * 2.3), 2.6 + (2 * 2.3)), c(5, 10, 15, 11.9, 11.9 + 5.3, 11.9 + (1.5 * 5.3)),
+                                        c(5, 10, 15, 4.7, 4.7 + (0.5 * 4.6), 4.7 + (1.5 * 4.6)), c(5, 10, 15, 4.5, 4.5 + (1.5 * 4.9), 4.5 + (3 * 4.9)),
                                         c(5, 10, 15, 3.87, 3.87 + 4.52, 3.87 + (2 * 4.52)), c(0, 0, 0, 0, 0, 0)),
-                   cutoff_labels = list(c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2.5 Sd"),
-                                        c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"),
-                                        c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"),
-                                        c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"),
-                                        c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"),
+                   cutoff_labels = list(c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2.5 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"),
+                                        c("Mild", "Moderate", "Severe", "Mean", "Mean + 3.5 Sd", "Mean + 2 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1.5 Sd", "Mean + 3 Sd"),
+                                        c("Mild", "Moderate", "Severe", "Mean + 1.5 Sd", "Mean + 1 Sd", "Mean + 1.5 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"),
+                                        c("Mild", "Moderate", "Severe", "Mean", "Mean + 4 Sd", "Mean + 2 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 1.5 Sd"),
+                                        c("Mild", "Moderate", "Severe", "Mean", "Mean + 0.5 Sd", "Mean + 1.5 Sd"), c("Mild", "Moderate", "Severe", "Mean", "Mean + 1.5 Sd", "Mean + 3 Sd"),
                                         c("Mild", "Moderate", "Severe", "Mean", "Mean + 1 Sd", "Mean + 2 Sd"), c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value",
                                                                                                                  "Define Value")),
                    cutoff_references = list(c("Spitzer, Kroenke, Williams & Löwe (2006)", "Spitzer, Kroenke, Williams & Löwe (2006)", "Spitzer, Kroenke, Williams & Löwe (2006)",
@@ -61,10 +61,10 @@ GAD_7<- list(  title = "Generalized Anxiety Disorder 7-Item Scale (GAD-7)", #Tit
                                             c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value", "Define Value")),
                    cutoff_quantity = 6,
                    items = 1:7,
-                   max_score = 30,
+                   max_score = 21,
                    min_score = 0,
-                   plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
-                   plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
+                   plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Redundant
+                   plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Redundant
                    plot_cutoff_label_size = 3,
                    description = readr::read_file(
                      "GAD_7.md"
