@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   resources :clients
   match 'clients', to: 'clients#update', via: [:patch, :put]
   # root :to => 'scale#index'
+  get '/v2/logout/' => 'logout#logout'
 end

@@ -1,6 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # force HTTPS on production
+  # config.force_ssl = true
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -29,6 +32,8 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
+
+  config.require_master_key = true
 
   # Auth0 Configure the application to display errors by adding the following to the production environment config:
 #   OmniAuth.config.on_failure = Proc.new { |env|

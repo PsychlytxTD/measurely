@@ -1,0 +1,11 @@
+files:
+  "/etc/nginx/conf.d/01_force-https.conf":
+    mode: "000644"
+    owner: root
+    group: root
+    content: |
+      server {
+      if ($http_x_forwarded_proto = 'http') {
+          return 301 https://measurely-edit-records.psychlytx.com$request_uri;
+      }
+      }

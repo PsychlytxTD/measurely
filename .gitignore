@@ -5,6 +5,10 @@
 .Rhistory
 .Rapp.history
 
+# Rails credentials file.
+credentials.yml.enc
+master.key
+
 # Session Data files
 .RData
 
