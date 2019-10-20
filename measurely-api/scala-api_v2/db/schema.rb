@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_11_074558) do
+ActiveRecord::Schema.define(version: 2019_10_15_233238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -31,13 +31,14 @@ ActiveRecord::Schema.define(version: 2019_08_11_074558) do
     t.text "sexuality"
     t.text "ethnicity"
     t.boolean "indigenous"
-    t.integer "children"
+    t.float "children"
     t.text "workforce_status"
     t.text "education"
   end
 
-  create_table "holding", id: :text, force: :cascade do |t|
+  create_table "holding", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.datetime "creation_date", default: -> { "CURRENT_TIMESTAMP" }
+    t.text "entry_id", null: false
     t.text "clinician_id", null: false
     t.text "client_id", null: false
     t.text "measure", null: false
@@ -71,8 +72,9 @@ ActiveRecord::Schema.define(version: 2019_08_11_074558) do
     t.text "cutoff_reference_6", null: false
   end
 
-  create_table "item", id: :text, force: :cascade do |t|
+  create_table "item", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.datetime "creation_date", default: -> { "CURRENT_TIMESTAMP" }
+    t.text "entry_id", null: false
     t.text "clinician_id", null: false
     t.text "client_id", null: false
     t.date "date", null: false
@@ -227,9 +229,10 @@ ActiveRecord::Schema.define(version: 2019_08_11_074558) do
     t.text "out_of_pocket"
   end
 
-  create_table "scale", id: :text, force: :cascade do |t|
+  create_table "scale", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.datetime "creation_date", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "update_date", default: -> { "CURRENT_TIMESTAMP" }
+    t.text "entry_id", null: false
     t.text "clinician_id", null: false
     t.text "client_id", null: false
     t.text "measure", null: false
