@@ -34,7 +34,7 @@ pool <- dbPool( #Set up the pool connection management
   dbname = "scaladb",
   host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
   user = "jameslovie",
-  password = "e2534e41-bbb6-4e2b-b687-71c5be7c7d35" #Sys.getenv("PGPASSWORD")
+  password = Sys.getenv("PGPASSWORD")
 )
 
 
