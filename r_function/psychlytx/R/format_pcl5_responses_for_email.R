@@ -39,9 +39,11 @@ format_pcl5_responses_for_email<- function(input, output, session, pool, clinici
 
       manual_entry()$item_scores == 1 ~ "A little",
 
-      manual_entry()$item_scores == 2 ~ "A lot",
+      manual_entry()$item_scores == 2 ~ "Moderately",
 
-      manual_entry()$item_scores == 3 ~ "Extremely",
+      manual_entry()$item_scores == 3 ~ "A lot",
+
+      manual_entry()$item_scores == 4 ~ "Extremely",
 
       TRUE ~ as.character(manual_entry()$item_scores)
 
@@ -54,7 +56,7 @@ format_pcl5_responses_for_email<- function(input, output, session, pool, clinici
     FROM client
     WHERE id = ?client_id;"
 
-    client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id)
+    client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id[1])
 
     client_name<- dbGetQuery( pool, client_name_query )
     client_name<- paste(client_name, collapse = " ")
@@ -149,7 +151,7 @@ format_pcl5_responses_for_email<- function(input, output, session, pool, clinici
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",
                                    "c2a_link":"http://www.psychlytx.com"}}],
-                                   "template_id":"d-c102ab1090724b6a90a269479f37e943"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
+                                   "template_id":"d-63b62d7380924aa4bba7bb80aedc1c45"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
 
     return(body)
 

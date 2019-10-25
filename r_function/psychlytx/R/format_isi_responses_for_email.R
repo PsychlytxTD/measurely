@@ -33,19 +33,51 @@ format_isi_responses_for_email<- function(input, output, session, pool, clinicia
 
   reactive({
 
-    formatted_item_responses<- dplyr::case_when( #Convert the client's responses from numerical form to readable responses, teo appear in the email.
+    #Convert the client's responses from numerical form to readable responses, teo appear in the email.
 
-      manual_entry()$item_scores == 0 ~ "Not at all",
+    formatted_item_responses<- purrr::map_at(manual_entry()$item_scores, c(1,2,3), ~ {
 
-      manual_entry()$item_scores == 1 ~ "Several days",
+      if(.x == 0) { "None"}
+      else if(.x == 1) {"Mild"}
+      else if(.x == 2) {"Moderate"}
+      else if(.x == 3) {"Severe"}
+      else {"Very Severe"}
 
-      manual_entry()$item_scores == 2 ~ "More than half the days",
+    }) %>% purrr::map_at(4, ~ {
 
-      manual_entry()$item_scores == 3 ~ "Nearly every day",
+      if(.x == 0) { "Very satisfied" }
+      else if(.x == 1) {"Satisfied"}
+      else if(.x == 2) {"Moderately satisfied"}
+      else if(.x == 3) {"Dissatisfied"}
+      else {"Very dissatisfied"}
 
-      TRUE ~ as.character(manual_entry()$item_scores)
+    }) %>% purrr::map_at(5, ~ {
 
-    )
+      if(.x == 0) { "Not at all noticeable"}
+      else if(.x == 1) {"A little"}
+      else if(.x == 2) {"Somewhat"}
+      else if(.x == 3) {"Much"}
+      else {"Very much noticeable"}
+
+    }) %>% purrr::map_at(6, ~ {
+
+      if(.x == 0) { "Not at all worried"}
+      else if(.x == 1) {"A little"}
+      else if(.x == 2) {"Somewhat"}
+      else if(.x == 3) {"Much"}
+      else {"Very much noticeable"}
+
+    }) %>% purrr::map_at(7, ~ {
+
+      if(.x == 0) { "Not at all interfering"}
+      else if(.x == 1) {"A little"}
+      else if(.x == 2) {"Somewhat"}
+      else if(.x == 3) {"Much"}
+      else {"Very much interfering"}
+
+    })
+
+
 
 
     #Need to retrieve client's name for the email
@@ -125,7 +157,7 @@ format_isi_responses_for_email<- function(input, output, session, pool, clinicia
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",
                                    "c2a_link":"http://www.psychlytx.com"}}],
-                                   "template_id":"d-c102ab1090724b6a90a269479f37e943"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
+                                   "template_id":"d-efb4b34a61b34d6383e22ae87ca2964b"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
 
     return(body)
 

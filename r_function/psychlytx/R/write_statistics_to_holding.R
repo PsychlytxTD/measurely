@@ -96,7 +96,7 @@ write_statistics_to_holding<- function(input, ouput, session, pool, holding_data
 "header":"A measure is ready to be completed",
 "text": "Before you begin, please copy copy the following unique key to your clipboard: %s"
 "c2a_button":"Begin",
-"c2a_link":"www.psychlytx.com.au"}}],
+"c2a_link":"https://measurely-remote.psychlytx.com/app/gad_7s"}}],
 "template_id":"d-0680c882a9904f3a9e8f72638ff1d807"}', selected_client_email, holding_data()$client_id)
 
     result <- httr::POST(url,                     #Send the email

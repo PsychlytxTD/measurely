@@ -57,7 +57,7 @@ subscale_info_5<- global_subscale_info[["OCI_R_Obsessing"]]
 subscale_info_6<- global_subscale_info[["OCI_R_Hoarding"]]
 subscale_info_7<- global_subscale_info[["OCI_R_Neutralizing"]]
 
-clinician_email<- Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
+clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
 
 #url<- "https://scala.au.auth0.com/userinfo"
 
@@ -476,8 +476,8 @@ server <- function(input, output, session) {
   #Have to store the list of sublists as a reactive object
   
   
-  input_list<- reactive({ list( input_list_1(), input_list_2(), input_list_3(), input_list_3(),
-                                input_list_5(), input_list_7(), input_list_7() ) })  
+  input_list<- reactive({ list( input_list_1(), input_list_2(), input_list_3(), input_list_4(),
+                                input_list_5(), input_list_6(), input_list_7() ) })  
   #Store each list of input values in a larger list object. If there were more than one 
   #subscale it would look like this: input_list<- reactive({ list( input_list_1(), input_list_2(), etc. ) })
   #After creating the list of lists, flatten each sublist and set the names of sublist elements so that they 

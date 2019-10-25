@@ -39,9 +39,11 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
 
       manual_entry()$item_scores == 1 ~ "A little",
 
-      manual_entry()$item_scores == 2 ~ "A lot",
+      manual_entry()$item_scores == 2 ~ "Moderately",
 
-      manual_entry()$item_scores == 3 ~ "Extremely",
+      manual_entry()$item_scores == 3 ~ "A lot",
+
+      manual_entry()$item_scores == 4 ~ "Extremely",
 
       TRUE ~ as.character(manual_entry()$item_scores)
 
@@ -54,7 +56,7 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
     FROM client
     WHERE id = ?client_id;"
 
-    client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id)
+    client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id[1])
 
     client_name<- dbGetQuery( pool, client_name_query )
     client_name<- paste(client_name, collapse = " ")
@@ -88,7 +90,7 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
     )
 
 
-    simplified_cutoff_descriptor_hoarding_subscale<-
+    simplified_cutoff_descriptor_hoarding<-
 
       dplyr::case_when(
 
@@ -103,7 +105,7 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
 
     score_severity_range[8]<- simplified_cutoff_descriptor_total      #Replace the original cutoff descriptions with the simplified info for the two scales
 
-    score_severity_range[15]<- simplified_cutoff_descriptor_hoarding
+    score_severity_range[13]<- simplified_cutoff_descriptor_hoarding
 
 
 
@@ -139,7 +141,7 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
                                    "severity_range_1": "%s",
                                    "severity_range_2": "%s",
                                    "severity_range_3": "%s",
-                                   "severity_range_5": "%s",
+                                   "severity_range_4": "%s",
                                    "severity_range_5": "%s",
                                    "severity_range_6": "%s",
                                    "severity_range_7": "%s",
@@ -166,7 +168,7 @@ format_ocir_responses_for_email<- function(input, output, session, pool, clinici
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",
                                    "c2a_link":"http://www.psychlytx.com"}}],
-                                   "template_id":"d-c102ab1090724b6a90a269479f37e943"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
+                                   "template_id":"d-90adbcf094b04e47bdf80bbd7966e711"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
 
     return(body)
 

@@ -201,7 +201,7 @@ format_pqb_responses_for_email<- function(input, output, session, pool, clinicia
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",
                                    "c2a_link":"http://www.psychlytx.com"}}],
-                                   "template_id":"d-c102ab1090724b6a90a269479f37e943"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
+                                   "template_id":"d-26817f798d874bd3bf3c146dea2deec7"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
 
     return(body)
 

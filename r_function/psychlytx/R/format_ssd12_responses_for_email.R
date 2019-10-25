@@ -118,7 +118,7 @@ format_ssd12_responses_for_email<- function(input, output, session, pool, clinic
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",
                                    "c2a_link":"http://www.psychlytx.com"}}],
-                                   "template_id":"d-c102ab1090724b6a90a269479f37e943"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
+                                   "template_id":"d-22f17a11a0a74a42829adec4e27bf739"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
 
     return(body)
 
