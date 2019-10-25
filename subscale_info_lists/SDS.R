@@ -18,24 +18,24 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                                              "Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
                                              "Gossop, Darke, Griffiths, Hando, Powis et al (1995)", "Gossop, Darke, Griffiths, Hando, Powis et al (1995)",
                                              "Define Value"),
-               cutoff_values = list(c(3, 3.6, 3.6 + 4.4, 3.6 + (2 * 4.4), 3.6 + (3 * 4.4), 3.6 + (4 * 4.4)),
-                                    c(3, 3.4, 7, 3.4 + (1.5 * 3.7), 3.4 + (2.5 * 3.7), 3.4 + (3.5 * 3.7)),
-                                    c(8.7, 8.7 + (0.5 * 4), 8.7 + 4, 8.7 + (1.5 * 4), 8.7 + (2 * 4), 8.7 + (2.5 * 4)),
-                                    c(3, 4.2, 4.2 + 3.3, 4.2 + (2 * 3.3), 4.2 + (3 * 3.3), 4.2 + (4 * 3.3)),
-                                    c(4.3, 5, 4.3 + 3.2, 4.3 + (2 * 3.2), 4.3 + (3 * 3.2), 4.3 + (4 * 3.2)),
-                                    c(6.4, 7, 6.4 + 3.8, 6.4 + (1.5 * 3.8), 6.4 + (2 * 3.8), 6.4 + (3 * 3.8)),
-                                    c(3.3, 5, 3.3 + 3.2, 3.3 + (2 * 3.2), 3.3 + (3 * 3.2), 3.3 + (4 * 3.2)),
+               cutoff_values = list(c(3, 3.6, 3.6 + (0.5 * 4.4), 3.6 + 4.4, 3.6 + (1.5 * 4.4), 3.6 + (2 * 4.4)),
+                                    c(3, 3.4 + (0.5 * 3.7), 7, 3.4 + (1.5 * 3.7), 3.4 + (2 * 3.7), 3.4 + (2.5 * 3.7)),
+                                    c(8.7 - 4, 8.7 - (0.5 * 4), 8.7, 8.7 + (0.5 * 4), 8.7 + 4, 8.7 + (1.5 * 4)),
+                                    c(3, 4.2, 4.2 + (0.5 * 3.3), 4.2 + 3.3, 4.2 + (1.5 * 3.3), 4.2 + (2.5 * 3.3)),
+                                    c(4.3 - 3.2, 4.3, 5, 4.3 + 3.2, 4.3 + (2 * 3.2), 4.3 + (3 * 3.2)),
+                                    c(6.4 - 3.8, 6.4, 7, 6.4 + 3.8, 6.4 + (1.5 * 3.8), 6.4 + (2 * 3.8)),
+                                    c(3.3, 5, 3.3 + 3.2, 3.3 + (2 * 3.2), 3.3 + (3 * 3.2), 3.3 + (3.5 * 3.2)),
                                     c(4, 7.7, 7.7 + 3.8, 7.7 + (1.5 * 3.8), 7.7 + (2 * 3.8), 7.7 + (3 * 3.8)),
                                     c(0, 0, 0, 0, 0, 0)
                                     ),
-               cutoff_labels = list(c("Alcohol Dependence", "Mean", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 4 Sd"),
-                                    c("Moderate Dependence", "Mean", "Severe Dependence", "Mean + 1.5 Sd", "Mean + 2.5 Sd", "Mean + 3.5 Sd"),
-                                    c("Mean", "Mean + 0.5 Sd", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd", "Mean + 2.5 Sd"),
-                                    c("Cocaine Dependence", "Mean", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 4 Sd"),
-                                    c("Mean", "Amphetamine Dependence", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 4 Sd"),
-                                    c("Mean", "Benzodiazepine Dependence", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd", "Mean + 3 Sd"),
-                                    c("Mean", "Opiate Dependence", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 4 Sd"),
-                                    c("Ketamine Dependence", "Mean", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd", "Mean + 3 Sd"),
+               cutoff_labels = list(c("Alcohol Dependence", "Mean", "Mean + 0.5 Sd", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd"),
+                                    c("Moderate Dependence", "Mean + 0.5 Sd", "Severe Dependence", "Mean + 1.5 Sd", "Mean + 2 Sd", "Mean + 2.5 Sd"),
+                                    c("Mean - Sd", "Mean - 0.5 Sd", "Mean", "Mean + 0.5 Sd", "Mean + 1 Sd", "Mean + 1.5 Sd"),
+                                    c("Cocaine Dependence", "Mean", "Mean + 0.5 Sd", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2.5 Sd"),
+                                    c("Mean - 1 Sd", "Mean", "Amphetamine Dependence", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd"),
+                                    c("Mean - 1 Sd", "Mean", "Benzodiazepine Dependence", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd"),
+                                    c("Mean", "Opiate Dependence", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 3.5 Sd"),
+                                    c("Mean - 1.5 Sd", "Ketamine Dependence", "Mean", "Mean + 0.5 Sd", "Mean + 1 Sd", "Mean + 1.5 Sd"),
                                     c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value",
                                       "Define Value")
                                     ),
@@ -67,10 +67,10 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                ),
                cutoff_quantity = 6,
                items = 1:5,
-               max_score = 20,
+               max_score = 15,
                min_score = 0,
-               plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
-               plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
+               plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Redundant
+               plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Redundant
                plot_cutoff_label_size = 3,
                description = readr::read_file(
                  "SDS.md"

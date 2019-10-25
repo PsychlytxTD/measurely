@@ -78,7 +78,7 @@ format_phq9_responses_for_email<- function(input, output, session, pool, clinici
 
       measure_data()$score >= 10 & measure_data()$score < 15 ~ "Major Depressive Episode",
 
-      measure_data()$score >= 15 & measure_data()$score < 20 ~ "Moderately Severe Depressio",
+      measure_data()$score >= 15 & measure_data()$score < 20 ~ "Moderately Severe Depression",
 
       measure_data()$score >= 20 ~ "Severe Depression",
 
@@ -129,7 +129,7 @@ format_phq9_responses_for_email<- function(input, output, session, pool, clinici
                                    "content": "text/html",
                                    "c2a_button":"Download Full Clinical Report",
                                    "c2a_link":"http://www.psychlytx.com"}}],
-                                   "template_id":"d-c102ab1090724b6a90a269479f37e943"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
+                                   "template_id":"d-058348841dfb42f69580374a4b4dad36"}'), body_values)) #Pass in the vector of strings to replace placeholders in order.
 
     return(body)
 
