@@ -125,9 +125,9 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
     ),
 
     fluidRow(
-      box(width = 12,
-          plotly::plotlyOutput("plot_all_cases_by_measure")
-               )),
+
+          plotly::plotlyOutput("plot_all_cases_by_measure", height = "auto")
+               ),
 
 
     fluidRow(
@@ -660,19 +660,13 @@ server <- shinyServer(function(input, output, session) {
         )
     ) %>%
     subplot(
-      nrows = 2, margin = 0.05,
-      shareY = FALSE, shareX = TRUE, titleY = FALSE
+      nrows = 15, margin = 0.05, heights = rep(0.70, 15),
+      shareY = FALSE, shareX = FALSE, titleY = FALSE
     ) %>% highlight(
       dynamic = TRUE,
       selectize = TRUE,
       color = "red"
     )
-
-
-
-
-
-
 
 
 })

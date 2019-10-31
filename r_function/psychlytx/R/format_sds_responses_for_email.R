@@ -78,6 +78,36 @@ format_sds_responses_for_email<- function(input, output, session, pool, clinicia
     score_severity_range<- psychlytx::find_severity_range(measure_data) #use the find_severity_range() function to make a single vector of strings
     #containing (in order) the scores and the severity range descriptions.
 
+    if(measure_data$population == 'Alcohol_Use' & score_severity_range[1] >= 3) {
+
+      score_severity_range[2]<- "Alcohol Dependence"
+
+    } else if(measure_data$population == 'Cannabis_Use' & score_severity_range[1] >= 3) {
+
+      score_severity_range[2]<- "Moderate or Severe Cannabis Dependence"
+
+    } else if(measure_data$population == 'Cocaine_Use' & score_severity_range[1] >= 3) {
+
+      score_severity_range[2]<- "Cocaine Dependence"
+
+    } else if(measure_data$population == 'Amphetamine_Use' & score_severity_range[1] >= 5) {
+
+      score_severity_range[2]<- "Amphetamine Dependence"
+
+    } else if(measure_data$population == 'Benzodiazepine_Use' & score_severity_range[1] >= 7) {
+
+      score_severity_range[2]<- "Benzodiazepine Dependence"
+
+    } else if(measure_data$population == 'Opiate_Use' & score_severity_range[1] >= 5) {
+
+      score_severity_range[2]<- "Opiate Dependence"
+
+    } else if(measure_data$population == 'Ketamine_Use' & score_severity_range[1] >= 4) {
+
+      score_severity_range[2]<- "Ketamine Dependence"
+
+    }
+
 
     if(simplified == TRUE) {
 

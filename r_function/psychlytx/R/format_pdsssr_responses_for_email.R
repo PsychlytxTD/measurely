@@ -111,7 +111,7 @@ format_pdsssr_responses_for_email<- function(input, output, session, pool, clini
 
 
 
-    formatted_item_responses<- formatted_item_responses() %>% purrr::compact() %>% unlist() #Remove null values to obtain final vector of item scores
+    formatted_item_responses<- formatted_item_responses %>% purrr::compact() %>% unlist() #Remove null values to obtain final vector of item scores
 
     #Need to retrieve client's name for the email
 

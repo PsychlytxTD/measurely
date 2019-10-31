@@ -56,7 +56,7 @@ format_ssd12_responses_for_email<- function(input, output, session, pool, clinic
     FROM client
     WHERE id = ?client_id;"
 
-    client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id)
+    client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id[1])
 
     client_name<- dbGetQuery( pool, client_name_query )
     client_name<- paste(client_name, collapse = " ")
@@ -83,10 +83,6 @@ format_ssd12_responses_for_email<- function(input, output, session, pool, clinic
       clinician_email<- clinician_email
 
     }
-
-
-
-    score_severity_range<- c(measure_data()$score, severity_range)
 
 
     body_values<- c(clinician_email, client_name, score_severity_range, formatted_item_responses) #Join the previous score/severity range description strings with the item responses to make one vector.

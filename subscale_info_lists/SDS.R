@@ -35,7 +35,7 @@ SDS<- list(   title = "Severity of Dependence Scale (SDS)", #Title can contain w
                                     c("Mean - 1 Sd", "Mean", "Amphetamine Dependence", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd"),
                                     c("Mean - 1 Sd", "Mean", "Benzodiazepine Dependence", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd"),
                                     c("Mean", "Opiate Dependence", "Mean + 1 Sd", "Mean + 2 Sd", "Mean + 3 Sd", "Mean + 3.5 Sd"),
-                                    c("Mean - 1.5 Sd", "Ketamine Dependence", "Mean", "Mean + 0.5 Sd", "Mean + 1 Sd", "Mean + 1.5 Sd"),
+                                    c("Ketamine Dependence", "Mean", "Mean + 1 Sd", "Mean + 1.5 Sd", "Mean + 2 Sd", "Mean + 2.5 Sd"),
                                     c("Define Value", "Define Value", "Define Value", "Define Value", "Define Value",
                                       "Define Value")
                                     ),

@@ -79,7 +79,7 @@ format_pqb_responses_for_email<- function(input, output, session, pool, clinicia
     FROM client
     WHERE id = ?client_id;"
 
-    client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id)
+    client_name_query<- sqlInterpolate(pool, client_name_sql, client_id = measure_data()$client_id[1])
 
     client_name<- dbGetQuery( pool, client_name_query )
     client_name<- paste(client_name, collapse = " ")
@@ -99,21 +99,21 @@ format_pqb_responses_for_email<- function(input, output, session, pool, clinicia
 
     severity_range_dichotomous<- dplyr::case_when(    #Create simplified severity descriptors for dichotomouse and distress subscales
 
-      measure_data()$Score[1] < 9 ~ "Below Clinical High Risk Status",
+      measure_data()$score[1] < 9 ~ "Below Clinical High Risk Status",
 
-      measure_data()$Score[1] >= 9 ~ "Clinical High Risk Status",
+      measure_data()$score[1] >= 9 ~ "Clinical High Risk Status",
 
-      TRUE ~ as.character(measure_data()$score)
+      TRUE ~ as.character(measure_data()$score[1])
 
     )
 
     severity_range_distress<- dplyr::case_when(
 
-      measure_data()$Score[2] < 18 ~ "Below Clinical High Risk Status",
+      measure_data()$score[2] < 18 ~ "Below Clinical High Risk Status",
 
-      measure_data()$Score[2] >= 18 ~ "Clinical High Risk Status",
+      measure_data()$score[2] >= 18 ~ "Clinical High Risk Status",
 
-      TRUE ~ as.character(measure_data()$score)
+      TRUE ~ as.character(measure_data()$score[2])
 
 
     )

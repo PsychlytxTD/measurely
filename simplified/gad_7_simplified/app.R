@@ -252,7 +252,7 @@ server <- function(input, output, session) {
       audience = "https://scala.au.auth0.com/api/v2/"
     )
     
-    result_auth <- POST(
+    result_auth <- httr::POST(
       url,
       body = request_body,
       encode = "form"
@@ -280,7 +280,8 @@ server <- function(input, output, session) {
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the body text to be sent.     
   #Add clinician email - will need to query API to get it from simplified app (we don't automatically get it from shinyproxy clinician login)
                                                                                                                                  #Add clinician email
-  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, simplified_measure_data, simplified = TRUE)
+  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", 
+                                                 pool, clinician_email, manual_entry, simplified_measure_data, simplified = TRUE)
   
   
   callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, simplified_measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db

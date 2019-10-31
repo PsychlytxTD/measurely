@@ -73,6 +73,12 @@ format_sias_responses_for_email<- function(input, output, session, pool, clinici
     score_severity_range<- psychlytx::find_severity_range(measure_data) #use the find_severity_range() function to make a single vector of strings
     #containing (in order) the scores and the severity range descriptions.
 
+    if(score_severity_range[1] >= 34) {
+
+      score_severity_range[2]<- "Social Phobia"
+
+    }
+
 
     if(simplified == TRUE) {
 
