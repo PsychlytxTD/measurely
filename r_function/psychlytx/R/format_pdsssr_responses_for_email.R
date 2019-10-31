@@ -31,8 +31,7 @@ format_pdsssr_responses_for_email_UI<- function(id) {
 
 format_pdsssr_responses_for_email<- function(input, output, session, pool, clinician_email, manual_entry, measure_data, simplified = FALSE) {
 
-  reactive({
-
+    reactive({
 
     formatted_item_responses<- purrr::map_at(manual_entry()$item_scores, 1, ~ {
 
@@ -58,60 +57,53 @@ format_pdsssr_responses_for_email<- function(input, output, session, pool, clini
       else if(.x == 3) {"Very often or to a very disturbing degree"}
       else {"Nearly constantly and to a disabling extent"}
 
-    }) %>%
-      purrr::map_at(4, ~ifelse(.x == 0, "None: no fear or avoidance", NULL)) %>%
+    }) %>% purrr::map_at(4, ~ {
 
-      purr::map_at(5, ~ifelse(.x == 1, "Mild: occasional fear and/or avoidance but I could usually confront or endure the situation. There was little or no modification of my
-                                          lifestyle due to this.", NULL)) %>%
-      purr::map_at(6, ~ifelse(.x == 2, "Moderate: noticeable fear and/or avoidance but still manageable. I avoided some situations, but I could
-                                                    confront them with a companion. There was some modification of my lifestyle because of this, but my
-                              overall functioning was not impaired.", NULL)) %>%
-      purr::map_at(7, ~ifelse(.x == 3, "Severe: extensive avoidance. Substantial modification of my lifestyle was required to accommodate the
-                                                                avoidance making it difficult to manage usual activities.", NULL)) %>%
-    purr::map_at(8, ~ifelse(.x == 4, "Extreme: pervasive disabling fear and/or avoidance. Extensive modification in my lifestyle was required
-                                                               such that important tasks were not performed.", NULL)) %>%
-    purr::map_at(9, ~ifelse(.x == 0, "No fear or avoidance of situations or activities because of distressing physical sensations", NULL)) %>%
+      if(.x == 0) {"None: no fear or avoidance."}
+      else if(.x == 1) {"Mild: occasional fear and/or avoidance but I could usually confront or endure the situation. There was little or no modification of my
+                                      lifestyle due to this."}
+      else if(.x == 2) {"Moderate: noticeable fear and/or avoidance but still manageable. I avoided some situations, but I could confront them with a companion. There was some modification of my lifestyle because of this, but my
+                                                                 overall functioning was not impaired."}
+      else if(.x == 3) {"Severe: extensive avoidance. Substantial modification of my lifestyle was required to accommodate the
+                                      avoidance making it difficult to manage usual activities."}
+      else {"Extreme: pervasive disabling fear and/or avoidance. Extensive modification in my lifestyle was required
+                                      such that important tasks were not performed."}
 
-    purr::map_at(10, ~ifelse(.x == 1, "Mild: occasional fear and/or avoidance, but usually I could confront or endure with little distress activities
-                                      that cause physical sensations. There was little modification of my lifestyle due to this", NULL)) %>%
+    }) %>% purrr::map_at(5, ~ {
 
-    purr::map_at(11, ~ifelse(.x == 2, "Moderate: noticeable avoidance but still manageable. There was definite, but limited, modification of my
-                                      lifestyle such that my overall functioning was not impaired.", NULL)) %>%
+      if(.x == 0) {"No fear or avoidance of situations or activities because of distressing physical sensations"}
+      else if(.x == 1) {"Mild: occasional fear and/or avoidance, but usually I could confront or endure with little distress activities
+                                      that cause physical sensations. There was little modification of my lifestyle due to this"}
+      else if(.x == 2) {" Moderate: noticeable avoidance but still manageable. There was definite, but limited, modification of my
+                                      lifestyle such that my overall functioning was not impaired."}
+      else if(.x == 3) {"Severe: extensive avoidance. There was substantial modification of my lifestyle or interference in my
+                                      functioning."}
+      else {"Extreme: pervasive and disabling avoidance. There was extensive modification in my lifestyle due to this
+                                      such that important tasks or activities were not performed."}
 
-    purr::map_at(12, ~ifelse(.x == 3, "Severe: extensive avoidance. There was substantial modification of my lifestyle or interference in my
-                                                               functioning.", NULL)) %>%
+    }) %>% purrr::map_at(6, ~ {
 
-    purrr::map_at(13, ~ifelse(.x == 4, "Extreme: pervasive and disabling avoidance. There was extensive modification in my lifestyle due to this
-                                                               such that important tasks or activities were not performed.", NULL)) %>%
+      if(.x == 0) {"No interference with work or home responsibilities"}
+      else if(.x == 1) {"Slight interference with work or home responsibilities, but I could do nearly everything I could if I didn’t
+                                      have these problems."}
+      else if(.x == 2) {"Significant interference with work or home responsibilities, but I still could manage to do the things I
+                                      needed to do."}
+      else if(.x == 3) {"Substantial impairment in work or home responsibilities; there were many important things I couldn’t do
+because of these problems."}
+      else {"Extreme, incapacitating impairment such that I was essentially unable to manage any work or home
+responsibilities."}
 
-     purrr::map_at(14, ~ifelse(.x == 0, "No interference with work or home responsibilities", NULL)) %>%
+    }) %>% purrr::map_at(7, ~ {
 
-      purrr::map_at(15, ~ifelse(.x == 1, "Slight interference with work or home responsibilities, but I could do nearly everything I could if I didn’t
-                                                                have these problems.", NULL)) %>%
+      if(.x == 0) {"No interference"}
+      else if(.x == 1) {"Slight interference with social activities, but I could do nearly everything I could if I didn’t have these
+                                      problems."}
+      else if(.x == 2) {"Significant interference with social activities but I could manage to do most things if I made the effort."}
+      else if(.x == 3) {"Substantial impairment in social activities; there are many social things I couldn’t do because of these
+                                      problems."}
+      else {"Extreme, incapacitating impairment, such that there was hardly anything social I could do."}
 
-      purrr::map_at(16, ~ifelse(.x == 2, "Significant interference with work or home responsibilities, but I still could manage to do the things I
-                                                                needed to do.", NULL)) %>%
-
-      purrr::map_at(17, ~ifelse(.x == 3, "Severe: more than 2 full attacks but not more than 1/day on average", NULL)) %>%
-
-      purrr::map_at(18, ~ifelse(.x == 4, "Extreme: full panic attacks occurred more than once a day, more days than not", NULL)) %>%
-
-      purrr::map_at(19, ~ifelse(.x == 0, "No interference", NULL)) %>%
-
-      purrr::map_at(20, ~ifelse(.x == 1, "Slight interference with social activities, but I could do nearly everything I could if I didn’t have these
-                                                                problems.", NULL)) %>%
-
-    purrr::map_at(21, ~ifelse(.x == 2, "Significant interference with social activities but I
-                              could manage to do most things if I made the effort.", NULL)) %>%
-
-      purrr::map_at(22, ~ifelse(.x == 3, "Substantial impairment in social activities; there are many social things I couldn’t do because of these
-                                                                problems.", NULL)) %>%
-
-      purrr::map_at(23, ~ifelse(.x == 4, "Extreme, incapacitating impairment, such that there was hardly anything social I could do.", NULL))
-
-
-
-    formatted_item_responses<- formatted_item_responses %>% purrr::compact() %>% unlist() #Remove null values to obtain final vector of item scores
+      }) %>% unlist()
 
     #Need to retrieve client's name for the email
 

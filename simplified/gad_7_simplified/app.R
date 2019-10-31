@@ -241,18 +241,18 @@ server <- function(input, output, session) {
     
     req(simplified_measure_data())
     
-    url <- "https://scala.au.auth0.com/oauth/token"
+    url<- "https://scala.au.auth0.com/oauth/token"
     
-    payload <- "grant_type=client_credentials&client_id=J0aFeSwChHWyIidxIvGggvOtNiIglaV7&client_secret=LFAsaZ4jbLowQ2ug9G38CYy7TGwAb3vkDkKuPyP7vuwXswNfROT-nzv6BY-KQxpd&audience=https%3A%2F%2Fscala.au.auth0.com%2Fapi%2Fv2%2F"
+    payload<- "grant_type=client_credentials&client_id=J0aFeSwChHWyIidxIvGggvOtNiIglaV7&client_secret=LFAsaZ4jbLowQ2ug9G38CYy7TGwAb3vkDkKuPyP7vuwXswNfROT-nzv6BY-KQxpd&audience=https%3A%2F%2Fscala.au.auth0.com%2Fapi%2Fv2%2F"
     
-    request_body <- list(
+    request_body<- list(
       grant_type = "client_credentials",
       client_id = Sys.getenv("AUTHO_CLIENT_ID"),                                      #Use a generic client_id and client_secret to obtain token to ping Autho
       client_secret = Sys.getenv("AUTHO_CLIENT_SECRET"),
       audience = "https://scala.au.auth0.com/api/v2/"
     )
     
-    result_auth <- httr::POST(
+    result_auth<- httr::POST(
       url,
       body = request_body,
       encode = "form"
