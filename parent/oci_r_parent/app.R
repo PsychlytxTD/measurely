@@ -160,7 +160,7 @@ ui<- function(request) {
                                 
                                   psychlytx::manual_data_UI("manual_data"), #Items of the specific measure are passed here as a string of numbers
                                   
-                                  psychlytx::format_ocir_responses_for_email_UI("format_repsonses_for_email"),
+                                  psychlytx::format_ocir_responses_for_email_UI("format_responses_for_email"),
                                   
                                   psychlytx::calculate_subscale_UI("calculate_subscales"), #Calculate all aggregate subscale scores for the measure
                                   

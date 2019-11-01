@@ -57,9 +57,7 @@ PCL_5<- list(  title = "PTSD Checklist for DSM-5 (PCL-5)", #Title can contain wh
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                plot_cutoff_label_size = 3,
-               description = readr::read_file(
-                 "PCL_5.md"
-               ),
+               description = NULL,
                sample_overview = list(
                  c("103 American psychiatric inpatients"),
                  c("838 English-speaking Canadian university students"),
@@ -147,9 +145,7 @@ PCL_5_Intrusion<- list(  title = "PCL-5 Intrusion", #Title can contain white spa
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                plot_cutoff_label_size = 3,
-               description = readr::read_file(
-                 "PCL_5.md"
-               ),
+               description = NULL,
                sample_overview = list(
                  c("103 American psychiatric inpatients"),
                  c("42 French-speaking Candian university students"),
@@ -237,9 +233,7 @@ PCL_5_Cognition_Mood<- list(  title = "PCL-5 Negative Cognition/Mood", #Title ca
                          plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                          plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                          plot_cutoff_label_size = 3,
-                         description = readr::read_file(
-                           "PCL_5.md"
-                         ),
+                         description = NULL,
                          sample_overview = list(
                            c("103 American psychiatric inpatients"),
                            c("42 French-speaking Candian university students"),
@@ -324,9 +318,7 @@ PCL_5_Hyperarousal<- list(  title = "PCL-5 Hyperarousal", #Title can contain whi
                          plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                          plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                          plot_cutoff_label_size = 3,
-                         description = readr::read_file(
-                           "PCL_5.md"
-                         ),
+                         description = NULL,
                          sample_overview = list(
                            c("103 American psychiatric inpatients"),
                            c("42 French-speaking Candian university students"),

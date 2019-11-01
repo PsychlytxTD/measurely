@@ -32,9 +32,7 @@ OCI_R<- list(  title = "Obsessive Compulsive Inventory - Revised (OCI-R)", #Titl
                plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                plot_cutoff_label_size = 3,
-               description = readr::read_file(
-                 "OCI_R.md"
-               ),
+               description = NULL,
                sample_overview = list(
                  c("215 Americans with OCD"),
                  c("477 American non-anxious university students")
@@ -85,9 +83,7 @@ OCI_R_Washing<- list(  title = "OCI-R Washing", #Title can contain white space. 
               plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
               plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
               plot_cutoff_label_size = 3,
-              description = readr::read_file(
-                "OCI_R.md"
-              ),
+              description = NULL,
               sample_overview = list(
                 c("215 Americans with OCD"),
                 c("478 American non-anxious university students")
@@ -139,9 +135,7 @@ OCI_R_Checking<- list(  title = "OCI-R Checking", #Title can contain white space
                        plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                        plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                        plot_cutoff_label_size = 3,
-                       description = readr::read_file(
-                         "OCI_R.md"
-                       ),
+                       description = NULL,
                        sample_overview = list(
                          c("215 Americans with OCD"),
                          c("479 American non-anxious university students")
@@ -153,7 +147,7 @@ OCI_R_Checking<- list(  title = "OCI-R Checking", #Title can contain white space
                            Development and validation of a short version. Psychological Assessment, 14(4), 485.")
                          )
 
-                         )
+                    )
 
 
 
@@ -193,9 +187,7 @@ OCI_R_Ordering<- list(  title = "OCI-R Ordering", #Title can contain white space
                         plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                         plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                         plot_cutoff_label_size = 3,
-                        description = readr::read_file(
-                          "OCI_R.md"
-                        ),
+                        description = NULL,
                         sample_overview = list(
                           c("215 Americans with OCD"),
                           c("480 American non-anxious university students")
@@ -247,9 +239,7 @@ OCI_R_Obsessing<- list(  title = "OCI-R Obsessing", #Title can contain white spa
                         plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                         plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                         plot_cutoff_label_size = 3,
-                        description = readr::read_file(
-                          "OCI_R.md"
-                        ),
+                        description = NULL,
                         sample_overview = list(
                           c("215 Americans with OCD"),
                           c("481 American non-anxious university students")
@@ -301,9 +291,7 @@ OCI_R_Hoarding<- list(  title = "OCI-R Hoarding", #Title can contain white space
                          plot_shading_gap = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1), #Gap = next cutoff minus plot_shading gap
                          plot_cutoff_label_start = c(0.8, 0.8, 0.8, 0.8, 1, 0.8), #Indicates how far above the cutoff value the text cutoff label starts
                          plot_cutoff_label_size = 3,
-                         description = readr::read_file(
-                           "OCI_R.md"
-                         ),
+                         description = NULL,
                          sample_overview = list(
                            c("215 Americans with OCD"),
                            c("482 American non-anxious university students")

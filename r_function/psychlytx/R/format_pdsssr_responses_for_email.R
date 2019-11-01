@@ -60,47 +60,33 @@ format_pdsssr_responses_for_email<- function(input, output, session, pool, clini
     }) %>% purrr::map_at(4, ~ {
 
       if(.x == 0) {"None: no fear or avoidance."}
-      else if(.x == 1) {"Mild: occasional fear and/or avoidance but I could usually confront or endure the situation. There was little or no modification of my
-                                      lifestyle due to this."}
-      else if(.x == 2) {"Moderate: noticeable fear and/or avoidance but still manageable. I avoided some situations, but I could confront them with a companion. There was some modification of my lifestyle because of this, but my
-                                                                 overall functioning was not impaired."}
-      else if(.x == 3) {"Severe: extensive avoidance. Substantial modification of my lifestyle was required to accommodate the
-                                      avoidance making it difficult to manage usual activities."}
-      else {"Extreme: pervasive disabling fear and/or avoidance. Extensive modification in my lifestyle was required
-                                      such that important tasks were not performed."}
+      else if(.x == 1) {"Mild: occasional fear and/or avoidance but I could usually confront or endure the situation. There was little or no modification of my lifestyle due to this."}
+      else if(.x == 2) {"Moderate: noticeable fear and/or avoidance but still manageable. I avoided some situations, but I could confront them with a companion. There was some modification of my lifestyle because of this, but myoverall functioning was not impaired."}
+      else if(.x == 3) {"Severe: extensive avoidance. Substantial modification of my lifestyle was required to accommodate the avoidance making it difficult to manage usual activities."}
+      else {"Extreme: pervasive disabling fear and/or avoidance. Extensive modification in my lifestyle was required such that important tasks were not performed."}
 
     }) %>% purrr::map_at(5, ~ {
 
       if(.x == 0) {"No fear or avoidance of situations or activities because of distressing physical sensations"}
-      else if(.x == 1) {"Mild: occasional fear and/or avoidance, but usually I could confront or endure with little distress activities
-                                      that cause physical sensations. There was little modification of my lifestyle due to this"}
-      else if(.x == 2) {" Moderate: noticeable avoidance but still manageable. There was definite, but limited, modification of my
-                                      lifestyle such that my overall functioning was not impaired."}
-      else if(.x == 3) {"Severe: extensive avoidance. There was substantial modification of my lifestyle or interference in my
-                                      functioning."}
-      else {"Extreme: pervasive and disabling avoidance. There was extensive modification in my lifestyle due to this
-                                      such that important tasks or activities were not performed."}
+      else if(.x == 1) {"Mild: occasional fear and/or avoidance, but usually I could confront or endure with little distress activities that cause physical sensations. There was little modification of my lifestyle due to this"}
+      else if(.x == 2) {" Moderate: noticeable avoidance but still manageable. There was definite, but limited, modification of my lifestyle such that my overall functioning was not impaired."}
+      else if(.x == 3) {"Severe: extensive avoidance. There was substantial modification of my lifestyle or interference in my functioning."}
+      else {"Extreme: pervasive and disabling avoidance. There was extensive modification in my lifestyle due to this such that important tasks or activities were not performed."}
 
     }) %>% purrr::map_at(6, ~ {
 
       if(.x == 0) {"No interference with work or home responsibilities"}
-      else if(.x == 1) {"Slight interference with work or home responsibilities, but I could do nearly everything I could if I didn’t
-                                      have these problems."}
-      else if(.x == 2) {"Significant interference with work or home responsibilities, but I still could manage to do the things I
-                                      needed to do."}
-      else if(.x == 3) {"Substantial impairment in work or home responsibilities; there were many important things I couldn’t do
-because of these problems."}
-      else {"Extreme, incapacitating impairment such that I was essentially unable to manage any work or home
-responsibilities."}
+      else if(.x == 1) {"Slight interference with work or home responsibilities, but I could do nearly everything I could if I didn’t have these problems."}
+      else if(.x == 2) {"Significant interference with work or home responsibilities, but I still could manage to do the things I needed to do."}
+      else if(.x == 3) {"Substantial impairment in work or home responsibilities; there were many important things I couldn’t do because of these problems."}
+      else {"Extreme, incapacitating impairment such that I was essentially unable to manage any work or home responsibilities."}
 
     }) %>% purrr::map_at(7, ~ {
 
       if(.x == 0) {"No interference"}
-      else if(.x == 1) {"Slight interference with social activities, but I could do nearly everything I could if I didn’t have these
-                                      problems."}
+      else if(.x == 1) {"Slight interference with social activities, but I could do nearly everything I could if I didn’t have these problems."}
       else if(.x == 2) {"Significant interference with social activities but I could manage to do most things if I made the effort."}
-      else if(.x == 3) {"Substantial impairment in social activities; there are many social things I couldn’t do because of these
-                                      problems."}
+      else if(.x == 3) {"Substantial impairment in social activities; there are many social things I couldn’t do because of these problems."}
       else {"Extreme, incapacitating impairment, such that there was hardly anything social I could do."}
 
       }) %>% unlist()

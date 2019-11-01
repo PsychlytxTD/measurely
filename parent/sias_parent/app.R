@@ -150,7 +150,7 @@ ui<- function(request) {
                                 
                                   psychlytx::manual_data_UI("manual_data"), #Items of the specific measure are passed here as a string of numbers
                                   
-                                  psychlytx::format_sias_responses_for_email_UI("format_repsonses_for_email"),
+                                  psychlytx::format_sias_responses_for_email_UI("format_responses_for_email"),
                                   
                                   psychlytx::calculate_subscale_UI("calculate_subscales"), #Calculate all aggregate subscale scores for the measure
                                   
@@ -335,7 +335,7 @@ server <- function(input, output, session) {
   
 
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the email body text to be sent.
-  formatted_response_body_for_email<- callModule(psychlytx::format_sias_responses_for_email, "format_repsonses_for_email", pool, clinician_email, manual_entry, measure_data)
+  formatted_response_body_for_email<- callModule(psychlytx::format_sias_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
   callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
