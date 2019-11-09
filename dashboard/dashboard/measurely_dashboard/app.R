@@ -660,7 +660,7 @@ server <- shinyServer(function(input, output, session) {
         )
     ) %>%
     subplot(
-      nrows = 15, margin = 0.05, heights = rep(0.70, 15),
+      nrows = 15, margin = 0.05,
       shareY = FALSE, shareX = FALSE, titleY = FALSE
     ) %>% highlight(
       dynamic = TRUE,

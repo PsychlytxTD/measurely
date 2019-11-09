@@ -236,7 +236,6 @@ server <- function(input, output, session) {
                                            #created when a patient completes the simplified app (i.e. simplified_measure_data()). (3) Use this value and the token
                                            #To send GET request to Autho and retrieve the clinician_email. (4) Send clinician_email to measure-specific email formatting
                                            #module.
-  
   observe({
     
     req(simplified_measure_data())
@@ -272,6 +271,7 @@ server <- function(input, output, session) {
     
     clinician_email$value<- clinician_object[[1]][1]  #Subset the object to only pull out the clinician's email address
     
+    print(clinician_email$value)
   
   })
   
