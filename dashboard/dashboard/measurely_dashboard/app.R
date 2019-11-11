@@ -30,6 +30,7 @@ library(tibble)
 library(aws.s3)
 library(glue)
 library(plotly)
+library(skimr)
 
 
 pool <- dbPool( #Set up the connection with the db
@@ -59,6 +60,28 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 #clinician_object<- httr::content(clinician_object)
 
 clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
+
+#Prepare data used in dashboard
+#Import the client table
+#Convert birth dates to ages (numerical variable), then cut it into discrete categories
+
+client<- tbl(pool, "client") %>% dplyr::collect() %>% as.data.frame() %>%
+  dplyr::mutate(creation_date = as.Date(creation_date))
+
+client$age<- measurelydashboard::age_cat(eeptools::age_calc(client$birth_date, units = 'years'), upper = 70)
+
+#Import the measure table
+#Extract minimum and maximum date to use in dateRangeInput
+#Make the date filter
+
+measure<- tbl(pool, "scale") %>% dplyr::collect() %>% as.data.frame() %>%
+  dplyr::mutate(date = as.Date(date))
+
+dates<- c(as.Date(min(measure$date)),
+          as.Date(max(measure$date)))
+
+
+
 
   header<- dashboardHeader(title ="Measurely | Clinical Outcomes Dashboard", titleWidth = 800)
 
@@ -124,11 +147,6 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
       )
     ),
 
-    fluidRow(
-
-          plotly::plotlyOutput("plot_all_cases_by_measure", height = "auto")
-               ),
-
 
     fluidRow(
       valueBoxOutput("attendances"),
@@ -148,7 +166,9 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
       ),
       box(collapsible = TRUE, title = "Clinical Outcomes By Attendance Characteristics", status = "primary", solidHeader = TRUE, width = 5,
           plotly::plotlyOutput("summary_outcomes_plot_by_posttherapy")
-      ))
+      )),
+
+    plotly::plotlyOutput("plot_all_cases_by_measure", height = "2000px")
 
 
   ))
@@ -163,24 +183,6 @@ server <- shinyServer(function(input, output, session) {
 
   addClass(selector = "body", class = "sidebar-collapse")
 
-  #Prepare data used in dashboard
-  #Import the client table
-  #Convert birth dates to ages (numerical variable), then cut it into discrete categories
-
-  client<- tbl(pool, "client") %>% dplyr::collect() %>% as.data.frame() %>%
-    dplyr::mutate(creation_date = as.Date(creation_date))
-
-  client$age<- measurelydashboard::age_cat(eeptools::age_calc(client$birth_date, units = 'years'), upper = 70)
-
-  #Import the measure table
-  #Extract minimum and maximum date to use in dateRangeInput
-  #Make the date filter
-
-  measure<- tbl(pool, "scale") %>% dplyr::collect() %>% as.data.frame() %>%
-    dplyr::mutate(date = as.Date(date))
-
-  dates<- c(as.Date(min(measure$date)),
-            as.Date(max(measure$date)))
 
   output$date_dropdown<- renderUI({
     dateRangeInput("date_selection", "Select Date Range", start = dates[1], end = dates[2], format = "yyyy-mm-dd")
@@ -634,14 +636,21 @@ server <- shinyServer(function(input, output, session) {
 
   by_measure<- by_measure %>% tidyr::unite("Client", first_name, last_name, birth_date, sep = " ")
 
+  by_measure<- by_measure %>% dplyr::group_by(subscale, timepoint) %>% dplyr::mutate(mean_score = round(mean(score, na.rm = TRUE), 2)) %>% dplyr::ungroup()
+
   by_measure$subscale<- gsub("_", "-", by_measure$subscale)
+
 
 
   by_measure %>%
     group_by(subscale) %>%
-    do(
+    dplyr::do(
       p = highlight_key(., ~Client, group = "Select A Client") %>%
         plot_ly(type = 'scatter', mode = 'lines', showlegend = FALSE) %>%
+        add_lines(x = ~timepoint, y = ~ mean_score, text = ~paste("Mean Score:", mean_score),
+                  line = list(width = 3, dash = 'dash'),
+                  marker =  list(symbol ="diamond-open"),
+                  mode = 'lines+markers', hoverinfo = "text") %>%
         group_by(Client) %>%
         add_trace(
           x = ~timepoint, y = ~score, text = ~paste("Client:", Client, "<br>",
@@ -649,8 +658,8 @@ server <- shinyServer(function(input, output, session) {
                                                    "Score:", score, "<br>",
                                                    "Change Since Previous:", sprintf("%+3.1f", change_all)
                                                    ),
-          mode = 'lines+markers', hoverinfo = "text"
-        ) %>% layout(xaxis = list(tickangle = 45)) %>%
+          mode = 'lines+markers', hoverinfo = "text")  %>%
+        layout(xaxis = list(tickangle = 45)) %>%
         add_annotations(
           text = ~unique(subscale),
           x = 0.5, y = 1,
@@ -660,7 +669,7 @@ server <- shinyServer(function(input, output, session) {
         )
     ) %>%
     subplot(
-      nrows = 15, margin = 0.05,
+      nrows = (NROW(.)/2) + 1,
       shareY = FALSE, shareX = FALSE, titleY = FALSE
     ) %>% highlight(
       dynamic = TRUE,
