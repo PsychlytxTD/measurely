@@ -254,7 +254,7 @@ server <- shinyServer(function(input, output, session) {
     nested<- nested %>% dplyr::mutate(change = purrr::map_dbl( data, ~.x$score[1] - .x$score[length(.x$score)] ), #Specify non-sig improvement
                                       improve = purrr::map_lgl( data, ~ .x$score[length(.x$score)] < .x$score[1] & .x$score[length(.x$score)] >= .x$ci_lower[1]  ),
                                       sig_improve = purrr::map_lgl( data, ~.x$score[length(.x$score)] < .x$ci_lower[1] ),
-                                      remained_same = purrr::map_lgl( data, ~ .x$score[length(.x$score)] == .x$score[1] ),
+                                      remained_same = purrr::map_lgl( data, ~ (length(.x$score) > 1) & (.x$score[length(.x$score)] == .x$score[1]) ),
                                       deteriorated = purrr::map_lgl(data, ~.x$score[length(.x$score)] > .x$score[1] )
     )
 
