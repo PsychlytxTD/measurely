@@ -106,23 +106,7 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
       uiOutput("date_dropdown")
       ),
 
-    fluidRow(
-      valueBoxOutput("improved", width = 3),
-      bsModal("mod_1","Clients Showing Improvement","btn", size = "large",
-              DT::dataTableOutput("table_improved")),
-
-      valueBoxOutput("sig_improved", width = 3),
-      bsModal("mod_2","Clients Showing Statistically Reliable Improvement","btn", size = "large",
-              DT::dataTableOutput("table_sig_improved")),
-
-      valueBoxOutput("remained_same", width = 3),
-      bsModal("mod_3","Clients Showing No Change","btn", size = "large",
-              DT::dataTableOutput("table_remained_same")),
-
-      valueBoxOutput("deteriorated", width = 3),
-      bsModal("mod_4","Clients Showing Deterioration","btn", size = "large",
-              DT::dataTableOutput("table_deteriorated"))
-    ),
+   measurelydashboard::make_outcome_valueboxes_UI("make_outcome_valueboxes"),
 
     fluidRow(
       uiOutput("demographics_dropdown")
@@ -253,133 +237,10 @@ server <- shinyServer(function(input, output, session) {
   })
 
 
+
+  callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data, joined_data)
+
   callModule(measurelydashboard::plot_clinical_outcomes, "plot_clinical_outcomes", nested_data)
-
-
-  #Wrangle the data for the value boxes
-
-  value_box_outcomes<- reactive({
-
-    total_administrations<- nrow(nested_data())
-
-    joined_data() %>% dplyr::summarise(
-
-      improved = sum(nested_data()$improve, na.rm = TRUE),
-      improved_percent = round((improved/total_administrations) * 100 , 1),
-      sig_improved = sum(nested_data()$sig_improve, na.rm = TRUE),
-      sig_improved_percent = round((sig_improved/total_administrations) * 100, 1),
-      remained_same = sum(nested_data()$remained_same, na.rm = TRUE),
-      remained_same_percent = round((remained_same/total_administrations) * 100, 1),
-      deteriorated = sum(nested_data()$deteriorated, na.rm = TRUE),
-      deteriorated_percent = round((deteriorated/total_administrations) * 100, 1)
-
-    )
-
-  })
-
-  #Render the value boxes and the DT table modals that show upon clicking value boxes
-
-  output$improved <- renderValueBox({
-    entry_01<- 20
-    box1<- valueBox(
-      value = paste0(req(value_box_outcomes()) %>% dplyr::pull(1), " ", "(",
-                     value_box_outcomes() %>% dplyr::pull(2), "%", ")"),
-      href = "#",
-      subtitle = HTML("<b>Clients Improved</b>")
-    )
-    box1$children[[1]]$attribs$class<-"action-button"
-    box1$children[[1]]$attribs$id<-"button_box_01"
-    return(box1)
-  })
-
-
-  output$table_improved<- DT::renderDataTable({
-
-    nested_data() %>% dplyr::filter(improve == TRUE) %>% dplyr::select(first_name, last_name, birth_date, subscale)
-
-  })
-
-  observeEvent(input$button_box_01, {
-    toggleModal(session,"mod_1","open")
-  })
-
-
-
-
-
-  output$sig_improved <- renderValueBox({
-    entry_02<- 20
-    box2<- valueBox(
-      value = paste0(req(value_box_outcomes()) %>% dplyr::pull(3), " ", "(",
-                     value_box_outcomes() %>% dplyr::pull(4), "%", ")"),
-      href = "#",
-      subtitle = HTML("<b>Clients Significantly Improved</b>")
-    )
-    box2$children[[1]]$attribs$class<-"action-button"
-    box2$children[[1]]$attribs$id<-"button_box_02"
-    return(box2)
-  })
-
-  output$table_sig_improved<- DT::renderDataTable({
-
-    nested_data() %>% dplyr::filter(sig_improve == TRUE) %>% dplyr::select(first_name, last_name, birth_date, subscale)
-  })
-
-  observeEvent(input$button_box_02, {
-    toggleModal(session,"mod_2","open")
-  })
-
-
-
-  output$remained_same <- renderValueBox({
-    entry_03<- 20
-    box3<- valueBox(
-      value = paste0(req(value_box_outcomes()) %>% dplyr::pull(5), " ", "(",
-                     value_box_outcomes() %>% dplyr::pull(6), "%", ")"),
-      href = "#",
-      subtitle = HTML("<b>Clients Did Not Change</b>")
-    )
-    box3$children[[1]]$attribs$class<-"action-button"
-    box3$children[[1]]$attribs$id<-"button_box_03"
-    return(box3)
-  })
-
-
-  output$table_remained_same<- DT::renderDataTable({
-
-    nested_data() %>% dplyr::filter(remained_same == TRUE) %>% dplyr::select(first_name, last_name, birth_date, subscale)
-
-  })
-
-  observeEvent(input$button_box_03, {
-    toggleModal(session,"mod_3","open")
-  })
-
-
-  output$deteriorated <- renderValueBox({
-    entry_04<- 20
-    box4<- valueBox(
-      value = paste0(req(value_box_outcomes()) %>% dplyr::pull(7), " ", "(",
-                     value_box_outcomes() %>% dplyr::pull(8), "%", ")"),
-      href = "#",
-      subtitle = HTML("<b>Clients Deteriorated</b>")
-    )
-    box4$children[[1]]$attribs$class<-"action-button"
-    box4$children[[1]]$attribs$id<-"button_box_04"
-    return(box4)
-  })
-
-
-  output$table_deteriorated<- DT::renderDataTable({
-
-    nested_data() %>% dplyr::filter(deteriorated == TRUE) %>% dplyr::select(first_name, last_name, birth_date, subscale)
-
-  })
-
-  observeEvent(input$button_box_04, {
-    toggleModal(session,"mod_4","open")
-  })
-
 
 
   #Generate the dropdown of demographics variables

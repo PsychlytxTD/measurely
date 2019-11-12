@@ -26,7 +26,7 @@ fluidRow(
 #'
 #' Make the plot for displaying clinical outcomes by individual measures
 #'
-#' @param nested_data A reactive nested dataframe containing subscale scores for each individual
+#' @param nested_data A reactive nested dataframe containing subscale scores for each individual.
 #'
 #' @export
 
