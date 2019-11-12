@@ -108,18 +108,7 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
 
    measurelydashboard::make_outcome_valueboxes_UI("make_outcome_valueboxes"),
 
-    fluidRow(
-      uiOutput("demographics_dropdown")
-    ),
-
-    fluidRow(
-             box(collapsible = TRUE, title = "Explore Demographical Information", status = "primary", solidHeader = TRUE, width = 7,
-             plotly::plotlyOutput("demographics_plot")
-             ),
-             box(collapsible = TRUE, title = "Clinical Outcomes By Demographics", status = "primary", solidHeader = TRUE, width = 5,
-             plotly::plotlyOutput("summary_outcomes_plot_by_demographics")
-             )),
-
+   measurelydashboard::plot_demographics_UI("plot_demographics"),
 
     fluidRow(
       box(width = 12, collapsible = TRUE, title = "Client Diagnoses", status = "primary", solidHeader = TRUE,
@@ -240,114 +229,9 @@ server <- shinyServer(function(input, output, session) {
 
   callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data, joined_data)
 
+  callModule(measurelydashboard::plot_demographics, "plot_demographics", client, client_table, joined_data, nested_data)
+
   callModule(measurelydashboard::plot_clinical_outcomes, "plot_clinical_outcomes", nested_data)
-
-
-  #Generate the dropdown of demographics variables
-
-  output$demographics_dropdown<- renderUI({
-
-    #Make named list to pass to dropdown, to avoid underscores between words
-
-    demographic_vars<- names(req(joined_data()[6:14])) %>%
-      purrr::set_names(stringr::str_replace_all(names(joined_data()[6:14]), "_", " "))
-
-    selectInput("demographic_variable", "Select Demographic Outcome",
-                choices = demographic_vars)
-  })
-
-
-  #Plot the demographics pie graph
-
-  current_category<- reactiveVal()
-
-  output$demographics_plot <- plotly::renderPlotly({
-
-    demographics<- tibble::tibble(req(client_table()[, input$demographic_variable])) %>%
-      dplyr::count(.[[1]]) %>% purrr::set_names(c("labels", "values")) %>% dplyr::mutate_if(is.factor, as.character)
-
-    demographics$labels[demographics$labels == "" | is.na(demographics$labels)]<- "Missing"
-
-
-    plot_ly(demographics) %>%
-      add_pie(
-        labels = ~labels,
-        values = ~values,
-        hole = 0.6,
-        customdata = ~labels,
-        colors = "BrBG"
-      )
-
-  })
-
-  #Add variable metadata from click to reactive values object (needed for drill-down)
-
-  observe({
-
-    cd <- event_data("plotly_click")$customdata[[1]]
-
-    if (isTRUE(cd %in% client[,paste(req(input$demographic_variable))])) current_category(cd)
-
-  })
-
-  #Wrangle the drill-down data ready for plotting
-
-  outcomes_by_demographic<- reactive({
-
-    if(length(current_category())) {
-
-      outcomes_df<- client_table() %>% dplyr::inner_join(nested_data(), by = c("id" = "client_id"))
-
-      outcomes_df<- outcomes_df[, c(input$demographic_variable, "improve", "sig_improve", "remained_same", "deteriorated")]
-
-      names(outcomes_df)<- c("selected", "Improved", "Reliably Improved", "No Change", "Deteriorated")
-
-      outcomes_df<- outcomes_df %>% dplyr::filter(selected %in% current_category())
-
-      outcomes_df_gathered<- outcomes_df %>% tidyr::gather("outcome", "status", -selected) %>% dplyr::filter(status == TRUE)
-
-      outcomes_summary<- forcats::fct_count(outcomes_df_gathered$outcome, sort = TRUE, prop = TRUE) %>% dplyr::mutate(p = p * 100) %>%
-        dplyr::select(Variable = f, Count = n, Percent = p)
-
-    }
-
-  })
-
-  #Make the drill-down plot
-
-  output$summary_outcomes_plot_by_demographics<- renderPlotly({
-
-
-    p<- ggplot(req(outcomes_by_demographic()), aes(x = paste(current_category()[1]),
-                                                   y = Percent,
-                                                   fill = forcats::fct_reorder(Variable, Percent),
-                                                   text = paste(Variable, "<br>","Count: ", Count))) +
-      geom_col() + geom_text(aes(label = paste0(round(Percent, 1), "%")), size = 3,
-                             position = position_stack(vjust = 0.5)) +
-      theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            panel.background = element_blank(),
-            axis.line = element_blank()) + xlab("")
-
-
-    plotly::ggplotly(p, tooltip = "text")
-
-
-  })
-
-
-  # populate back button if category is chosen
-
-  output$back <- renderUI({
-
-    if (length(current_category())) actionButton("clear", "Clear", icon("chevron-left"))
-
-  })
-
-
-  # clear the chosen category on back button press
-
-  observeEvent(input$clear, current_category(NULL))
 
 
   #Create plot of diagnoses
