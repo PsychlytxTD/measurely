@@ -15,6 +15,7 @@ library(ggplot2)
 library(stringr)
 library(ggrepel)
 library(DT)
+library(eeptools)
 library(memor)
 library(extrafont)
 library(extrafontdb)
@@ -80,7 +81,10 @@ measure<- tbl(pool, "scale") %>% dplyr::collect() %>% as.data.frame() %>%
 dates<- c(as.Date(min(measure$date)),
           as.Date(max(measure$date)))
 
+#Import the posttherapy_analytics table
 
+posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
+  dplyr::collect() %>% as.data.frame() %>% dplyr::mutate(creation_date = as.Date(creation_date))
 
 
   header<- dashboardHeader(title ="Measurely | Clinical Outcomes Dashboard", titleWidth = 800)
@@ -139,14 +143,7 @@ dates<- c(as.Date(min(measure$date)),
           )
     ),
 
-    fluidRow(
-      radioGroupButtons("outcome_type", "Select Outcome", choices = c("Improvement", "Statistically Reliable Improvement",
-                                                                      "No Change", "Deterioration")),
-      box(width = 12,
-          plotly::plotlyOutput("plot_outcomes_by_measure")
-      )
-    ),
-
+    measurelydashboard::plot_clinical_outcomes_UI("plot_clinical_outcomes"),
 
     fluidRow(
       valueBoxOutput("attendances"),
@@ -189,11 +186,6 @@ server <- shinyServer(function(input, output, session) {
   })
 
 
-  #Import the posttherapy_analytics table
-
-  posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
-    dplyr::collect() %>% as.data.frame() %>% dplyr::mutate(creation_date = as.Date(creation_date))
-
 
   #Make reactive expressions from the imported tables (we need these to be updateable if the date filter changes)
 
@@ -233,7 +225,7 @@ server <- shinyServer(function(input, output, session) {
 
   nested_data<- reactive({
 
-    nested<- joined_data() %>% dplyr::group_by(client_id, measure, subscale) %>% tidyr::nest()
+    nested<- joined_data() %>% dplyr::group_by(client_id, first_name, last_name, birth_date, measure, subscale) %>% tidyr::nest()
 
     #Arrange the date column within each nested dataframe, from earliest to latest
 
@@ -261,63 +253,7 @@ server <- shinyServer(function(input, output, session) {
   })
 
 
-  #Wrangle data to generate outcomes by measure (improve, sig_improve, remained_same, deterioration etc.)
-
-  outcomes_by_measure<- reactive({
-
-    switch(input$outcome_type,
-
-           "Improvement" = {
-
-             nested_data() %>% dplyr::group_by(measure) %>% dplyr::summarise(
-
-               count = round(sum(improve, na.rm = TRUE), 1),
-               percent = round((count / length(improve)) * 100, 1),
-               average_change = round(mean(change, na.rm = TRUE), 1)
-
-             )
-
-           },
-
-           "Statistically Reliable Improvement" = {
-
-             nested_data() %>% dplyr::group_by(measure) %>% dplyr::summarise(
-
-               average_change = round(mean(change, na.rm = TRUE), 1),
-               count = round(sum(sig_improve, na.rm = TRUE), 1),
-               percent = round((count / length(sig_improve)) * 100, 1)
-
-             )
-
-           },
-
-           "No Change" = {
-
-             nested_data() %>% dplyr::group_by(measure) %>% dplyr::summarise(
-
-               average_change = round(mean(change, na.rm = TRUE), 1),
-               count = round(sum(remained_same, na.rm = TRUE), 1),
-               percent = round((count / length(remained_same)) * 100, 1)
-
-             )
-
-           },
-
-           "Deterioration" = {
-
-             nested_data() %>% dplyr::group_by(measure) %>% dplyr::summarise(
-
-               average_change = round(mean(change, na.rm = TRUE), 1),
-               count = round(sum(deteriorated, na.rm = TRUE), 1),
-               percent = round((count / length(deteriorated)) * 100, 1)
-
-             )
-
-           }
-
-    )
-
-  })
+  callModule(measurelydashboard::plot_clinical_outcomes, "plot_clinical_outcomes", nested_data)
 
 
   #Wrangle the data for the value boxes
@@ -357,9 +293,10 @@ server <- shinyServer(function(input, output, session) {
   })
 
 
-  output$table_improved<- DT::renderDataTable({ client_table() %>% inner_join(nested_data(),
-                                               by = c("id" = "client_id")) %>% dplyr::filter(improve == TRUE) %>%
-      dplyr::select(first_name, last_name, birth_date, subscale)
+  output$table_improved<- DT::renderDataTable({
+
+    nested_data() %>% dplyr::filter(improve == TRUE) %>% dplyr::select(first_name, last_name, birth_date, subscale)
+
   })
 
   observeEvent(input$button_box_01, {
@@ -383,9 +320,9 @@ server <- shinyServer(function(input, output, session) {
     return(box2)
   })
 
-  output$table_sig_improved<- DT::renderDataTable({ client_table() %>% inner_join(nested_data(),
-                                                     by = c("id" = "client_id")) %>% dplyr::filter(sig_improve == TRUE) %>%
-      dplyr::select(first_name, last_name, birth_date, subscale)
+  output$table_sig_improved<- DT::renderDataTable({
+
+    nested_data() %>% dplyr::filter(sig_improve == TRUE) %>% dplyr::select(first_name, last_name, birth_date, subscale)
   })
 
   observeEvent(input$button_box_02, {
@@ -408,9 +345,10 @@ server <- shinyServer(function(input, output, session) {
   })
 
 
-  output$table_remained_same<- DT::renderDataTable({ client_table() %>% inner_join(nested_data(),
-                                                    by = c("id" = "client_id")) %>% dplyr::filter(remained_same == TRUE) %>%
-      dplyr::select(first_name, last_name, birth_date, subscale)
+  output$table_remained_same<- DT::renderDataTable({
+
+    nested_data() %>% dplyr::filter(remained_same == TRUE) %>% dplyr::select(first_name, last_name, birth_date, subscale)
+
   })
 
   observeEvent(input$button_box_03, {
@@ -432,9 +370,10 @@ server <- shinyServer(function(input, output, session) {
   })
 
 
-  output$table_deteriorated<- DT::renderDataTable({ client_table() %>% inner_join(nested_data(),
-                                        by = c("id" = "client_id")) %>% dplyr::filter(deteriorated == TRUE) %>%
-      dplyr::select(first_name, last_name, birth_date, subscale)
+  output$table_deteriorated<- DT::renderDataTable({
+
+    nested_data() %>% dplyr::filter(deteriorated == TRUE) %>% dplyr::select(first_name, last_name, birth_date, subscale)
+
   })
 
   observeEvent(input$button_box_04, {
@@ -595,37 +534,6 @@ server <- shinyServer(function(input, output, session) {
 
 
 
-  #Generate a plot displaying outcomes by measure (allowing comparison of measures)
-
-  output$plot_outcomes_by_measure<- plotly::renderPlotly({
-
-    measures_whitespace<- gsub("_", "-", req(outcomes_by_measure()$measure))
-
-    p<- ggplot(outcomes_by_measure(), aes(x= measure, y= percent, color = measure, fill = measure,
-                                          text = paste0("Percentage of ", gsub('_', '-', measure),
-                                                        " respondents that showed", " ", stringr::str_to_lower(input$outcome_type), ": ", percent, "%", "<br>",
-                                                        "Mean change (pre to post) on the: ", gsub('_', '-', measure), ": ", average_change))) +
-      geom_col() +
-      xlab("Outcome Measure") + ylab(paste("%", stringr::str_to_sentence(input$outcome_type), "Per Measure")) +
-      ggtitle(paste("Comparison of Outcome Measures:", stringr::str_to_sentence(input$outcome_type))) +
-      scale_x_discrete(labels = measures_whitespace) +
-      theme(panel.grid.minor.y = element_blank(),
-            panel.grid.major.y = element_blank(),
-            panel.background = element_blank(),
-            panel.grid.major.x = element_line("grey"),
-            axis.text.x = element_text(angle=65, vjust=0.6),
-            legend.position="none"
-      )
-
-
-
-    ggplotly(p, tooltip = "text")
-
-  })
-
-
-
-
   all_cases_by_measure<- reactive({
 
   by_measure_nested<- nested_data() %>% dplyr::mutate(data = purrr::map(data, ~ dplyr::mutate(., timepoint = 1:length(.x$date))))
@@ -714,7 +622,7 @@ output$attendances <- renderValueBox({
 output$cancellations <- renderValueBox({
   valueBox(
     value = paste0(req(value_box_posttherapy()) %>% dplyr::pull(2)),
-    subtitle = "Averange Cancellations Per Client"
+    subtitle = "Average Cancellations Per Client"
   )
 })
 
