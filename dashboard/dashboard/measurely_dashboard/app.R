@@ -31,7 +31,6 @@ library(tibble)
 library(aws.s3)
 library(glue)
 library(plotly)
-library(skimr)
 
 
 pool <- dbPool( #Set up the connection with the db
@@ -100,13 +99,15 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
 
     ),
 
+
     fluidPage(
 
     fluidRow(
       uiOutput("date_dropdown")
       ),
 
-    measurelydashboard::make_nested_data_UI("make_nested_data"),
+
+   measurelydashboard::make_nested_data_UI("make_nested_data"),
 
    measurelydashboard::make_outcome_valueboxes_UI("make_outcome_valueboxes"),
 

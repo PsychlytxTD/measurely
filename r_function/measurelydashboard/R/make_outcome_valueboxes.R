@@ -13,7 +13,8 @@ make_outcome_valueboxes_UI<- function(id) {
 
   fluidRow(
 
-    valueBoxOutput(ns("improved"), width = 3),
+    shinycssloaders::withSpinner(valueBoxOutput(ns("improved"), width = 3), type = getOption("spinner.type", default = 7),
+                                 color = getOption("spinner.color", default = "#d35400")),
 
     bsModal(ns("mod_1"),"Clients Showing Improvement","btn", size = "large",
             DT::dataTableOutput(ns("table_improved"))),
@@ -90,6 +91,7 @@ output$improved <- renderValueBox({
   box1$children[[1]]$attribs$class<-"action-button"
   box1$children[[1]]$attribs$id<-ns("button_box_01")
   return(box1)
+
 })
 
 
