@@ -114,27 +114,11 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
 
    measurelydashboard::plot_clinical_outcomes_UI("plot_clinical_outcomes"),
 
-    fluidRow(
-      valueBoxOutput("attendances"),
-      valueBoxOutput("cancellations"),
-      valueBoxOutput("dnas")
-    ),
+   measurelydashboard::make_posttherapy_valueboxes_UI("make_posttherapy_valueboxes"),
 
-    fluidRow(
+   measurelydashboard::plot_posttherapy_outcomes_UI("plot_posttherapy_outcomes"),
 
-      uiOutput("posttherapy_dropdown")
-
-    ),
-
-    fluidRow(
-      box(collapsible = TRUE, title = "Attendance Characteristics", status = "primary", solidHeader = TRUE, width = 7,
-          plotly::plotlyOutput("posttherapy_plot")
-      ),
-      box(collapsible = TRUE, title = "Clinical Outcomes By Attendance Characteristics", status = "primary", solidHeader = TRUE, width = 5,
-          plotly::plotlyOutput("summary_outcomes_plot_by_posttherapy")
-      )),
-
-    measurelydashboard::plot_cases_by_measure_UI("plot_cases_by_measure")
+   measurelydashboard::plot_cases_by_measure_UI("plot_cases_by_measure")
 
 
   ))
@@ -233,130 +217,10 @@ server <- shinyServer(function(input, output, session) {
 
   callModule(measurelydashboard::plot_cases_by_measure, "plot_cases_by_measure", nested_data)
 
+  callModule(measurelydashboard::make_posttherapy_valueboxes, "make_posttherapy_valueboxes", posttherapy_analytics_table)
 
-value_box_posttherapy<- reactive({
-
-  posttherapy_analytics_table() %>% dplyr::summarise(
-
-    avg_attendances<- round(mean(attendances, na.rm = TRUE), 1),
-
-    avg_cancellations<- round(mean(cancellations, na.rm = TRUE), 1),
-
-    avg_dnas<- round(mean(non_attendances, na.rm = TRUE), 1)
-
-  )
-
-
-})
-
-
-output$attendances <- renderValueBox({
-  valueBox(
-    value = paste0(req(value_box_posttherapy()) %>% dplyr::pull(1)),
-    subtitle = "Average Sessions Per Client"
-  )
-})
-
-output$cancellations <- renderValueBox({
-  valueBox(
-    value = paste0(req(value_box_posttherapy()) %>% dplyr::pull(2)),
-    subtitle = "Average Cancellations Per Client"
-  )
-})
-
-output$dnas <- renderValueBox({
-  valueBox(
-    value = paste0(req(value_box_posttherapy()) %>% dplyr::pull(3)),
-    subtitle = "Average DNAs Per Client"
-  )
-
-})
-
-
-output$posttherapy_dropdown<- renderUI({
-
-  #Make named list to pass to dropdown, to avoid underscores between words
-
-  posttherapy_vars<- names(req(joined_data()[, 38:49])) %>%
-    purrr::set_names(stringr::str_replace_all(names(joined_data()[, 38:49]), "_", " "))
-
-  selectInput("posttherapy_variable", "Select Therapy Outcome",
-              choices = posttherapy_vars)
-})
-
-
-current_category_posttherapy<- reactiveVal()
-
-output$posttherapy_plot <- plotly::renderPlotly({
-
-  posttherapy<- tibble::tibble(req(posttherapy_analytics_table()[, req(input$posttherapy_variable)])) %>%
-    dplyr::count(.[[1]]) %>% purrr::set_names(c("labels", "values")) %>% dplyr::mutate_if(is.factor, as.character)
-
-  posttherapy$labels[posttherapy$labels == "" | is.na(posttherapy$labels)]<- "Missing"
-
-
-  plot_ly(posttherapy) %>%
-    add_pie(
-      labels = ~labels,
-      values = ~values,
-      hole = 0.6,
-      customdata = ~labels
-    ) %>%
-    layout(legend = list(orientation = 'h'))
-
-})
-
-
-
-observe({
-
-  cd <- event_data("plotly_click")$customdata[[1]]
-
-  if (isTRUE(cd %in% posttherapy_analytics[,paste(input$posttherapy_variable)])) current_category_posttherapy(cd)
-
-})
-
-
-outcomes_by_posttherapy<- reactive({
-
-  if(length(current_category_posttherapy())) {
-
-    outcomes_df<- posttherapy_analytics_table() %>% dplyr::inner_join(nested_data(), by = c("client_id" = "client_id"))
-
-    outcomes_df<- outcomes_df[, c(input$posttherapy_variable, "improve", "sig_improve", "remained_same", "deteriorated")]
-
-    names(outcomes_df)<- c("selected", "Improved", "Reliably Improved", "No Change", "Deteriorated")
-
-    outcomes_df<- outcomes_df %>% dplyr::filter(selected %in% current_category_posttherapy())
-
-    outcomes_df_gathered<- outcomes_df %>% tidyr::gather("outcome", "status", -selected) %>% dplyr::filter(status == TRUE)
-
-    outcomes_summary<- forcats::fct_count(outcomes_df_gathered$outcome, sort = TRUE, prop = TRUE) %>% dplyr::mutate(p = p * 100) %>%
-      dplyr::select(Variable = f, Count = n, Percent = p)
-
-  }
-
-})
-
-
-output$summary_outcomes_plot_by_posttherapy<- renderPlotly({
-
-
-  p<- ggplot(req(outcomes_by_posttherapy()), aes(x = paste(current_category_posttherapy()[1]),
-                                                 y = Percent,
-                                                 fill = forcats::fct_reorder(Variable, Percent),
-                                                 text = paste(Variable, "<br>","Count: ", Count))) +
-    geom_col() + geom_text(aes(label = paste0(round(Percent, 1), "%")), size = 3,
-                           position = position_stack(vjust = 0.5)) +
-    theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          panel.background = element_blank(),
-          axis.line = element_blank()) + xlab("")
-
-
-  plotly::ggplotly(p, tooltip = "text")
-
-})
+  callModule(measurelydashboard::plot_posttherapy_outcomes, "plot_posttherapy_outcomes", posttherapy_analytics,
+             posttherapy_analytics_table, joined_data, nested_data)
 
 
 })
