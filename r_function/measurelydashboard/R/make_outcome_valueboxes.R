@@ -57,18 +57,17 @@ make_outcome_valueboxes<- function(input, output, session, nested_data, joined_d
 
 value_box_outcomes<- reactive({
 
-
   total_administrations<- nrow(nested_data())
 
-  joined_data() %>% dplyr::summarise(
+  nested_data() %>% dplyr::summarise(
 
-    improved = sum(nested_data()$improve, na.rm = TRUE),
+    improved = sum(improve, na.rm = TRUE),
     improved_percent = round((improved/total_administrations) * 100 , 1),
-    sig_improved = sum(nested_data()$sig_improve, na.rm = TRUE),
+    sig_improved = sum(sig_improve, na.rm = TRUE),
     sig_improved_percent = round((sig_improved/total_administrations) * 100, 1),
-    remained_same = sum(nested_data()$remained_same, na.rm = TRUE),
+    remained_same = sum(remained_same, na.rm = TRUE),
     remained_same_percent = round((remained_same/total_administrations) * 100, 1),
-    deteriorated = sum(nested_data()$deteriorated, na.rm = TRUE),
+    deteriorated = sum(deteriorated, na.rm = TRUE),
     deteriorated_percent = round((deteriorated/total_administrations) * 100, 1)
 
   )
@@ -83,8 +82,8 @@ output$improved <- renderValueBox({
 
   entry_01<- 20
   box1<- valueBox(
-    value = paste0(req(value_box_outcomes()) %>% dplyr::pull(1), " ", "(",
-                   req(value_box_outcomes()) %>% dplyr::pull(2), "%", ")"),
+    value = paste0(value_box_outcomes() %>% dplyr::pull(1), " ", "(",
+                   value_box_outcomes() %>% dplyr::pull(2), "%", ")"),
     href = "#",
     subtitle = HTML("<b>Clients Improved</b>")
   )
@@ -114,7 +113,7 @@ output$sig_improved <- renderValueBox({
 
   entry_02<- 20
   box2<- valueBox(
-    value = paste0(req(value_box_outcomes()) %>% dplyr::pull(3), " ", "(",
+    value = paste0(value_box_outcomes() %>% dplyr::pull(3), " ", "(",
                    value_box_outcomes() %>% dplyr::pull(4), "%", ")"),
     href = "#",
     subtitle = HTML("<b>Clients Significantly Improved</b>")
@@ -142,7 +141,7 @@ output$remained_same <- renderValueBox({
 
   entry_03<- 20
   box3<- valueBox(
-    value = paste0(req(value_box_outcomes()) %>% dplyr::pull(5), " ", "(",
+    value = paste0(value_box_outcomes() %>% dplyr::pull(5), " ", "(",
                    value_box_outcomes() %>% dplyr::pull(6), "%", ")"),
     href = "#",
     subtitle = HTML("<b>Clients Did Not Change</b>")
@@ -170,7 +169,7 @@ output$deteriorated <- renderValueBox({
 
   entry_04<- 20
   box4<- valueBox(
-    value = paste0(req(value_box_outcomes()) %>% dplyr::pull(7), " ", "(",
+    value = paste0(value_box_outcomes() %>% dplyr::pull(7), " ", "(",
                    value_box_outcomes() %>% dplyr::pull(8), "%", ")"),
     href = "#",
     subtitle = HTML("<b>Clients Deteriorated</b>")

@@ -106,6 +106,8 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
       uiOutput("date_dropdown")
       ),
 
+    measurelydashboard::make_nested_data_UI("make_nested_data"),
+
    measurelydashboard::make_outcome_valueboxes_UI("make_outcome_valueboxes"),
 
    measurelydashboard::plot_demographics_UI("plot_demographics"),
@@ -133,7 +135,6 @@ server <- shinyServer(function(input, output, session) {
 
   addClass(selector = "body", class = "sidebar-collapse")
 
-
   output$date_dropdown<- renderUI({
     dateRangeInput("date_selection", "Select Date Range", start = dates[1], end = dates[2], format = "yyyy-mm-dd")
   })
@@ -143,17 +144,15 @@ server <- shinyServer(function(input, output, session) {
   #Make reactive expressions from the imported tables (we need these to be updateable if the date filter changes)
 
   measure_table<- reactive({
-    measure %>% dplyr::filter(date >= input$date_selection[1] & date <= input$date_selection[2])
+    measure %>% dplyr::filter(date >= req(input$date_selection[1]) & date <= req(input$date_selection[2]))
   })
-
 
   client_table<- reactive({
-    client %>% dplyr::filter(creation_date >= input$date_selection[1] & creation_date <= input$date_selection[2])
+    client %>% dplyr::filter(creation_date >= req(input$date_selection[1]) & creation_date <= req(input$date_selection[2]))
   })
 
-
   posttherapy_analytics_table<- reactive({
-    posttherapy_analytics %>%  dplyr::filter(creation_date >= input$date_selection[1] & creation_date <= input$date_selection[2])
+    posttherapy_analytics %>%  dplyr::filter(creation_date >= req(input$date_selection[1]) & creation_date <= req(input$date_selection[2]))
   })
 
 
@@ -172,40 +171,7 @@ server <- shinyServer(function(input, output, session) {
   })
 
 
-  #Nest the joined data - required for analysis of outcomes by measure and client
-
-  #Create a list column with scores on a specific subscale for each client
-
-  nested_data<- reactive({
-
-    nested<- joined_data() %>% dplyr::group_by(client_id, first_name, last_name, birth_date, measure, subscale) %>% tidyr::nest()
-
-    #Arrange the date column within each nested dataframe, from earliest to latest
-
-    nested$data<- purrr::map(nested$data, ~dplyr::arrange(., lubridate::dmy(.x$date)))
-
-    #Within each nested dataframe, canculate key stats across all timepoints for that subscale
-
-    nested<- nested %>% dplyr::mutate(data = purrr::map(data, ~ dplyr::mutate(., improve_all = .x$score < lag( .x$score ),
-                                                                              sig_improve_all = .x$score < lag( .x$ci_lower ),
-                                                                              remained_same_all = .x$score == lag( .x$score ),
-                                                                              deteriorated_all = .x$score > lag( .x$score ),
-                                                                              change_all = .x$score - lag(.x$score)
-    )))
-
-    #Use the nested dataframes to add new variables of key stats between first and last timepoint for each client per subscale
-
-
-    nested<- nested %>% dplyr::mutate(change = purrr::map_dbl( data, ~.x$score[1] - .x$score[length(.x$score)] ), #Specify non-sig improvement
-                                      improve = purrr::map_lgl( data, ~ .x$score[length(.x$score)] < .x$score[1] & .x$score[length(.x$score)] >= .x$ci_lower[1]  ),
-                                      sig_improve = purrr::map_lgl( data, ~.x$score[length(.x$score)] < .x$ci_lower[1] ),
-                                      remained_same = purrr::map_lgl( data, ~ (length(.x$score) > 1) & (.x$score[length(.x$score)] == .x$score[1]) ),
-                                      deteriorated = purrr::map_lgl(data, ~.x$score[length(.x$score)] > .x$score[1] )
-    )
-
-  })
-
-
+  nested_data<- callModule(measurelydashboard::make_nested_data, "make_nested_data", joined_data)
 
   callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data, joined_data)
 
