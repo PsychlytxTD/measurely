@@ -110,13 +110,9 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
 
    measurelydashboard::plot_demographics_UI("plot_demographics"),
 
-    fluidRow(
-      box(width = 12, collapsible = TRUE, title = "Client Diagnoses", status = "primary", solidHeader = TRUE,
-          plotly::plotlyOutput("diagnosis_plot")
-          )
-    ),
+   measurelydashboard::plot_diagnoses_UI("plot_diagnoses"),
 
-    measurelydashboard::plot_clinical_outcomes_UI("plot_clinical_outcomes"),
+   measurelydashboard::plot_clinical_outcomes_UI("plot_clinical_outcomes"),
 
     fluidRow(
       valueBoxOutput("attendances"),
@@ -138,7 +134,7 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
           plotly::plotlyOutput("summary_outcomes_plot_by_posttherapy")
       )),
 
-    plotly::plotlyOutput("plot_all_cases_by_measure", height = "2000px")
+    measurelydashboard::plot_cases_by_measure_UI("plot_cases_by_measure")
 
 
   ))
@@ -231,114 +227,11 @@ server <- shinyServer(function(input, output, session) {
 
   callModule(measurelydashboard::plot_demographics, "plot_demographics", client, client_table, joined_data, nested_data)
 
+  callModule(measurelydashboard::plot_diagnoses, "plot_diagnoses", posttherapy_analytics_table)
+
   callModule(measurelydashboard::plot_clinical_outcomes, "plot_clinical_outcomes", nested_data)
 
-
-  #Create plot of diagnoses
-
-  output$diagnosis_plot<- plotly::renderPlotly({
-
-    df_dsm<- req(posttherapy_analytics_table()) %>% count(principal_diagnosis, secondary_diagnosis) %>% select(principal_diagnosis, secondary_diagnosis, number = n)
-
-    df_dsm<- df_dsm %>% mutate('relative'=unlist(by(data = number, INDICES = principal_diagnosis,
-                                                    FUN = function(x) round(x/sum(x)*100, digits = 1))))
-
-    df_dsm<- df_dsm %>% group_by(principal_diagnosis) %>% mutate(diagnosis_count = sum(number))
-
-    df_dsm<- df_dsm %>% mutate_if(is.factor, as.character)
-
-    df_dsm$principal_diagnosis[df_dsm$principal_diagnosis == "" | is.na(df_dsm$principal_diagnosis)]<- "Missing"
-
-    df_dsm$secondary_diagnosis[df_dsm$secondary_diagnosis == "" | is.na(df_dsm$secondary_diagnosis)]<- "Missing"
-
-
-    #create the stacked bar plot based on your data
-    p<- ggplot(data = df_dsm, aes(y= number, x=principal_diagnosis, fill=secondary_diagnosis,
-                                  text = paste("Primary Diagnosis: ", principal_diagnosis, "<br>",
-                                               "Number of Cases:", diagnosis_count, "<br>",
-                                               "Representents ", round((diagnosis_count/nrow(df_dsm) * 100), 2), "% of all primary diagnoses")
-
-    )) +
-      geom_bar(stat="identity", width = 0.5) +
-      xlab('Primary Diagnosis') + ylab('Number of Cases') +
-      #use JOELS great solution for the label position
-      #and add percentage based on variable 'relative', otherwise use 'number'
-      geom_text(aes(x = principal_diagnosis, label = paste0(relative,'%')),
-                colour = 'white', position=position_stack(vjust=0.5)) +
-      labs(fill='Secondary Diagnosis') + coord_flip() +
-      theme(panel.grid.minor.y = element_blank(),
-            panel.grid.major.y = element_blank(),
-            panel.background = element_blank(),
-            panel.grid.major.x = element_line("grey")
-      )
-
-
-    ggplotly(p, tooltip = "text")
-
-  })
-
-
-
-  all_cases_by_measure<- reactive({
-
-  by_measure_nested<- nested_data() %>% dplyr::mutate(data = purrr::map(data, ~ dplyr::mutate(., timepoint = 1:length(.x$date))))
-
-  by_measure<- tidyr::unnest(by_measure_nested)
-
-  by_measure<- dplyr::mutate(by_measure, timepoint = paste("Time", timepoint))
-
-  by_measure<- by_measure %>% tidyr::unite("Client", first_name, last_name, birth_date, sep = " ")
-
-  by_measure<- by_measure %>% dplyr::group_by(subscale, timepoint) %>% dplyr::mutate(mean_score = round(mean(score, na.rm = TRUE), 2)) %>% dplyr::ungroup()
-
-  by_measure$subscale<- gsub("_", "-", by_measure$subscale)
-
-
-
-  by_measure %>%
-    group_by(subscale) %>%
-    dplyr::do(
-      p = highlight_key(., ~Client, group = "Select A Client") %>%
-        plot_ly(type = 'scatter', mode = 'lines', showlegend = FALSE) %>%
-        add_lines(x = ~timepoint, y = ~ mean_score, text = ~paste("Mean Score:", mean_score),
-                  line = list(width = 3, dash = 'dash'),
-                  marker =  list(symbol ="diamond-open"),
-                  mode = 'lines+markers', hoverinfo = "text") %>%
-        group_by(Client) %>%
-        add_trace(
-          x = ~timepoint, y = ~score, text = ~paste("Client:", Client, "<br>",
-                                                   "Assessment Date:", date, "<br>",
-                                                   "Score:", score, "<br>",
-                                                   "Change Since Previous:", sprintf("%+3.1f", change_all)
-                                                   ),
-          mode = 'lines+markers', hoverinfo = "text")  %>%
-        layout(xaxis = list(tickangle = 45)) %>%
-        add_annotations(
-          text = ~unique(subscale),
-          x = 0.5, y = 1,
-          xref = "paper", yref = "paper",
-          xanchor = "center", yanchor = "bottom",
-          showarrow = FALSE
-        )
-    ) %>%
-    subplot(
-      nrows = (NROW(.)/2) + 1,
-      shareY = FALSE, shareX = FALSE, titleY = FALSE
-    ) %>% highlight(
-      dynamic = TRUE,
-      selectize = TRUE,
-      color = "red"
-    )
-
-
-})
-
-
-output$plot_all_cases_by_measure<- plotly::renderPlotly({
-
-  req(all_cases_by_measure())
-
-})
+  callModule(measurelydashboard::plot_cases_by_measure, "plot_cases_by_measure", nested_data)
 
 
 value_box_posttherapy<- reactive({

@@ -60,7 +60,7 @@ output$demographics_dropdown<- renderUI({
 
   #Make named list to pass to dropdown, to avoid underscores between words
 
-  demographic_vars<- names(req(joined_data()[6:14])) %>%
+  demographic_vars<- names(joined_data()[6:14]) %>%
     purrr::set_names(stringr::str_replace_all(names(joined_data()[6:14]), "_", " "))
 
 
@@ -76,7 +76,7 @@ current_category<- reactiveVal()
 
 output$demographics_plot <- plotly::renderPlotly({
 
-  demographics<- tibble::tibble(req(joined_data()[, input$demographic_variable])) %>%
+  demographics<- tibble::tibble(joined_data()[, req(input$demographic_variable)]) %>%
     dplyr::count(.[[1]]) %>% purrr::set_names(c("labels", "values")) %>% dplyr::mutate_if(is.factor, as.character)
 
   demographics$labels[demographics$labels == "" | is.na(demographics$labels)]<- "Missing"
@@ -130,8 +130,10 @@ outcomes_by_demographic<- reactive({
 
 output$summary_outcomes_plot_by_demographics<- renderPlotly({
 
+  validate(need(length(outcomes_by_demographic()$Percent) >= 1, "No data to show yet. Click on a category of the left plot."))
 
-  p<- ggplot(req(outcomes_by_demographic()), aes(x = paste(current_category()[1]),
+
+  p<- ggplot(outcomes_by_demographic(), aes(x = paste(current_category()[1]),
                                                  y = Percent,
                                                  fill = forcats::fct_reorder(Variable, Percent),
                                                  text = paste(Variable, "<br>","Count: ", Count))) +

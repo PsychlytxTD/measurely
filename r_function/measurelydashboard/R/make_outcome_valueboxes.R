@@ -84,7 +84,7 @@ output$improved <- renderValueBox({
   entry_01<- 20
   box1<- valueBox(
     value = paste0(req(value_box_outcomes()) %>% dplyr::pull(1), " ", "(",
-                   value_box_outcomes() %>% dplyr::pull(2), "%", ")"),
+                   req(value_box_outcomes()) %>% dplyr::pull(2), "%", ")"),
     href = "#",
     subtitle = HTML("<b>Clients Improved</b>")
   )
