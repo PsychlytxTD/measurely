@@ -77,21 +77,22 @@ ui<- function(request) {
                   
                   tabBox(id = "tabset", width = 12,
                          
+                         tabPanel("", 
+                                  
+                                  psychlytx::read_holding_stats_UI("read_holding_stats")
+                                  
+                                  ),
+                         
                       
                          tabPanel("", value = "go_questionnaire",
                                 
-                                  
-                                 
-                                  psychlytx::read_holding_stats_UI("read_holding_stats"),
-                                  
-                                  
                                   h3(textOutput("client_name_message")),
                             
                                   psychlytx::gad7_scale_UI("gad7_scale"), #Item of the specific measure
                   
                                   psychlytx::manual_data_UI("manual_data"), #Items of the specific measure are passed here as a string of numbers
                                   
-                                  psychlytx::format_gad7_responses_for_email_UI("format_repsonses_for_email"),
+                                  psychlytx::format_gad7_responses_for_email_UI("format_responses_for_email"),
                                   
                                   psychlytx::calculate_subscale_UI("calculate_subscales"), #Calculate all aggregate subscale scores for the measure
                                   
@@ -164,7 +165,7 @@ server <- function(input, output, session) {
   
   observe({
     
-    shinyjs::hideElement(id= "hide_settings")
+    shinyjs::hideElement(id = "hide_settings")
     
   })
   
@@ -271,7 +272,6 @@ server <- function(input, output, session) {
     
     clinician_email$value<- clinician_object[[1]][1]  #Subset the object to only pull out the clinician's email address
     
-    print(clinician_email$value)
   
   })
   
@@ -280,7 +280,7 @@ server <- function(input, output, session) {
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the body text to be sent.     
   #Add clinician email - will need to query API to get it from simplified app (we don't automatically get it from shinyproxy clinician login)
                                                                                                                                  #Add clinician email
-  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_repsonses_for_email", 
+  formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_responses_for_email", 
                                                  pool, clinician_email, manual_entry, simplified_measure_data, simplified = TRUE)
   
   

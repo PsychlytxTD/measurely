@@ -91,6 +91,7 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
   sidebar<- dashboardSidebar()
 
   body<- dashboardBody(
+
     useShinyjs(),
 
     tags$head(
@@ -103,7 +104,9 @@ posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
     fluidPage(
 
     fluidRow(
+
       uiOutput("date_dropdown")
+
       ),
 
 
@@ -137,7 +140,7 @@ server <- shinyServer(function(input, output, session) {
   addClass(selector = "body", class = "sidebar-collapse")
 
   output$date_dropdown<- renderUI({
-    dateRangeInput("date_selection", "Select Date Range", start = dates[1], end = dates[2], format = "yyyy-mm-dd")
+    dateRangeInput("date_selection", "Select Date Range For Analyses", start = dates[1], end = dates[2], format = "dd-mm-yyyy")
   })
 
 
