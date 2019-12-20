@@ -113,9 +113,10 @@ ui<- function(request) {
                                       
                                       shinyBS::bsModal("show_population_modal", "Please Indicate Your Client's Stage of Assessment", "retrieve_client_data", size = "large",
                                               
-                                              psychlytx::apply_initial_population_UI("apply_population"),
+                                              psychlytx::apply_initial_population_UI("apply_population")
                                               
-                                              psychlytx::analytics_posttherapy_UI("analytics_posttherapy") #End-of-therapy clinical outcomes panel
+                                              
+                                              
                                               
                                       ),
                                       
@@ -135,7 +136,7 @@ ui<- function(request) {
                                     ))),
                          
                          
-                         tabPanel(tags$strong("Complete Measure"), 
+                         tabPanel(tags$strong("Complete Measure"),
                                   
                                   
                                   psychlytx::extract_holding_statistics_UI("extract_holding_statistics"),
@@ -146,8 +147,6 @@ ui<- function(request) {
 
                                   psychlytx::gad7_scale_UI("gad7_scale"), #Item of the specific measure
                                   
-                                  psychlytx::write_posttherapy_to_db_UI("write_posttherapy_to_db"),
-                                
                                   psychlytx::manual_data_UI("manual_data"), #Items of the specific measure are passed here as a string of numbers
                                   
                                   psychlytx::format_gad7_responses_for_email_UI("format_responses_for_email"),
@@ -275,7 +274,7 @@ server <- function(input, output, session) {
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
-                                           subscale_info_1, existing_data)) #Store the selected population for downstream use in other modules
+                                           subscale_info_1, existing_data, pool, selected_client, clinician_id)) #Store the selected population for downstream use in other modules
   
   
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client
@@ -354,8 +353,6 @@ server <- function(input, output, session) {
   callModule(psychlytx::write_statistics_to_holding, "write_holding_statistics_to_db", pool, holding_data)
   
   
-  
-  
   most_recent_client_data<- reactiveValues()
   
 onclick("trigger_most_recent_data",  #Query database when user clicks report tab to make sure that the most recent data is pulled in before report generation
@@ -374,14 +371,7 @@ onclick("trigger_most_recent_data",  #Query database when user clicks report tab
           
           )
   
-  
-  #Write post-therapy analytics data to db
-  
-  analytics_posttherapy<- callModule(psychlytx::analytics_posttherapy, "analytics_posttherapy", clinician_id, selected_client) #Collect posttherapy info
-  
-  callModule(psychlytx::write_posttherapy_to_db, "write_posttherapy_to_db", pool, analytics_posttherapy) #Write posttherapy info to db
-  
-  
+
   
   #Pull selected client's data from db, create a nested df containing all necessary info for report (plots and tables) and send to R Markdown doc.
   

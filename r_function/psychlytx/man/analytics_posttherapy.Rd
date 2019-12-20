@@ -5,7 +5,7 @@
 \title{New or existing client status widget and headings}
 \usage{
 analytics_posttherapy(input, output, session, clinician_id,
-  selected_client)
+  selected_client, assessment_stage)
 }
 \arguments{
 \item{clinician_id}{String indicating clinician's unique identifier.}

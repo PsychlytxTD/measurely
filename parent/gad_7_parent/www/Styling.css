@@ -96,7 +96,9 @@
                                
                                .swal-button--confirm:focus {box-shadow:none;}
                                
-                               .button.btn.btn-default {content: 'Done';}
+                               .modal-footer .btn-default {visibility: hidden;}
+                               .modal-footer .btn-default:after {content: "Okay"; visibility:visible;
+                               }
 
                                 
                                 )

@@ -85,7 +85,11 @@ display_client_data<- function(input, output, session, pool, selected_client, me
   })
 
 
-  output$client_data_availability_message<- renderText({ #Show user whether client has been selected and whether data has previously been inputted.
+  output$client_data_availability_message<- renderText({
+
+    measure<- gsub("_", "-", measure)
+
+    #Show user whether client has been selected and whether data has previously been inputted.
 
     req( selected_client_data() )
 
@@ -95,7 +99,7 @@ display_client_data<- function(input, output, session, pool, selected_client, me
 
     } else {
 
-      glue::glue("Client selected. No data to show yet for this measure. Note: only your client's outcome data for the {measure} are displayed.")
+      glue::glue("Client selected. No data to show yet for the {measure}.")
 
     }
 

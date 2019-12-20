@@ -80,7 +80,7 @@ ui<- function(request) {
                          tabPanel("", 
                                   
                                   psychlytx::read_holding_stats_UI("read_holding_stats")
-                                  
+          
                                   ),
                          
                       
@@ -243,8 +243,6 @@ server <- function(input, output, session) {
     
     url<- "https://scala.au.auth0.com/oauth/token"
     
-    payload<- "grant_type=client_credentials&client_id=J0aFeSwChHWyIidxIvGggvOtNiIglaV7&client_secret=LFAsaZ4jbLowQ2ug9G38CYy7TGwAb3vkDkKuPyP7vuwXswNfROT-nzv6BY-KQxpd&audience=https%3A%2F%2Fscala.au.auth0.com%2Fapi%2Fv2%2F"
-    
     request_body<- list(
       grant_type = "client_credentials",
       client_id = Sys.getenv("AUTHO_CLIENT_ID"),                                      #Use a generic client_id and client_secret to obtain token to ping Autho
@@ -272,7 +270,6 @@ server <- function(input, output, session) {
     
     clinician_email$value<- clinician_object[[1]][1]  #Subset the object to only pull out the clinician's email address
     
-  
   })
   
   

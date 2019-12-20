@@ -87,7 +87,6 @@ write_measure_data_to_db<- function(input, ouput, session, pool, measure_data, m
                     verbose())
 
 
-
   })
 
 }

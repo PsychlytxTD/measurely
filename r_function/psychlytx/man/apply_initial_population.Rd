@@ -10,7 +10,8 @@ apply_initial_population(input, output, session, title, brief_title,
   cutoff_labels, cutoff_references, cutoff_quantity, items, max_score,
   min_score, plot_shading_gap, plot_cutoff_label_start,
   plot_cutoff_label_size, description, sample_overview, journal_references,
-  existing_data, tabsetpanel_id = "tabset")
+  existing_data, pool, selected_client, clinician_id,
+  tabsetpanel_id = "tabset")
 }
 \arguments{
 \item{title}{A string (white space allowed) indicating the name of the subscale, to be used as a panel title.}

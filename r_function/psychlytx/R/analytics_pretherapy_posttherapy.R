@@ -145,95 +145,7 @@ analytics_posttherapy_UI<- function(id) {
 
   ns<- NS(id)
 
-  tagList(
-
-    fluidPage(
-
-      fluidRow(
-
-    column(width = 10, offset = 1, checkboxInput(ns("last_assessment"), h4(tags$strong("Final assessment using this measure or any other.", style = "color: #283747")),
-                                                 width = "100%"))),
-
-    conditionalPanel(condition = "input.last_assessment == 1", ns = ns,
-
-                     tagList(
-                       sidebarLayout(
-                         sidebarPanel(width = 11,
-                                      tagList(
-                                        titlePanel(span(tagList(icon("chart-bar", lib = "font-awesome")),
-                                                        h3(tags$b("Please provide important information about clinical outcomes.")))),
-                                        br(),
-                                        selectizeInput(ns("principal_diagnosis"), "Primary Diagnosis", choices = psychlytx::diagnosis_list,
-                                                       options = list(
-                                                         placeholder = 'Type a word or scroll down..',
-                                                         onInitialize = I('function() { this.setValue(""); }')
-                                                       ),
-                                                       multiple = FALSE, width = '60%'),
-                                        selectizeInput(ns("secondary_diagnosis"), "Secondary Diagnosis", choices = psychlytx::diagnosis_list,
-                                                       options = list(
-                                                         placeholder = 'Type a word or scroll down..',
-                                                         onInitialize = I('function() { this.setValue(""); }')
-                                                       ),
-                                                       width = '60%'),
-                                        textInput(ns("referrer"), "Referrer", value = "", width = '50%'),
-                                        selectInput(ns("attendance_schedule"), "Schedule of Attendance", c("", "Varied", "Twice A Week", "Once A Week", "Once a Fortnight", "Once Every 3 Weeks", "Once A Month", "Greater Than 1 Month Apart"), width = '40%'),
-                                        numericInput(ns("cancellations"), "Number of Cancellations", value = "", width = '20%'),
-                                        numericInput(ns("non_attendances"), "Number of Non-Attendances (No Notice Given)", value = "", width = '20%'),
-                                        numericInput(ns("attendances"), "Number of Sessions Attended", value = "", width = '20%'),
-                                        radioButtons(ns("premature_dropout"), "Premature Dropout", choices = c("Yes", "No"), selected = character(0), width = '20%'),
-                                        selectizeInput(ns("therapy"), "Therapeutic Approach Used", choices = psychlytx::therapies_list,
-                                                    options = list(
-                                                      placeholder = 'Type a word or scroll down..',
-                                                      onInitialize = I('function() { this.setValue(""); }')
-                                                    ),
-                                                    width = '50%'),
-                                        selectInput(ns("funding"), "Funding Source", choices = c("", "Entirely Self-Funded", "Partly Medicare Funded", "Entirely Medicare Funded (Bulk Billed)",
-                                                                                                "Private Health Fund", "National Disability Insurance Scheme (NDIS)",
-                                                                                                "WorkCover", "Transport Accident Commission (TAC)",
-                                                                                                "Department of Veterans Affairs (DVA)",
-                                                                                                "Victims of Crime Assistance Tribunal (VOCAT)",
-                                                                                                "Other"), width = '40%'),
-                                        conditionalPanel(condition = "input.funding == 'Private Health Fund'", ns = ns,
-
-                                                         selectizeInput(inputId = ns("private_health_fund"), label = "Select Private Health Fund", width = '60%',
-                                                                        choices = c("", "ACA", "ahm", "Apia", "Australian Unity", "Allianz", "Budget Direct", "Bupa",
-                                                                                    "CBHS", "CDH", "CUA", "Defence Health", "Doctors Health Fund", "Emergency Services Health",
-                                                                                    "Frank Health Insurance", "GMF", "GMHBA", "GUHealth", "HBA", "HBF", "HCF", "HealthCare",
-                                                                                    "Health Partners", "health.com.au", "HIF", "IMAN Health Cover", "Latrove Health", "Medibank",
-                                                                                    "Mildura Health Fund", "Navy Health", "NIB", "Nurses & Midwives Health", "onemedifund",
-                                                                                    "Peoplecare", "Phoenix Health FUnd", "Police Health", "Qantas Insurance", "Queensland Country Health Fund",
-                                                                                    "Researve Bank Health Society", "RT Health Insurance", "St.LukesHealth", "Teachers Health",
-                                                                                    "Transport Health", "TUH", "UniHealth", "Westfund Health"),
-                                                                        options = list(
-                                                                          placeholder = 'Type a word or scroll down..',
-                                                                          onInitialize = I('function() { this.setValue(""); }')
-                                                                        ))
-
-                                                         ),
-
-                                        selectInput(ns("out_of_pocket"), "Out-Of-Pocket Expense", c("", "None", "$1-$10",
-                                                                                                     "$11-$20", "$21-$30", "$31-$40",
-                                                                                                     "$41-$50", "$51-$60",
-                                                                                                     "$61-$70", "$71-$80",
-                                                                                                     "$81-$90", "$91-$100",
-                                                                                                     "$101-$110", "$111-$120",
-                                                                                                     "$121-$130", "$131-140",
-                                                                                                     "$141-$150", "$151-$160",
-                                                                                                     "$161-$170", "$171-$180",
-                                                                                                     "$181-$190", "$191-$200",
-                                                                                                     "$201-$210", "$211-$220",
-                                                                                                     "$221-$230", "$231-$240",
-                                                                                                     "$241-$250", "$251-$260",
-                                                                                                     "$261-$270", "$271-$280",
-                                                                                                     "$281-$290", "$291-$300",
-                                                                                                     "More than $300"), width = '20%'),
-                                        actionButton(ns("submit_analytics_posttherapy"), "Submit Clinical Outcomes", class = "submit_data")
-
-                                           )),
-
-                         mainPanel()
-
-                       )))))
+  uiOutput(ns("posttherapy_questions"))
 
 
 }
@@ -252,7 +164,96 @@ analytics_posttherapy_UI<- function(id) {
 #'
 #' @export
 
-analytics_posttherapy<- function(input, output, session, clinician_id, selected_client) {
+analytics_posttherapy<- function(input, output, session, clinician_id, selected_client, assessment_stage) {
+
+
+  posttherapy_questions<- renderUI({
+
+    ns <- session$ns
+
+      tagList(
+        fluidPage(
+        sidebarLayout(
+          sidebarPanel(width = 11,
+                       tagList(
+                         titlePanel(span(tagList(icon("chart-bar", lib = "font-awesome")),
+                                         h3(tags$b("Record Your Client's Therapy & Attendance Outcomes")))),
+                         br(),
+                         selectizeInput(ns("principal_diagnosis"), "Primary Diagnosis", choices = psychlytx::diagnosis_list,
+                                        options = list(
+                                          placeholder = 'Type a word or scroll down..',
+                                          onInitialize = I('function() { this.setValue(""); }')
+                                        ),
+                                        multiple = FALSE, width = '60%'),
+                         selectizeInput(ns("secondary_diagnosis"), "Secondary Diagnosis", choices = psychlytx::diagnosis_list,
+                                        options = list(
+                                          placeholder = 'Type a word or scroll down..',
+                                          onInitialize = I('function() { this.setValue(""); }')
+                                        ),
+                                        width = '60%'),
+                         textInput(ns("referrer"), "Referrer", value = "", width = '50%'),
+                         selectInput(ns("attendance_schedule"), "Schedule of Attendance", c("", "Varied", "Twice A Week", "Once A Week", "Once a Fortnight", "Once Every 3 Weeks", "Once A Month", "Greater Than 1 Month Apart"), width = '40%'),
+                         numericInput(ns("cancellations"), "Number of Cancellations", value = "", width = '20%'),
+                         numericInput(ns("non_attendances"), "Number of Non-Attendances (No Notice Given)", value = "", width = '20%'),
+                         numericInput(ns("attendances"), "Number of Sessions Attended", value = "", width = '20%'),
+                         radioButtons(ns("premature_dropout"), "Premature Dropout", choices = c("Yes", "No"), selected = character(0), width = '20%'),
+                         selectizeInput(ns("therapy"), "Therapeutic Approach Used", choices = psychlytx::therapies_list,
+                                        options = list(
+                                          placeholder = 'Type a word or scroll down..',
+                                          onInitialize = I('function() { this.setValue(""); }')
+                                        ),
+                                        width = '50%'),
+                         selectInput(ns("funding"), "Funding Source", choices = c("", "Entirely Self-Funded", "Partly Medicare Funded", "Entirely Medicare Funded (Bulk Billed)",
+                                                                                  "Private Health Fund", "National Disability Insurance Scheme (NDIS)",
+                                                                                  "WorkCover", "Transport Accident Commission (TAC)",
+                                                                                  "Department of Veterans Affairs (DVA)",
+                                                                                  "Victims of Crime Assistance Tribunal (VOCAT)",
+                                                                                  "Other"), width = '40%'),
+                         conditionalPanel(condition = "input.funding == 'Private Health Fund'", ns = ns,
+
+                                          selectizeInput(inputId = ns("private_health_fund"), label = "Select Private Health Fund", width = '60%',
+                                                         choices = c("", "ACA", "ahm", "Apia", "Australian Unity", "Allianz", "Budget Direct", "Bupa",
+                                                                     "CBHS", "CDH", "CUA", "Defence Health", "Doctors Health Fund", "Emergency Services Health",
+                                                                     "Frank Health Insurance", "GMF", "GMHBA", "GUHealth", "HBA", "HBF", "HCF", "HealthCare",
+                                                                     "Health Partners", "health.com.au", "HIF", "IMAN Health Cover", "Latrove Health", "Medibank",
+                                                                     "Mildura Health Fund", "Navy Health", "NIB", "Nurses & Midwives Health", "onemedifund",
+                                                                     "Peoplecare", "Phoenix Health FUnd", "Police Health", "Qantas Insurance", "Queensland Country Health Fund",
+                                                                     "Researve Bank Health Society", "RT Health Insurance", "St.LukesHealth", "Teachers Health",
+                                                                     "Transport Health", "TUH", "UniHealth", "Westfund Health"),
+                                                         options = list(
+                                                           placeholder = 'Type a word or scroll down..',
+                                                           onInitialize = I('function() { this.setValue(""); }')
+                                                         ))
+
+                         ),
+
+                         selectInput(ns("out_of_pocket"), "Out-Of-Pocket Expense", c("", "None", "$1-$10",
+                                                                                     "$11-$20", "$21-$30", "$31-$40",
+                                                                                     "$41-$50", "$51-$60",
+                                                                                     "$61-$70", "$71-$80",
+                                                                                     "$81-$90", "$91-$100",
+                                                                                     "$101-$110", "$111-$120",
+                                                                                     "$121-$130", "$131-140",
+                                                                                     "$141-$150", "$151-$160",
+                                                                                     "$161-$170", "$171-$180",
+                                                                                     "$181-$190", "$191-$200",
+                                                                                     "$201-$210", "$211-$220",
+                                                                                     "$221-$230", "$231-$240",
+                                                                                     "$241-$250", "$251-$260",
+                                                                                     "$261-$270", "$271-$280",
+                                                                                     "$281-$290", "$291-$300",
+                                                                                     "More than $300"), width = '20%'),
+                         actionButton(ns("submit_analytics_posttherapy"), "Submit Clinical Outcomes", class = "submit_data")
+
+                       )),
+
+          mainPanel()
+
+        )))
+
+
+
+  })
 
 
   #Need to return input to make input parameters available
