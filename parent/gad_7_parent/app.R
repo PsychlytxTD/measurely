@@ -279,8 +279,8 @@ server <- function(input, output, session) {
   
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client
   
-  
-  scale_entry<- callModule(psychlytx::gad7_scale, "gad7_scale") #Return the raw responses to the online scale
+  shinyjs::useShinyjs(debug = TRUE)
+  scale_entry<- callModule(psychlytx::gad7_scale, "gad7_scale", selected_client) #Return the raw responses to the online scale
   
   
   manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry) #Raw item responses are stored as vector manual_entry to be used downstream

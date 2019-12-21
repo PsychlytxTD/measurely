@@ -4,7 +4,7 @@
 \alias{gad7_scale}
 \title{GAD-7 Scale}
 \usage{
-gad7_scale(input, output, session)
+gad7_scale(input, output, session, selected_client)
 }
 \description{
 Generates the GAD-7 for data entry
