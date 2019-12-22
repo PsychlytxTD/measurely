@@ -11,6 +11,8 @@ apply_initial_population_UI<- function(id) {
 
   ns <- NS(id)
 
+  div(id = ns("reset_id"),
+
   tagList(
 
     fluidPage(
@@ -152,7 +154,7 @@ apply_initial_population_UI<- function(id) {
 
       )
 
-    ))
+    )))
 
 }
 
@@ -222,6 +224,12 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
                                     items, max_score, min_score, plot_shading_gap, plot_cutoff_label_start, plot_cutoff_label_size, description,
                                     sample_overview, journal_references, existing_data, pool, selected_client, clinician_id) {
 
+
+  observeEvent(selected_client(), {
+
+    shinyjs::reset("reset_id")
+
+  })
 
 
   output$select_population<- renderUI({
@@ -392,11 +400,6 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
       text = "End-of-therapy outcome data has been submitted.",
       type = "success"
     )
-
-    updateCheckboxGroupInput(session=session, inputId="assessment_stage",
-                             choices = c("My client is completing this measure for the first time." = "first",
-                                         "My client is completing this measure for the last time" = "last"),
-                             selected = character(0))
 
   })
 
