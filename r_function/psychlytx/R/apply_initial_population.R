@@ -18,139 +18,139 @@ apply_initial_population_UI<- function(id) {
       #fluidRow(
 
       #column(width = 10, offset = 1,
-       #      checkboxInput(ns("first_time_scale_completion"), h4(tags$strong("First assessment using this measure", style = "color: #283747")), width = "100%" #Checking the 'first' box should trigger prompt to select a population
-        #                                   ))
+      #      checkboxInput(ns("first_time_scale_completion"), h4(tags$strong("First assessment using this measure", style = "color: #283747")), width = "100%" #Checking the 'first' box should trigger prompt to select a population
+      #                                   ))
       #),
 
       #fluidRow(
 
-       # column(width = 10, offset = 1,
-        #       checkboxInput(ns("ongoing_outcome_monitoring"), h4(tags$strong("Ongoing Outcome Monitoring", style = "color: #283747"))))
+      # column(width = 10, offset = 1,
+      #       checkboxInput(ns("ongoing_outcome_monitoring"), h4(tags$strong("Ongoing Outcome Monitoring", style = "color: #283747"))))
 
-        #),
+      #),
 
       fluidRow(
 
         column(width = 10, offset = 1,
-               checkboxGroupInput(ns("assessment_stage"), "If applicable, select an option below before continuing", c(
-                                                          "My client is completing this measure for the first time." = "first",
-                                                          "My client is completing this measure for the last time" = "last"),
-                                  selected = character(0))
-               )
+               checkboxGroupInput(ns("assessment_stage"), "", c(
+                 "My client is completing this measure for the first time." = "first",
+                 "My client is finishing therapy and this will be the last assessment. " = "last"),
+                 selected = character(0))
+        )
       ),
 
-      psychlytx::analytics_posttherapy_UI("analytics_posttherapy"),
-      psychlytx::write_posttherapy_to_db_UI("write_posttherapy_to_db"),
+      conditionalPanel(condition = "input.assessment_stage == 'first'", ns = ns,
+
+                       tagList(
+
+                         fluidRow(
+                           column(width = 7, offset = 2,
+
+                                  uiOutput(ns("sample_description")),
+
+                                  uiOutput(ns("select_population"))
+
+                           )),
+
+                         br(),
+
+                         fluidRow(
+                           column(width = 10, offset = 2,
+
+                                  uiOutput(ns("other_population"))
 
 
-    conditionalPanel(condition = "input.assessment_stage == 'first'", ns = ns,
 
- tagList(
+                           )),
 
-    fluidRow(
-      column(width = 7, offset = 2,
+                         h5("Optional: Set custom cutoff values and reliable change statistics for this client by navigating to the client settings page.")
 
-      uiOutput(ns("sample_description")),
-
-      uiOutput(ns("select_population"))
-
-    )),
-
-    br(),
-
-    fluidRow(
-      column(width = 10, offset = 2,
-
-             uiOutput(ns("other_population")),
-
-             actionButton(ns("go_custom_settings"), "Optional: Customise Client Settings", class = "submit_data")
-
-             )))),
+                         )),
 
 
- conditionalPanel(condition = "input.assessment_stage == 'last'", ns = ns,
+      conditionalPanel(condition = "input.assessment_stage == 'last'", ns = ns,
 
-   tagList(
-     fluidPage(
-       sidebarLayout(
-         sidebarPanel(width = 11,
-                      tagList(
-                        titlePanel(span(tagList(icon("chart-bar", lib = "font-awesome")),
-                                        h3(tags$b("Record Your Client's Therapy & Attendance Outcomes")))),
-                        br(),
-                        selectizeInput(ns("principal_diagnosis"), "Primary Diagnosis", choices = psychlytx::diagnosis_list,
-                                       options = list(
-                                         placeholder = 'Type a word or scroll down..',
-                                         onInitialize = I('function() { this.setValue(""); }')
-                                       ),
-                                       multiple = FALSE, width = '60%'),
-                        selectizeInput(ns("secondary_diagnosis"), "Secondary Diagnosis", choices = psychlytx::diagnosis_list,
-                                       options = list(
-                                         placeholder = 'Type a word or scroll down..',
-                                         onInitialize = I('function() { this.setValue(""); }')
-                                       ),
-                                       width = '60%'),
-                        textInput(ns("referrer"), "Referrer", value = "", width = '50%'),
-                        selectInput(ns("attendance_schedule"), "Schedule of Attendance", c("", "Varied", "Twice A Week", "Once A Week", "Once a Fortnight", "Once Every 3 Weeks", "Once A Month", "Greater Than 1 Month Apart"), width = '40%'),
-                        numericInput(ns("cancellations"), "Number of Cancellations", value = "", width = '20%'),
-                        numericInput(ns("non_attendances"), "Number of Non-Attendances (No Notice Given)", value = "", width = '20%'),
-                        numericInput(ns("attendances"), "Number of Sessions Attended", value = "", width = '20%'),
-                        radioButtons(ns("premature_dropout"), "Premature Dropout", choices = c("Yes", "No"), selected = character(0), width = '20%'),
-                        selectizeInput(ns("therapy"), "Therapeutic Approach Used", choices = psychlytx::therapies_list,
-                                       options = list(
-                                         placeholder = 'Type a word or scroll down..',
-                                         onInitialize = I('function() { this.setValue(""); }')
-                                       ),
-                                       width = '50%'),
-                        selectInput(ns("funding"), "Funding Source", choices = c("", "Entirely Self-Funded", "Partly Medicare Funded", "Entirely Medicare Funded (Bulk Billed)",
-                                                                                 "Private Health Fund", "National Disability Insurance Scheme (NDIS)",
-                                                                                 "WorkCover", "Transport Accident Commission (TAC)",
-                                                                                 "Department of Veterans Affairs (DVA)",
-                                                                                 "Victims of Crime Assistance Tribunal (VOCAT)",
-                                                                                 "Other"), width = '40%'),
-                        conditionalPanel(condition = "input.funding == 'Private Health Fund'", ns = ns,
+                       tagList(
+                         fluidPage(
+                           sidebarLayout(
+                             sidebarPanel(width = 11,
+                                          tagList(
+                                            titlePanel(span(tagList(icon("chart-bar", lib = "font-awesome")),
+                                                            h3(tags$b("Record Your Client's Therapy & Attendance Outcomes")))),
+                                            br(),
+                                            selectizeInput(ns("principal_diagnosis"), "Primary Diagnosis", choices = psychlytx::diagnosis_list,
+                                                           options = list(
+                                                             placeholder = 'Type a word or scroll down..',
+                                                             onInitialize = I('function() { this.setValue(""); }')
+                                                           ),
+                                                           multiple = FALSE, width = '60%'),
+                                            selectizeInput(ns("secondary_diagnosis"), "Secondary Diagnosis", choices = psychlytx::diagnosis_list,
+                                                           options = list(
+                                                             placeholder = 'Type a word or scroll down..',
+                                                             onInitialize = I('function() { this.setValue(""); }')
+                                                           ),
+                                                           width = '60%'),
+                                            textInput(ns("referrer"), "Referrer", value = "", width = '50%'),
+                                            selectInput(ns("attendance_schedule"), "Schedule of Attendance", c("", "Varied", "Twice A Week", "Once A Week", "Once a Fortnight", "Once Every 3 Weeks", "Once A Month", "Greater Than 1 Month Apart"), width = '40%'),
+                                            numericInput(ns("cancellations"), "Number of Cancellations", value = "", width = '20%'),
+                                            numericInput(ns("non_attendances"), "Number of Non-Attendances (No Notice Given)", value = "", width = '20%'),
+                                            numericInput(ns("attendances"), "Number of Sessions Attended", value = "", width = '20%'),
+                                            radioButtons(ns("premature_dropout"), "Premature Dropout", choices = c("Yes", "No"), selected = character(0), width = '20%'),
+                                            selectizeInput(ns("therapy"), "Therapeutic Approach Used", choices = psychlytx::therapies_list,
+                                                           options = list(
+                                                             placeholder = 'Type a word or scroll down..',
+                                                             onInitialize = I('function() { this.setValue(""); }')
+                                                           ),
+                                                           width = '50%'),
+                                            selectInput(ns("funding"), "Funding Source", choices = c("", "Entirely Self-Funded", "Partly Medicare Funded", "Entirely Medicare Funded (Bulk Billed)",
+                                                                                                     "Private Health Fund", "National Disability Insurance Scheme (NDIS)",
+                                                                                                     "WorkCover", "Transport Accident Commission (TAC)",
+                                                                                                     "Department of Veterans Affairs (DVA)",
+                                                                                                     "Victims of Crime Assistance Tribunal (VOCAT)",
+                                                                                                     "Other"), width = '40%'),
+                                            conditionalPanel(condition = "input.funding == 'Private Health Fund'", ns = ns,
 
-                                         selectizeInput(inputId = ns("private_health_fund"), label = "Select Private Health Fund", width = '60%',
-                                                        choices = c("", "ACA", "ahm", "Apia", "Australian Unity", "Allianz", "Budget Direct", "Bupa",
-                                                                    "CBHS", "CDH", "CUA", "Defence Health", "Doctors Health Fund", "Emergency Services Health",
-                                                                    "Frank Health Insurance", "GMF", "GMHBA", "GUHealth", "HBA", "HBF", "HCF", "HealthCare",
-                                                                    "Health Partners", "health.com.au", "HIF", "IMAN Health Cover", "Latrove Health", "Medibank",
-                                                                    "Mildura Health Fund", "Navy Health", "NIB", "Nurses & Midwives Health", "onemedifund",
-                                                                    "Peoplecare", "Phoenix Health FUnd", "Police Health", "Qantas Insurance", "Queensland Country Health Fund",
-                                                                    "Researve Bank Health Society", "RT Health Insurance", "St.LukesHealth", "Teachers Health",
-                                                                    "Transport Health", "TUH", "UniHealth", "Westfund Health"),
-                                                        options = list(
-                                                          placeholder = 'Type a word or scroll down..',
-                                                          onInitialize = I('function() { this.setValue(""); }')
-                                                        ))
+                                                             selectizeInput(inputId = ns("private_health_fund"), label = "Select Private Health Fund", width = '60%',
+                                                                            choices = c("", "ACA", "ahm", "Apia", "Australian Unity", "Allianz", "Budget Direct", "Bupa",
+                                                                                        "CBHS", "CDH", "CUA", "Defence Health", "Doctors Health Fund", "Emergency Services Health",
+                                                                                        "Frank Health Insurance", "GMF", "GMHBA", "GUHealth", "HBA", "HBF", "HCF", "HealthCare",
+                                                                                        "Health Partners", "health.com.au", "HIF", "IMAN Health Cover", "Latrove Health", "Medibank",
+                                                                                        "Mildura Health Fund", "Navy Health", "NIB", "Nurses & Midwives Health", "onemedifund",
+                                                                                        "Peoplecare", "Phoenix Health FUnd", "Police Health", "Qantas Insurance", "Queensland Country Health Fund",
+                                                                                        "Researve Bank Health Society", "RT Health Insurance", "St.LukesHealth", "Teachers Health",
+                                                                                        "Transport Health", "TUH", "UniHealth", "Westfund Health"),
+                                                                            options = list(
+                                                                              placeholder = 'Type a word or scroll down..',
+                                                                              onInitialize = I('function() { this.setValue(""); }')
+                                                                            ))
 
-                        ),
+                                            ),
 
-                        selectInput(ns("out_of_pocket"), "Out-Of-Pocket Expense", c("", "None", "$1-$10",
-                                                                                    "$11-$20", "$21-$30", "$31-$40",
-                                                                                    "$41-$50", "$51-$60",
-                                                                                    "$61-$70", "$71-$80",
-                                                                                    "$81-$90", "$91-$100",
-                                                                                    "$101-$110", "$111-$120",
-                                                                                    "$121-$130", "$131-140",
-                                                                                    "$141-$150", "$151-$160",
-                                                                                    "$161-$170", "$171-$180",
-                                                                                    "$181-$190", "$191-$200",
-                                                                                    "$201-$210", "$211-$220",
-                                                                                    "$221-$230", "$231-$240",
-                                                                                    "$241-$250", "$251-$260",
-                                                                                    "$261-$270", "$271-$280",
-                                                                                    "$281-$290", "$291-$300",
-                                                                                    "More than $300"), width = '20%'),
-                        actionButton(ns("submit_analytics_posttherapy"), "Submit Clinical Outcomes", class = "submit_data")
+                                            selectInput(ns("out_of_pocket"), "Out-Of-Pocket Expense", c("", "None", "$1-$10",
+                                                                                                        "$11-$20", "$21-$30", "$31-$40",
+                                                                                                        "$41-$50", "$51-$60",
+                                                                                                        "$61-$70", "$71-$80",
+                                                                                                        "$81-$90", "$91-$100",
+                                                                                                        "$101-$110", "$111-$120",
+                                                                                                        "$121-$130", "$131-140",
+                                                                                                        "$141-$150", "$151-$160",
+                                                                                                        "$161-$170", "$171-$180",
+                                                                                                        "$181-$190", "$191-$200",
+                                                                                                        "$201-$210", "$211-$220",
+                                                                                                        "$221-$230", "$231-$240",
+                                                                                                        "$241-$250", "$251-$260",
+                                                                                                        "$261-$270", "$271-$280",
+                                                                                                        "$281-$290", "$291-$300",
+                                                                                                        "More than $300"), width = '20%'),
+                                            actionButton(ns("submit_analytics_posttherapy"), "Submit Clinical Outcomes", class = "submit_data")
 
-                      )),
+                                          )),
 
-         mainPanel()
+                             mainPanel()
 
-       )))
+                           )))
 
- )
+      )
 
     ))
 
@@ -220,15 +220,7 @@ apply_initial_population_UI<- function(id) {
 apply_initial_population<- function(input, output, session, title, brief_title, measure, subscale, population_quantity, populations, sds, means,
                                     mean_sd_references, reliabilities, reliability_references, cutoff_values, cutoff_labels, cutoff_references, cutoff_quantity,
                                     items, max_score, min_score, plot_shading_gap, plot_cutoff_label_start, plot_cutoff_label_size, description,
-                                    sample_overview, journal_references, existing_data, pool, selected_client, clinician_id, tabsetpanel_id = "tabset") {
-
-  parent_session <- get("session", envir = parent.frame(2)) #Need to ensure correct scoping - want R to look in the parent app not the module
-
-
-  observeEvent(input$go_custom_settings, {
-    updateTabsetPanel(session = parent_session, tabsetpanel_id,  #Direct user to new tab upon button click
-                      selected = paste("go_custom_settings"))
-  })
+                                    sample_overview, journal_references, existing_data, pool, selected_client, clinician_id) {
 
 
 
@@ -257,7 +249,7 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
 
 
     updateSelectInput(session, "population", selected = existing_data()$population[1], choices =  existing_data()$population[1]) #Update the population widget based on user's
-                                                                                                                                 #existing data to reinstill their settings.
+    #existing data to reinstill their settings.
 
   })
 
@@ -285,10 +277,11 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
 
   output$sample_description <- renderUI({
 
+    ns <- session$ns
+
     #Make functionality to create icon that user can click to reveal information about the research sample upon with statistics
     #for a given population are based.
 
-    ns <- session$ns
 
     req(input$population)
 
@@ -327,27 +320,25 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
     } else {
 
 
-    #Use the population_selected object to return the correct list (i.e. the one containing the values of the population selected by the user)
+      #Use the population_selected object to return the correct list (i.e. the one containing the values of the population selected by the user)
 
-    selected_sample_info<- sample_info_params[[input$population]]
+      selected_sample_info<- sample_info_params[[input$population]]
 
     }
 
     h4("Select A Group With Similar Characteristics To Your Client") %>% #Make the population info popup modal
       helper(
-             colour = "#283747",
-             size = "m",
-             type = "inline",
-             title = paste(gsub("_", " ", selected_sample_info$populations)),
-             content = c("Below is information about the research sample that was employed to provide the mean and standard deviation for this client group. Means and standard deviations are used in reliable change calculations and to show how severe your client's symptoms are relative to others in his or her group.",
-                         "",
-                         paste("<b>Sample Characteristics:</b>", " ", selected_sample_info$sample_overview),
-                         "",
-                         paste("<b>Reference:</b>", " ", selected_sample_info$journal_references)
-                         ))
+        colour = "#283747",
+        size = "m",
+        type = "inline",
+        title = paste(gsub("_", " ", selected_sample_info$populations)),
+        content = c("Below is information about the research sample that was employed to provide the mean and standard deviation for this client group. Means and standard deviations are used in reliable change calculations and to show how severe your client's symptoms are relative to others in his or her group.",
+                    "",
+                    paste("<b>Sample Characteristics:</b>", " ", selected_sample_info$sample_overview),
+                    "",
+                    paste("<b>Reference:</b>", " ", selected_sample_info$journal_references)
+        ))
   })
-
-
 
   analytics_posttherapy<- eventReactive(input$submit_analytics_posttherapy, {
 
@@ -402,10 +393,10 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
       type = "success"
     )
 
-   updateCheckboxGroupInput(session=session, inputId="assessment_stage",
-                       choices = c("My client is completing this measure for the first time." = "first",
-                                   "My client is completing this measure for the last time" = "last"),
-                       selected = character(0))
+    updateCheckboxGroupInput(session=session, inputId="assessment_stage",
+                             choices = c("My client is completing this measure for the first time." = "first",
+                                         "My client is completing this measure for the last time" = "last"),
+                             selected = character(0))
 
   })
 
@@ -428,4 +419,3 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
 
 
 }
-

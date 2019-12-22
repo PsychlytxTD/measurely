@@ -39,7 +39,7 @@ display_client_data_UI<- function(id) {
 #' @export
 
 
-display_client_data<- function(input, output, session, pool, selected_client, measure, input_retrieve_client_data) {
+display_client_data<- function(input, output, session, pool, selected_client, measure, input_retrieve_client_data, client_name_for_display) {
 
 
   selected_client_data<- eventReactive(input_retrieve_client_data(), { #Pull in the selected client's data (for this measure only) from the db.
@@ -54,6 +54,7 @@ display_client_data<- function(input, output, session, pool, selected_client, me
 
 
   })
+
 
 
 
@@ -87,19 +88,21 @@ display_client_data<- function(input, output, session, pool, selected_client, me
 
   output$client_data_availability_message<- renderText({
 
-    measure<- gsub("_", "-", measure)
+    client_name<- paste(client_name_for_display()[1], client_name_for_display()[2])
+
+    measure<- stringr::str_replace(measure, "_", "-")
 
     #Show user whether client has been selected and whether data has previously been inputted.
 
-    req( selected_client_data() )
+    validate(need(client_name_for_display(), "Please select a client."))
 
     if(length(selected_client_data()) >= 1) {
 
-      glue::glue("Client selected. Note: only your client's outcome data for the {measure} are displayed.")
+      glue::glue("Showing {measure} outcomes for {client_name}.")
 
     } else {
 
-      glue::glue("Client selected. No data to show yet for the {measure}.")
+      glue::glue("No {measure} outcomes to show yet for {client_name}.")
 
     }
 

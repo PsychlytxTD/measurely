@@ -99,7 +99,7 @@
                                .swal-button--confirm:focus {box-shadow:none;}
                                
                                .modal-footer .btn-default {visibility: hidden;}
-                               .modal-footer .btn-default:after {content: "Okay"; visibility:visible;
+                               .modal-footer .btn-default:after {content: "Continue"; visibility:visible;
                                }
 
                                 

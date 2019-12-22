@@ -5,7 +5,7 @@
 \title{Select Client}
 \usage{
 display_client_data(input, output, session, pool, selected_client, measure,
-  input_retrieve_client_data)
+  input_retrieve_client_data, client_name_for_display)
 }
 \arguments{
 \item{pool}{A pooled db object}

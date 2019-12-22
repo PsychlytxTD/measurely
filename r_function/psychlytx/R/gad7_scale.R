@@ -83,6 +83,7 @@ gad7_scale<- function(input, output, session, selected_client) {
 
   })
 
+
   scale_entry <- reactive({ paste(input$item_1, input$item_2, input$item_3, input$item_4, input$item_5, input$item_6, input$item_7, sep = ",") })
 
   return(scale_entry)

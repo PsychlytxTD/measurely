@@ -111,12 +111,11 @@ ui<- function(request) {
                                       
                                       actionButton("retrieve_client_data", "Select Client", class = "submit_data"),
                                       
-                                      shinyBS::bsModal("show_population_modal", "Please Indicate Your Client's Stage of Assessment", "retrieve_client_data", size = "large",
+                                      psychlytx::retrieve_client_name_UI("retrieve_client_name"),
+                                      
+                                      shinyBS::bsModal("show_population_modal", "Please select an option below if applicable", "retrieve_client_data", size = "large",
                                               
                                               psychlytx::apply_initial_population_UI("apply_population")
-                                              
-                                              
-                                              
                                               
                                       ),
                                       
@@ -138,6 +137,7 @@ ui<- function(request) {
                          
                          tabPanel(tags$strong("Complete Measure"),
                                   
+                                  psychlytx::show_client_name_UI("show_client_name_measure_tab"),
                                   
                                   psychlytx::extract_holding_statistics_UI("extract_holding_statistics"),
                                   
@@ -163,6 +163,8 @@ ui<- function(request) {
                          tabPanel(tags$strong("Client Settings"), value = "go_custom_settings",
                                   
                                   fluidPage(
+                                    
+                                    psychlytx::show_client_name_UI("show_client_name_settings_tab"),
                                       
                                     psychlytx::show_population_message_UI("show_population_message"),
                                     
@@ -219,6 +221,8 @@ ui<- function(request) {
                          
                          tabPanel(tags$strong("Download Clinical Report", id = "trigger_most_recent_data"), 
                                   
+                                  psychlytx::show_client_name_UI("show_client_name_report_tab"),
+                                  
                                   psychlytx::download_report_UI("download_report") #Report download
                                   
                          )
@@ -268,20 +272,30 @@ server <- function(input, output, session) {
   
   input_retrieve_client_data<- reactive({input$retrieve_client_data}) #Store the value of the client selection button
   
+  client_name_for_display<- callModule(psychlytx::retrieve_client_name, "retrive_client_name", pool, input_retrieve_client_data, selected_client)
+  
+  callModule(psychlytx::show_client_name, "show_client_name_measure_tab", client_name_for_display)
+  callModule(psychlytx::show_client_name, "show_client_name_settings_tab", client_name_for_display)
+  callModule(psychlytx::show_client_name, "show_client_name_report_tab", client_name_for_display)
+  
+  
   
   existing_data<- callModule(psychlytx::display_client_data, "display_client_data", pool, selected_client, measure = subscale_info_1$measure,
-                             input_retrieve_client_data) #Return the selected client's previous scores on this measure
+                             input_retrieve_client_data, client_name_for_display) #Return the selected client's previous scores on this measure
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
                                            subscale_info_1, existing_data, pool, selected_client, clinician_id)) #Store the selected population for downstream use in other modules
-  
+  #Posttherapy questions & processing have been relocated to apply_initial_population module
+  #analytics_posttherapy and write_posttherapy_to_db modules are now redundant
+  #Need to pass pool, selected_client, and clinician_id to allow this to occur
+
   
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client
   
-  shinyjs::useShinyjs(debug = TRUE)
+  shinyjs::useShinyjs(debug = TRUE) #Allows resetting of scale items on client change
   scale_entry<- callModule(psychlytx::gad7_scale, "gad7_scale", selected_client) #Return the raw responses to the online scale
-  
+                                                                                 #Pass in selected_client to allow resetting
   
   manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry) #Raw item responses are stored as vector manual_entry to be used downstream
   

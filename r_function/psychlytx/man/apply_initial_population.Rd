@@ -10,8 +10,7 @@ apply_initial_population(input, output, session, title, brief_title,
   cutoff_labels, cutoff_references, cutoff_quantity, items, max_score,
   min_score, plot_shading_gap, plot_cutoff_label_start,
   plot_cutoff_label_size, description, sample_overview, journal_references,
-  existing_data, pool, selected_client, clinician_id,
-  tabsetpanel_id = "tabset")
+  existing_data, pool, selected_client, clinician_id)
 }
 \arguments{
 \item{title}{A string (white space allowed) indicating the name of the subscale, to be used as a panel title.}
@@ -62,9 +61,9 @@ apply_initial_population(input, output, session, title, brief_title,
 
 \item{journal_references}{The string indicating a full reference for each research sample for mean and sd.}
 
-\item{tabsetpanel_id}{A string indicating a panel id to allow automatic switching between panels.}
-
 \item{input_population}{A string (reactive value) representing the name of the selected population.}
+
+\item{tabsetpanel_id}{A string indicating a panel id to allow automatic switching between panels.}
 }
 \description{
 Select an initial population thereby applying settings for analyses
