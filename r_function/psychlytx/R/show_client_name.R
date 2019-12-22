@@ -17,7 +17,7 @@ br(),
 fluidRow(
   column(width = 12,
 
-         "Person Completing the Outcome Measure:",
+         h3(tags$strong("Person Completing the Outcome Measure:")),
 
          uiOutput(ns("client_name"))
 

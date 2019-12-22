@@ -55,8 +55,15 @@
                                 border-top-color: #827717;
                                 }
                                 
+                                .nav-tabs-custom>.nav-tabs>li>a:hover {
+                                  background-color: #283747;
+                                  color: #d35400;
+                                }
+                                
+                                
                                 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
                                 border-top-color: #283747;
+                                color: ;
                                 }
                                 
                                 hr {
@@ -86,6 +93,8 @@
                                 
                                 .submit_data {color:#d35400; }
                                 
+                                .submit_data:hover {background: #d35400; border-color: #283747;}
+                                
                                 .submit_data_blue {color:#283747;}
                                 
                                 .selectize-input { line-height: 30px; }
@@ -99,8 +108,9 @@
                                .swal-button--confirm:focus {box-shadow:none;}
                                
                                .modal-footer .btn-default {visibility: hidden;}
-                               .modal-footer .btn-default:after {content: "Continue"; visibility:visible;
+                               .modal-footer .btn-default:after {content: "Continue"; visibility:visible;}
                                }
-
+                               
+            
                                 
                                 )
