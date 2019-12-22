@@ -34,10 +34,7 @@ apply_initial_population_UI<- function(id) {
       fluidRow(
 
         column(width = 10, offset = 1,
-               checkboxGroupInput(ns("assessment_stage"), "", c(
-                 "My client is completing this measure for the first time." = "first",
-                 "My client is finishing therapy and this will be the last assessment. " = "last"),
-                 selected = character(0))
+              uiOutput(ns("assessment_stage_widget"))
         )
       ),
 
@@ -230,6 +227,33 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
     shinyjs::reset("reset_id")
 
   })
+
+
+  output$assessment_stage_widget<- renderUI({
+
+    ns<- session$ns
+
+    if(nrow(existing_data()) >= 1) {
+
+      checkboxGroupInput(ns("assessment_stage"), "", c(
+        "My client is continuing therapy." = "ongoing",
+        "My client is finishing therapy and this will be the last assessment." = "last"),
+        selected = "ongoing")
+
+    } else {
+
+      checkboxGroupInput(ns("assessment_stage"), "", c(
+        "My client is completing this measure for the first time." = "first"),
+        selected = "first")
+
+    }
+
+  })
+
+
+
+
+
 
 
   output$select_population<- renderUI({

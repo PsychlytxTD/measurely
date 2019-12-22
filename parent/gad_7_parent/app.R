@@ -254,6 +254,7 @@ server <- function(input, output, session) {
   
   callModule(psychlytx::make_header, "header") #Make header
   
+  
   #Register a new client with pretherapy analytics data. Module 
   #creates unique client id. Need clinician id needs to be available 
   #to module so pass it in.
@@ -282,6 +283,20 @@ server <- function(input, output, session) {
   
   existing_data<- callModule(psychlytx::display_client_data, "display_client_data", pool, selected_client, measure = subscale_info_1$measure,
                              input_retrieve_client_data, client_name_for_display) #Return the selected client's previous scores on this measure
+  
+  
+  observeEvent(input_retrieve_client_data(), {
+    
+    if(nrow(existing_data()) >= 1) {
+      
+      hideTab(inputId = "tabset", target = "go_custom_settings")
+      
+    } else {
+      
+      showTab(inputId = "tabset", target = "go_custom_settings")
+    }
+      
+  })
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
