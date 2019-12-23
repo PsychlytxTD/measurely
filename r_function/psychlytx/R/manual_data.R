@@ -59,13 +59,15 @@ manual_data_UI<- function(id) {
 #'
 #' @param recoding_key A string indicating the recoding pattern to use, of the form '0=;1=5;2=4;3=3;4=2;5=1;6=0' etc.
 #'
+#' @param expected_responses A single numerical value indicating the expected number of responses for the measure.
+#'
 #' @export
 
 
 
 #The scale_entry_scores object refers to the item scores from the online scale (if completed)
 
-manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, items_to_recode = NULL, recoding_key = NULL) {
+manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, items_to_recode = NULL, recoding_key = NULL, expected_responses) {
 
   observe({
 
@@ -99,7 +101,34 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
 
     })
 
-  eventReactive(input$submit_scores, { list( date = date(), item_scores = item_scores(), submit_scores_button_value = input$submit_scores ) })
+  observeEvent(input$submit_scores, {
+
+    if(length(item_scores()) != expected_responses) {
+
+      sendSweetAlert(
+        session = session,
+        title = "Incorrect number of responses!!",
+        text = "Please provide one response per question",
+        type = "error"
+      )
+    }
+
+  })
+
+
+  eventReactive(input$submit_scores, {
+
+              if(length(item_scores()) == 7) {
+
+              list( date = date(), item_scores = item_scores(), submit_scores_button_value = input$submit_scores )
+
+                } else {
+
+                  return(NULL)
+
+                }
+
+    })
   #On click of 'submit' questionnaire scores, return list of date, item scores and the value of the submit button (to use to trigger db writing.)
 
 

@@ -5,7 +5,7 @@
 \title{Manual Entry Widgets}
 \usage{
 manual_data(input, output, session, scale_entry, do_recode = FALSE,
-  items_to_recode = NULL, recoding_key = NULL)
+  items_to_recode = NULL, recoding_key = NULL, expected_responses)
 }
 \arguments{
 \item{scale_entry}{The item scores passed from the online scale (if completed).}
@@ -15,6 +15,8 @@ manual_data(input, output, session, scale_entry, do_recode = FALSE,
 \item{items_to_recode}{A numeric vector indicating the items that should be recoded, of the form c(3,5,6) etc.}
 
 \item{recoding_key}{A string indicating the recoding pattern to use, of the form '0=;1=5;2=4;3=3;4=2;5=1;6=0' etc.}
+
+\item{expected_responses}{A single numerical value indicating the expected number of responses for the measure.}
 }
 \description{
 Creates layout and widgets for manual data entry

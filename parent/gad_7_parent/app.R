@@ -312,7 +312,7 @@ server <- function(input, output, session) {
   scale_entry<- callModule(psychlytx::gad7_scale, "gad7_scale", selected_client) #Return the raw responses to the online scale
                                                                                  #Pass in selected_client to allow resetting
   
-  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry) #Raw item responses are stored as vector manual_entry to be used downstream
+  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 7) #Raw item responses are stored as vector manual_entry to be used downstream
   
   
   aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, item_index = list( subscale_info_1$items ), 
