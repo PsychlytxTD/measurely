@@ -275,9 +275,9 @@ server <- function(input, output, session) {
   
   client_name_for_display<- callModule(psychlytx::retrieve_client_name, "retrive_client_name", pool, input_retrieve_client_data, selected_client)
   
-  callModule(psychlytx::show_client_name, "show_client_name_measure_tab", client_name_for_display)
-  callModule(psychlytx::show_client_name, "show_client_name_settings_tab", client_name_for_display)
-  callModule(psychlytx::show_client_name, "show_client_name_report_tab", client_name_for_display)
+  callModule(psychlytx::show_client_name, "show_client_name_measure_tab", client_name_for_display, input_retrieve_client_data)
+  callModule(psychlytx::show_client_name, "show_client_name_settings_tab", client_name_for_display, input_retrieve_client_data)
+  callModule(psychlytx::show_client_name, "show_client_name_report_tab", client_name_for_display, input_retrieve_client_data)
   
   
   

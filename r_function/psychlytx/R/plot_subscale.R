@@ -18,34 +18,36 @@
 plot_subscale <- function(subscale_df, subscale_info) {
 
 
+
   #Convert date variable to date class
 
-  subscale_df <- transform(subscale_df, date = chron(date, format = "d/m/Y" ) )
+  subscale_df <- transform(subscale_df, date = chron::chron(date, format = "d/m/Y"))
 
+  subscale_df<- subscale_df %>% dplyr::arrange(date)
 
   #Calculate the ymin and ymax values to use with cutoff shading
 
-  ymin_cutoff_1 <- subscale_df$cutoff_value_1
+  ymin_cutoff_1 <- subscale_df$cutoff_value_1[1]
 
-  ymax_cutoff_1 <- subscale_df$cutoff_value_2
+  ymax_cutoff_1 <- subscale_df$cutoff_value_2[1]
 
-  ymin_cutoff_2 <- subscale_df$cutoff_value_2
+  ymin_cutoff_2 <- subscale_df$cutoff_value_2[1]
 
-  ymax_cutoff_2 <- subscale_df$cutoff_value_3
+  ymax_cutoff_2 <- subscale_df$cutoff_value_3[1]
 
-  ymin_cutoff_3 <- subscale_df$cutoff_value_3
+  ymin_cutoff_3 <- subscale_df$cutoff_value_3[1]
 
-  ymax_cutoff_3 <- subscale_df$cutoff_value_4
+  ymax_cutoff_3 <- subscale_df$cutoff_value_4[1]
 
-  ymin_cutoff_4 <- subscale_df$cutoff_value_4
+  ymin_cutoff_4 <- subscale_df$cutoff_value_4[1]
 
-  ymax_cutoff_4 <- subscale_df$cutoff_value_5
+  ymax_cutoff_4 <- subscale_df$cutoff_value_5[1]
 
-  ymin_cutoff_5 <- subscale_df$cutoff_value_5
+  ymin_cutoff_5 <- subscale_df$cutoff_value_5[1]
 
-  ymax_cutoff_5 <- subscale_df$cutoff_value_6
+  ymax_cutoff_5 <- subscale_df$cutoff_value_6[1]
 
-  ymin_cutoff_6 <- subscale_df$cutoff_value_6
+  ymin_cutoff_6 <- subscale_df$cutoff_value_6[1]
 
   ymax_cutoff_6 <- Inf
 
@@ -60,17 +62,17 @@ plot_subscale <- function(subscale_df, subscale_info) {
 
   #Need to increase space between 0 and first tick on x-axis to make space for cutoff labels
 
-  if(nrow(subscale_df) == 1) {
+if(nrow(subscale_df) == 1) {
 
-    x_axis_lower_expansion <- subscale_df$date[1] - 30
+  x_axis_lower_expansion <- subscale_df$date[1] - 30
 
-  } else {
+ } else {
 
     x_axis_expansion_factor<- (subscale_df$date[length(subscale_df$date)] - subscale_df$date[1]) * 0.3
 
     x_axis_lower_expansion<- subscale_df$date[1] - x_axis_expansion_factor
 
-  }
+ }
 
 
   #Plot breaks & break labs - need to replace this with the minimum and maximum possible scores on the scale
@@ -91,9 +93,11 @@ plot_subscale <- function(subscale_df, subscale_info) {
   upper_bounds<- list(ymax_cutoff_1, ymax_cutoff_2, ymax_cutoff_3, ymax_cutoff_4,
                       ymax_cutoff_5)
 
+
   #Create vector of numeric values representing the midpoints of the shaded rectangles
 
   cutoff_text_position<- purrr::map2_dbl(lower_bounds, upper_bounds, ~psychlytx::position_cutoff_label(.x, .y))
+
 
   #The last value needs to be added manually because the upper bound is inf (can't subtract a value from this to find midpoint)
 
@@ -103,14 +107,13 @@ plot_subscale <- function(subscale_df, subscale_info) {
   #Will use the df to add the cutoff labels
 
 
-  cutoff_labs<- c(subscale_df$cutoff_label_1, subscale_df$cutoff_label_2, subscale_df$cutoff_label_3,
-                  subscale_df$cutoff_label_4, subscale_df$cutoff_label_5, subscale_df$cutoff_label_6)
+  cutoff_labs<- c(subscale_df$cutoff_label_1[1], subscale_df$cutoff_label_2[1], subscale_df$cutoff_label_3[1],
+                  subscale_df$cutoff_label_4[1], subscale_df$cutoff_label_5[1], subscale_df$cutoff_label_6[1])
 
-  cutoff_vals<- c(subscale_df$cutoff_value_1, subscale_df$cutoff_value_2, subscale_df$cutoff_value_3,
-                  subscale_df$cutoff_value_4, subscale_df$cutoff_value_5, subscale_df$cutoff_value_6)
+  cutoff_vals<- c(subscale_df$cutoff_value_1[1], subscale_df$cutoff_value_2[1], subscale_df$cutoff_value_3[1],
+                  subscale_df$cutoff_value_4[1], subscale_df$cutoff_value_5[1], subscale_df$cutoff_value_6[1])
 
-  x_expansion<- c(x_axis_lower_expansion)
-
+  x_expansion<- x_axis_lower_expansion
 
   cutoff_text_df<- tibble::tibble(cutoff_labs, cutoff_vals, x_expansion)
 

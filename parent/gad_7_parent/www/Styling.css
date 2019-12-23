@@ -107,10 +107,43 @@
                                
                                .swal-button--confirm:focus {box-shadow:none;}
                                
-                               .modal-footer .btn-default {visibility: hidden;}
-                               .modal-footer .btn-default:after {content: "Continue"; visibility:visible;}
-                               }
-                               
-            
-                                
-                                )
+.modal-footer .btn-default:hover {
+  visibility: hidden;
+  content: "Continue"; 
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  background-color: #d35400;
+}
+
+.modal-footer .btn-default:hover:after {
+  content: "Continue"; 
+  visibility:visible;
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  background-color: #d35400;
+  }
+  
+
+)

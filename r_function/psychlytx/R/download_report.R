@@ -73,15 +73,11 @@ download_report<- function(input, output, session, pool, selected_client, global
 
    report_data <- reactive({
 
-     subscale_df<- NA
-
-     subscale_df$date<- NA
-
-     subscale_df$subscale<- NA   #Initialise objects
-
      subscale_df<- tibble::as_tibble(most_recent_client_data$value)
 
-     subscale_df$date<- as.character(format(subscale_df$date, "%d/%m/%Y"))
+     #subscale_df$date<- as.character(format(subscale_df$date, "%d/%m/%Y"))
+
+     subscale_df<- subscale_df %>% dplyr::mutate(date = as.character(format(date, "%d/%m/%Y")))
 
     #Nest the dataframe: create a list column of dataframes - one per each subscale.
     #We want to group the scores by subscale. So GAD7 should have its own df, PHQ9 should have its own df etc.

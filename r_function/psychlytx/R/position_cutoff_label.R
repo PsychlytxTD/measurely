@@ -11,6 +11,6 @@
 
 position_cutoff_label<- function(lower, upper) {
 
-  lower + (0.5 * diff(c(lower, upper)) )
+  lower + (0.5 * base::diff(c(lower, upper)) )
 
 }

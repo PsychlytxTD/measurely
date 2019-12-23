@@ -17,9 +17,9 @@ br(),
 fluidRow(
   column(width = 12,
 
-         h3(tags$strong("Person Completing the Outcome Measure:")),
+         h3("Person Completing Outcome Measure:"),
 
-         uiOutput(ns("client_name"))
+         selectInput(ns("client_name_widget"), "", "No client selected!! Please select a client")
 
   )))
 
@@ -33,15 +33,17 @@ fluidRow(
 #'
 #' @export
 
-show_client_name<- function(input, output, session, client_name_for_display) {
+show_client_name<- function(input, output, session, client_name_for_display, input_retrieve_client_data) {
 
-output$client_name<- renderUI({
 
-  ns <- session$ns
 
-  selectInput(ns("client_name_widget"), "", paste(client_name_for_display()[1], client_name_for_display()[2]))
+  observeEvent(input_retrieve_client_data(), {
 
-})
+  updateSelectInput(session, "client_name_widget", selected = paste(client_name_for_display()[1], client_name_for_display()[2]),
+                    choices = paste(client_name_for_display()[1], client_name_for_display()[2]))
+
+  })
+
 
 }
 

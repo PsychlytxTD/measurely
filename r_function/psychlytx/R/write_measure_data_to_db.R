@@ -32,9 +32,12 @@ write_measure_data_to_db_UI<- function(id) {
 
 write_measure_data_to_db<- function(input, ouput, session, pool, measure_data, manual_entry, formatted_response_body_for_email) {
 
+
   #We pass in the value of the submit scores button, so that when this button is clicked, the code below is triggered.
 
   observeEvent(manual_entry()$submit_scores_button_value, {
+
+    if(nrow(measure_data()) >= 1) {
 
 
     sendSweetAlert(             #Modal popup showing client that their responses have been submitted.
@@ -85,7 +88,7 @@ write_measure_data_to_db<- function(input, ouput, session, pool, measure_data, m
                     body = body,
                     encode="json",
                     verbose())
-
+    }
 
   })
 

@@ -4,7 +4,8 @@
 \alias{show_client_name}
 \title{Make Client Name For Display}
 \usage{
-show_client_name(input, output, session, client_name_for_display)
+show_client_name(input, output, session, client_name_for_display,
+  input_retrieve_client_data)
 }
 \arguments{
 \item{client_name_for_display}{A reactive object containing the client's first and last names.}
