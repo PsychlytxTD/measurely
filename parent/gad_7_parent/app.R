@@ -113,7 +113,7 @@ ui<- function(request) {
                                       
                                       psychlytx::retrieve_client_name_UI("retrieve_client_name"),
                                       
-                                      shinyBS::bsModal("show_population_modal", "Please select an option below if applicable", "retrieve_client_data", size = "large",
+                                      shinyBS::bsModal("show_population_modal", "Please indicate the stage of treatment", "retrieve_client_data", size = "large",
                                               
                                               psychlytx::apply_initial_population_UI("apply_population")
                                               
@@ -229,7 +229,7 @@ ui<- function(request) {
                          
                       ),
                   
-                  column(span(tagList(icon("copyright", lib = "font-awesome")), "Psychlytx 2019") , offset = 5, width = 12))
+                  column(span(tagList("Psychlytx", icon("registered", lib = "font-awesome"))), offset = 5, width = 12))
                   
                   )
                 

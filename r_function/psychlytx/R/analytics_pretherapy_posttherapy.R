@@ -12,13 +12,15 @@ analytics_pretherapy_UI<- function(id) {
 
                    tagList(
                      sidebarLayout(
-                      sidebarPanel(width = 10,
+                      sidebarPanel(width = 12,
                      titlePanel(span(tagList(icon("clipboard", lib = "font-awesome")), h3(tags$b("Please Complete Client Registration.")))),
                      br(),
                      br(),
                      column(width = 7, a(tags$strong("We take privacy seriously. View our policy here."),
                                                     href = "http://www.psychlytx.com", style = "color:#d35400; text-decoration: underline;") ),
                      br(),
+                     br(),
+                     helpText("**Required Items"),
                      br(),
                      textInput(ns("first_name"), tags$strong("First Name**"), width = '50%'), #Create the widgets for pretherapy analytics
                      textInput(ns("last_name"), tags$strong("Last Name**"), width = '50%'),

@@ -236,6 +236,7 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
     if(nrow(existing_data()) >= 1) {
 
       checkboxGroupInput(ns("assessment_stage"), "", c(
+        "My client is continuing therapy after this assessment." = "ongoing",
         "My client is finishing therapy and this will be the last assessment." = "last"),
         selected = "ongoing")
 

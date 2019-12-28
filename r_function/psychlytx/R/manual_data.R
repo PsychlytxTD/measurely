@@ -128,7 +128,7 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
       sendSweetAlert(
         session = session,
         title = "Incorrect number of responses!!",
-        text = "Please provide one response per question",
+        text = "Please make sure you provide only response per question",
         type = "error"
       )
     }

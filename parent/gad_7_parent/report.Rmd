@@ -34,6 +34,7 @@ for (i in seq(nrow(params$report_data))) {
   if (i != 1) cat("\\clearpage \n\n")
   cat("#", params$report_data$subscale_info[[i]]$title, "\n\n")
   print(params$report_data$plot[[i]])
+  cat("\\clearpage \n\n")
   cat(params$report_data$scores_table[[i]])
   cat(params$report_data$statistics_table_1[[i]])
   cat(params$report_data$statistics_table_2[[i]])

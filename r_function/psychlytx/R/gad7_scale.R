@@ -27,37 +27,37 @@ fluidRow(
 ),
 
 fluidRow(
-  column(width = 7, h4("Feeling nervous, anxious or on edge")),
+  column(width = 7, h4("1. Feeling nervous, anxious or on edge")),
   column(width = 5, checkboxGroupInput(ns("item_1"), label = NULL, choices = c("0", "1", "2", "3"), inline = TRUE, selected = NULL))
 ),
 
 fluidRow(
-  column(width = 7, h4("Not being able to stop or control worrying")),
+  column(width = 7, h4("2. Not being able to stop or control worrying")),
   column(width = 5, checkboxGroupInput(ns("item_2"), label = NULL, choices = c("0", "1", "2", "3"), inline = TRUE, selected = NULL))
 ),
 
 fluidRow(
-  column(width = 7, h4("Worrying too much about different things")),
+  column(width = 7, h4("3. Worrying too much about different things")),
   column(width = 5, checkboxGroupInput(ns("item_3"), label = NULL, choices = c("0", "1", "2", "3"), inline = TRUE, selected = NULL))
 ),
 
 fluidRow(
-  column(width = 7, h4("Trouble relaxing")),
+  column(width = 7, h4("4. Trouble relaxing")),
   column(width = 5, checkboxGroupInput(ns("item_4"), label = NULL, choices = c("0", "1", "2", "3"), inline = TRUE, selected = NULL))
 ),
 
 fluidRow(
-  column(width = 7, h4("Being so restless it is hard to sit still")),
+  column(width = 7, h4("5. Being so restless it is hard to sit still")),
   column(width = 5, checkboxGroupInput(ns("item_5"), label = NULL, choices = c("0", "1", "2", "3"), inline = TRUE, selected = NULL))
 ),
 
 fluidRow(
-  column(width = 7, h4("Becoming easily annoyed or irritable")),
+  column(width = 7, h4("6. Becoming easily annoyed or irritable")),
   column(width = 5, checkboxGroupInput(ns("item_6"), label = NULL, choices = c("0", "1", "2", "3"), inline = TRUE, selected = NULL))
 ),
 
 fluidRow(
-  column(width = 7, h4("Feeling afraid as if something awful might happen")),
+  column(width = 7, h4("7. Feeling afraid as if something awful might happen")),
   column(width = 5, checkboxGroupInput(ns("item_7"), label = NULL, choices = c("0", "1", "2", "3"), inline = TRUE, selected = NULL))
 ),
 
