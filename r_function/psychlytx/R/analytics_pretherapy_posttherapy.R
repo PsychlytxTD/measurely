@@ -20,11 +20,11 @@ analytics_pretherapy_UI<- function(id) {
                                                     href = "http://www.psychlytx.com", style = "color:#d35400; text-decoration: underline;") ),
                      br(),
                      br(),
-                     textInput(ns("first_name"), "First Name", width = '50%'), #Create the widgets for pretherapy analytics
-                     textInput(ns("last_name"), "Last Name", width = '50%'),
-                     textInput(ns("email_address"), "Email Address", width = '50%'),
+                     textInput(ns("first_name"), tags$strong("First Name**"), width = '50%'), #Create the widgets for pretherapy analytics
+                     textInput(ns("last_name"), tags$strong("Last Name**"), width = '50%'),
+                     textInput(ns("email_address"), tags$strong("Email Address**"), width = '50%'),
                      selectInput(ns("sex"), "Sex", c("", "Male", "Female", "Other"), width = '20%'),
-                     dateInput(ns("birth_date"), "Date of Birth", startview = "year", format = "dd/mm/yyyy", value = as.Date(NA), width = '20%'),
+                     dateInput(ns("birth_date"), tags$strong("Date of Birth**"), startview = "year", format = "dd/mm/yyyy", value = as.Date(NA), width = '20%'),
                      numericInput(ns("postcode"), "Postcode", value = "", width = '20%'),
                      selectInput(ns("marital_status"), "Marital Status", c("", "Never Married", "Currently Married", "Separated", "Divorced", "Widowed", "Cohabiting"), width = '30%'),
                      selectInput(ns("sexuality"), "Sexual Orientation", c("", "Heterosexual", "Lesbian", "Gay", "Bisexual", "Transgender", "Queer", "Other"), width = '30%'),

@@ -63,9 +63,10 @@ fluidRow(
 
 fluidRow(
   column(width = 12, h5("Source: Spitzer, R. L., Kroenke, K., Williams, J. B., & Lowe, B. (2006). A brief measure for assessing Generalized Anxiety Disorder: the GAD-7. Archives of Internal Medicine, 166(10), 1092–1097."))
-))
-
 )
+
+
+))
 
 }
 
@@ -77,6 +78,8 @@ fluidRow(
 #'
 gad7_scale<- function(input, output, session, selected_client) {
 
+
+
   observeEvent(selected_client(), {
 
     shinyjs::reset("reset_id")
@@ -84,7 +87,19 @@ gad7_scale<- function(input, output, session, selected_client) {
   })
 
 
-  scale_entry <- reactive({ paste(input$item_1, input$item_2, input$item_3, input$item_4, input$item_5, input$item_6, input$item_7, sep = ",") })
+
+  observe({
+
+      item_too_long<- purrr::map_lgl(list(c(input$item_1), c(input$item_2), c(input$item_3), c(input$item_4),
+                          c(input$item_5), c(input$item_6), c(input$item_7)), ~length(.x) > 1)
+
+      psychlytx::warn_too_many_responses(session, item_too_long)
+
+  })
+
+
+  scale_entry <- reactive({ paste(input$item_1, input$item_2, input$item_3,
+                                  input$item_4, input$item_5, input$item_6, input$item_7, sep = ",") })
 
   return(scale_entry)
 

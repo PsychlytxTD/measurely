@@ -38,7 +38,15 @@ manual_data_UI<- function(id) {
 
              tags$head(tags$style(".submit_data{color:#d35400;}"))
 
-      ))
+      ),
+
+      column(width = 3,
+
+             htmlOutput(ns("item_warning"))
+
+             )
+
+      )
 
   )
 
@@ -88,7 +96,7 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
 
   item_scores<- reactive({
 
-    item_scores<- as.numeric(unlist(strsplit(input$item_scores, ",")))
+    item_scores<- as.numeric(unlist(stringr::str_split(input$item_scores, ",")))
 
     if(do_recode == TRUE) {
 
@@ -100,6 +108,18 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
     return(item_scores)
 
     })
+
+
+  output$item_warning<- renderText({
+
+    missing<- which(is.na(item_scores()))
+
+  if(any(is.na(item_scores()))) {
+   paste("<span style=\"color:red\"> Please provide a response to item", missing, "</span>")
+   }
+
+  })
+
 
   observeEvent(input$submit_scores, {
 
@@ -118,7 +138,7 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
 
   eventReactive(input$submit_scores, {
 
-              if(length(item_scores()) == 7) {
+              if(length(item_scores()) == expected_responses) {
 
               list( date = date(), item_scores = item_scores(), submit_scores_button_value = input$submit_scores )
 
