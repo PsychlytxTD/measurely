@@ -7,9 +7,9 @@
 write_statistics_to_holding(input, ouput, session, pool, holding_data)
 }
 \arguments{
-\item{pool}{A pooled database connection}
+\item{pool}{A pooled database connection.}
 
-\item{holding_data}{A dataframe indicating the dataframe to send to the db}
+\item{holding_data}{A dataframe indicating the dataframe to send to the db.}
 }
 \description{
 Write the client's statistics (selected by clinician) to holding table in DB if sending measure via email link.

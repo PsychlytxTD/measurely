@@ -19,11 +19,11 @@ retrieve_client_name_UI<- function(id) {
 #'
 #' Retrive name to display thoughout pages of parent app
 #'
-#' @param pool A pooled db connection
+#' @param pool A pooled db connection.
 #'
-#' @param input_retrieve_client_data A reactive value: the value of client selection button
+#' @param input_retrieve_client_data A reactive value: the value of client selection button.
 #'
-#' @param selected_client A reactive value containing the id of the selected client
+#' @param selected_client A reactive value containing the id of the selected client.
 #'
 #' @export
 

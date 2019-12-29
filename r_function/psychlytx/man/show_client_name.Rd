@@ -8,7 +8,9 @@ show_client_name(input, output, session, client_name_for_display,
   input_retrieve_client_data)
 }
 \arguments{
-\item{client_name_for_display}{A reactive object containing the client's first and last names.}
+\item{client_name_for_display}{A reactive object (string) containing the client's first and last names.}
+
+\item{input_retrive_client_data}{A reactive value: the value of client selection button.}
 }
 \description{
 Pull name from db to display on app tabpanels

@@ -229,7 +229,7 @@ ui<- function(request) {
                          
                       ),
                   
-                  column(span(tagList("Psychlytx", icon("registered", lib = "font-awesome"))), offset = 5, width = 12))
+                  psychlytx::make_footer_UI("footer"))
                   
                   )
                 
@@ -253,6 +253,8 @@ server <- function(input, output, session) {
   callModule(psychlytx::make_sidebar, "sidebar") #Make sidebar
   
   callModule(psychlytx::make_header, "header") #Make header
+  
+  callModule(psychlytx::make_footer, "footer") #Make footer
   
   
   #Register a new client with pretherapy analytics data. Module 

@@ -8,6 +8,8 @@ make_header_UI(id, header_text)
 }
 \arguments{
 \item{id}{A string to create the namespace}
+
+\item{header_text}{A string indicating the name of the outcome measure.}
 }
 \description{
 Module to make header

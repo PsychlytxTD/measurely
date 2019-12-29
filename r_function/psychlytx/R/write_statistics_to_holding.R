@@ -47,9 +47,9 @@ write_statistics_to_holding_UI<- function(id) {
 #'
 #' Write the client's statistics (selected by clinician) to holding table in DB if sending measure via email link.
 #'
-#' @param pool A pooled database connection
+#' @param pool A pooled database connection.
 #'
-#' @param holding_data A dataframe indicating the dataframe to send to the db
+#' @param holding_data A dataframe indicating the dataframe to send to the db.
 #'
 #' @export
 

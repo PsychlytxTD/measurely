@@ -8,6 +8,7 @@
 
 
 reliability_calc_UI <- function(id) {
+
   ns <- NS(id)
 
   tagList(
@@ -88,12 +89,12 @@ reliability_calc<- function(input, output, session) {
 
   if(input$reliability_stat == "T-Value") {
 
-    t_rel(calc_sd = input$calc_sd, calc_retest_sd = input$calc_retest_sd, calc_mean = input$calc_mean, calc_retest_mean = input$calc_retest_mean,
+    psychlytx::t_rel(calc_sd = input$calc_sd, calc_retest_sd = input$calc_retest_sd, calc_mean = input$calc_mean, calc_retest_mean = input$calc_retest_mean,
           calc_t = input$calc_t, calc_n = input$calc_n)
 
   } else if(input$reliability_stat == "F-Value") {
 
-    t_rel(calc_sd = input$calc_sd, calc_retest_sd = input$calc_retest_sd, calc_mean = input$calc_mean, calc_retest_mean = input$calc_retest_mean,
+    psychlytx::f_rel(calc_sd = input$calc_sd, calc_retest_sd = input$calc_retest_sd, calc_mean = input$calc_mean, calc_retest_mean = input$calc_retest_mean,
           calc_f = input$calc_f, calc_n = input$calc_n)
 
   }

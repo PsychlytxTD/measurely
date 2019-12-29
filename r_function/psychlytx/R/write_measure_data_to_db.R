@@ -25,6 +25,8 @@ write_measure_data_to_db_UI<- function(id) {
 #'
 #' @param manual_entry A list of values returned when clinician submits new scale responses. Of list items, only accessing the button value, to trigger the query.
 #'
+#' @param formatted_response_body_for_email A string containing all required values for email body.
+#'
 #' @export
 
 

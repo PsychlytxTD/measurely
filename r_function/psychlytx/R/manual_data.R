@@ -110,25 +110,33 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
     })
 
 
-  output$item_warning<- renderText({
+
+  item_warning_reac<- eventReactive(input$submit_scores, {
 
     missing<- which(is.na(item_scores()))
 
-  if(any(is.na(item_scores()))) {
-   paste("<span style=\"color:red\"> Please provide a response to item", missing, "</span>")
-   }
+    if(any(is.na(item_scores()))) {
+      paste("<span style=\"color:red\"> Please provide a response to item", missing, "</span>")
+    }
+
+  })
+
+
+  output$item_warning<- renderText({
+
+  req(item_warning_reac())
 
   })
 
 
   observeEvent(input$submit_scores, {
 
-    if(length(item_scores()) != expected_responses) {
+    if(any(is.na(item_scores())) | length(item_scores()) > expected_responses) {
 
       sendSweetAlert(
         session = session,
-        title = "Incorrect number of responses!!",
-        text = "Please make sure you provide only response per question",
+        title = "Incorrect number of responses!",
+        text = "Please provide one response per question.",
         type = "error"
       )
     }
@@ -138,14 +146,13 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
 
   eventReactive(input$submit_scores, {
 
-              if(length(item_scores()) == expected_responses) {
+              if(any(is.na(item_scores())) | length(item_scores()) > expected_responses) {
 
-              list( date = date(), item_scores = item_scores(), submit_scores_button_value = input$submit_scores )
+                return(NULL)
 
                 } else {
 
-                  return(NULL)
-
+                  list( date = date(), item_scores = item_scores(), submit_scores_button_value = input$submit_scores )
                 }
 
     })

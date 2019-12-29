@@ -9,6 +9,8 @@
 
 make_about_tab_UI<- function(id) {
 
+  ns<- NS(id)
+
   tabItem(tabName = "About", br(), br(), br(), br(),br(), br(),br(),br(), br(),
           column(12, offset = 4, h1(tags$a(href = "http://psychlytx.com.au", "Visit PsychlytX here.",  style = "color: #827717;")))
   )

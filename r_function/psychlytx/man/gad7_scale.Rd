@@ -6,6 +6,9 @@
 \usage{
 gad7_scale(input, output, session, selected_client)
 }
+\arguments{
+\item{selected_client}{A string indicating the unique id of the selected client.}
+}
 \description{
 Generates the GAD-7 for data entry
 }

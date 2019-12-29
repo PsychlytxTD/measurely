@@ -43,6 +43,8 @@ extract_holding_statistics_UI<-  function(id) {
 #' @param cutoff_input A list containing the cutoff values, labels and references (widget inputs).
 #'
 #' @param subscale_number A numeric value representing which index (i.e. which subscale) to select from the list of indices.
+#'
+#' @export
 
 
 

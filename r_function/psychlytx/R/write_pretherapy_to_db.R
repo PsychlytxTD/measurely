@@ -8,6 +8,8 @@
 
 write_pretherapy_to_db_UI<- function(id) {
 
+  ns<- NS(id)
+
   return(NULL)
 
 }

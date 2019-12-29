@@ -29,7 +29,9 @@ fluidRow(
 #'
 #' Pull name from db to display on app tabpanels
 #'
-#' @param client_name_for_display A reactive object containing the client's first and last names.
+#' @param client_name_for_display A reactive object (string) containing the client's first and last names.
+#'
+#' @param input_retrive_client_data A reactive value: the value of client selection button.
 #'
 #' @export
 

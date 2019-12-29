@@ -7,9 +7,9 @@
 analytics_pretherapy(input, output, session, clinician_id)
 }
 \arguments{
-\item{clinician_id}{String indicating clinician's unique identifier.}
+\item{session}{A session object.}
 
-\item{id}{String to create a unique namespace.}
+\item{clinician_id}{String indicating clinician's unique identifier.}
 }
 \description{
 Module generates client status widget and headings.

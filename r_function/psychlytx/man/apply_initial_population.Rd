@@ -61,9 +61,15 @@ apply_initial_population(input, output, session, title, brief_title,
 
 \item{journal_references}{The string indicating a full reference for each research sample for mean and sd.}
 
-\item{input_population}{A string (reactive value) representing the name of the selected population.}
+\item{existing_data}{A dataframe representing the client's existing available data for this measure.}
 
-\item{tabsetpanel_id}{A string indicating a panel id to allow automatic switching between panels.}
+\item{pool}{A pooled db connection.}
+
+\item{selected_client}{A string indicating the unique id of the selected client.}
+
+\item{clinician_id}{A string indicating the unique id of the clinician.}
+
+\item{input_population}{A string (reactive value) representing the name of the selected population.}
 }
 \description{
 Select an initial population thereby applying settings for analyses

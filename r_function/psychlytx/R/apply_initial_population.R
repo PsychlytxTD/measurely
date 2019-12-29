@@ -17,20 +17,6 @@ apply_initial_population_UI<- function(id) {
 
     fluidPage(
 
-      #fluidRow(
-
-      #column(width = 10, offset = 1,
-      #      checkboxInput(ns("first_time_scale_completion"), h4(tags$strong("First assessment using this measure", style = "color: #283747")), width = "100%" #Checking the 'first' box should trigger prompt to select a population
-      #                                   ))
-      #),
-
-      #fluidRow(
-
-      # column(width = 10, offset = 1,
-      #       checkboxInput(ns("ongoing_outcome_monitoring"), h4(tags$strong("Ongoing Outcome Monitoring", style = "color: #283747"))))
-
-      #),
-
       fluidRow(
 
         column(width = 10, offset = 1,
@@ -211,7 +197,13 @@ apply_initial_population_UI<- function(id) {
 #'
 #' @param journal_references The string indicating a full reference for each research sample for mean and sd.
 #'
-#' @param tabsetpanel_id A string indicating a panel id to allow automatic switching between panels.
+#' @param existing_data A dataframe representing the client's existing available data for this measure.
+#'
+#' @param pool A pooled db connection.
+#'
+#' @param selected_client A string indicating the unique id of the selected client.
+#'
+#' @param clinician_id A string indicating the unique id of the clinician.
 #'
 #' @export
 

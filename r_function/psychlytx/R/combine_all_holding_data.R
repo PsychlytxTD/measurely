@@ -19,7 +19,7 @@ combine_all_holding_data_UI<- function(id) {
 #'
 #' Combine all lists of holding statistics
 #'
-#' @param input_list A list of input lists (one for each subscale).
+#' @param holding_statistics_list A list of input lists (one for each subscale).
 #'
 #' @export
 

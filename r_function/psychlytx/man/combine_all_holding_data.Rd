@@ -7,7 +7,7 @@
 combine_all_holding_data(input, output, session, holding_statistics_list)
 }
 \arguments{
-\item{input_list}{A list of input lists (one for each subscale).}
+\item{holding_statistics_list}{A list of input lists (one for each subscale).}
 }
 \description{
 Combine all lists of holding statistics

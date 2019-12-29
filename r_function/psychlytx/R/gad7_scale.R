@@ -74,7 +74,9 @@ fluidRow(
 #'
 #' Generates the GAD-7 for data entry
 #'
-#'@export
+#' @param selected_client A string indicating the unique id of the selected client.
+#'
+#' @export
 #'
 gad7_scale<- function(input, output, session, selected_client) {
 
@@ -89,14 +91,18 @@ gad7_scale<- function(input, output, session, selected_client) {
 
 
   observe({
+             #Make a logical vector indicating whether a scale item had more than one response endorsed.
 
       item_too_long<- purrr::map_lgl(list(c(input$item_1), c(input$item_2), c(input$item_3), c(input$item_4),
                           c(input$item_5), c(input$item_6), c(input$item_7)), ~length(.x) > 1)
+
+      #Generate a sweet alert as soon as more than one responsennisngiven for an item
 
       psychlytx::warn_too_many_responses(session, item_too_long)
 
   })
 
+  #Return the values of all items in a string.
 
   scale_entry <- reactive({ paste(input$item_1, input$item_2, input$item_3,
                                   input$item_4, input$item_5, input$item_6, input$item_7, sep = ",") })

@@ -8,11 +8,11 @@ retrieve_client_name(input, output, session, pool,
   input_retrieve_client_data, selected_client)
 }
 \arguments{
-\item{pool}{A pooled db connection}
+\item{pool}{A pooled db connection.}
 
-\item{input_retrieve_client_data}{A reactive value: the value of client selection button}
+\item{input_retrieve_client_data}{A reactive value: the value of client selection button.}
 
-\item{selected_client}{A reactive value containing the id of the selected client}
+\item{selected_client}{A reactive value containing the id of the selected client.}
 }
 \description{
 Retrive name to display thoughout pages of parent app

@@ -12,9 +12,9 @@ download_report(input, output, session, pool, selected_client,
 
 \item{selected_client}{A string indicating the unique id of the selected client.}
 
-\item{most_recent_client_data}{A dataframe representing the most recently queried data (across all measures) for this patient.}
+\item{global_subscale_info}{A list of lists containing required statistics for each outcome measure subscale.}
 
-\item{measure}{The name of the psychological measure.}
+\item{most_recent_client_data}{A dataframe representing the most recently queried data (across all measures) for this patient.}
 }
 \description{
 Wrangle selected_client_data pulled from database and pass it to an R Markdown report

@@ -8,6 +8,8 @@
 
 write_posttherapy_to_db_UI<- function(id) {
 
+  ns<- NS(id)
+
   return(NULL)
 
 }
@@ -19,7 +21,7 @@ write_posttherapy_to_db_UI<- function(id) {
 #'
 #' @param pool A pooled db connection.
 #'
-#' @param  analytics_posttherapy A dataframe containing post-therapy analytics data.
+#' @param analytics_posttherapy A dataframe containing post-therapy analytics data.
 #'
 #' @export
 

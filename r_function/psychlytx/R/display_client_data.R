@@ -36,6 +36,8 @@ display_client_data_UI<- function(id) {
 #'
 #' @param input_retrieve_client_data A numeric value indicating the value of the action button - used to trigger a database query.
 #'
+#' @param client_name_for_display A string indicating the selected client's name.
+#'
 #' @export
 
 

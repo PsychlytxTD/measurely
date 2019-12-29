@@ -61,7 +61,7 @@ download_report_UI<- function(id) {
 #'
 #' @param selected_client A string indicating the unique id of the selected client.
 #'
-#' @param measure The name of the psychological measure.
+#' @param global_subscale_info A list of lists containing required statistics for each outcome measure subscale.
 #'
 #' @param most_recent_client_data A dataframe representing the most recently queried data (across all measures) for this patient.
 #'
