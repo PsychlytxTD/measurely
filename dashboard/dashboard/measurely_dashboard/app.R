@@ -65,22 +65,22 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
 #Import the client table
 #Convert birth dates to ages (numerical variable), then cut it into discrete categories
 
-client<- dplyr::tbl(pool, "client") %>% dplyr::collect() %>% as.data.frame() %>%
-  dplyr::mutate(creation_date = as.Date(creation_date))
+#client<- dplyr::tbl(pool, "client") #%>% dplyr::collect() %>% as.data.frame() %>%
+  #dplyr::mutate(creation_date = as.Date(creation_date))
 
-client$age<- measurelydashboard::age_cat(eeptools::age_calc(client$birth_date, units = 'years'), upper = 70)
+#client$age<- measurelydashboard::age_cat(eeptools::age_calc(client$birth_date, units = 'years'), upper = 70)
 
 #Import the measure table
 #Extract minimum and maximum date to use in dateRangeInput
 #Make the date filter
 
-measure<- dplyr::tbl(pool, "scale") %>% dplyr::collect() %>% as.data.frame() %>%
-  dplyr::mutate(date = as.Date(date))
+#measure<- dplyr::tbl(pool, "scale") #%>% dplyr::collect() %>% as.data.frame() %>%
+  #dplyr::mutate(date = as.Date(date))
 
 #Import the posttherapy_analytics table
 
-posttherapy_analytics<- dplyr::tbl(pool, "posttherapy_analytics") %>%
-  dplyr::collect() %>% as.data.frame() %>% dplyr::mutate(creation_date = as.Date(creation_date))
+#posttherapy_analytics<- dplyr::tbl(pool, "posttherapy_analytics")# %>%
+  #dplyr::collect() %>% as.data.frame() %>% dplyr::mutate(creation_date = as.Date(creation_date))
 
 
   header<- dashboardHeader(title ="Measurely | Clinical Outcomes Dashboard", titleWidth = 800)
@@ -137,24 +137,84 @@ server <- shinyServer(function(input, output, session) {
   addClass(selector = "body", class = "sidebar-collapse")
 
   output$date_dropdown<- renderUI({
-    dateRangeInput("date_selection", "Select Date Range For Analyses", start = lubridate::now("UTC") - lubridate::years(1), lubridate::now("UTC"), format = "dd-mm-yyyy")
+    dateRangeInput("date_selection", "Select Date Range For Analyses", start = Sys.Date() - lubridate::years(1), Sys.Date(), format = "dd-mm-yyyy")
   })
+
+
+
+ measure_table<- reactive({
+         date_filter_sql<- "SELECT *
+          FROM scale
+          WHERE creation_date >= ?creation_date_1
+          AND creation_date <= ?creation_date_2;"
+
+ date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")), creation_date_2 =  stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")))
+
+
+ measure<- dbGetQuery(pool, date_filter_query)
+
+ tibble::as_tibble(measure)
+
+ })
+
+
+
+ client_table<- reactive({ date_filter_sql<- "SELECT *
+          FROM client
+          WHERE creation_date >= ?creation_date_1
+          AND creation_date <= ?creation_date_2;"
+
+ date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")), creation_date_2 =  stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")))
+
+
+ client<- as.data.frame(dbGetQuery(pool, date_filter_query))
+
+ client$age<- measurelydashboard::age_cat(eeptools::age_calc(req(client$birth_date), Sys.Date(), units = 'years'), upper = 70)
+
+
+ tibble::as_tibble(client)
+
+ })
+
+
+
+ posttherapy_analytics_table<- reactive({ date_filter_sql<- "SELECT *
+          FROM posttherapy_analytics
+          WHERE creation_date >= ?creation_date_1
+          AND creation_date <= ?creation_date_2;"
+
+ date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")), creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")))
+
+
+ posttherapy_analytics<- dbGetQuery(pool, date_filter_query)
+
+
+ tibble::as_tibble(posttherapy_analytics)
+
+ })
+
 
 
 
   #Make reactive expressions from the imported tables (we need these to be updateable if the date filter changes)
 
-  measure_table<- reactive({
-    measure %>% dplyr::filter(date >= req(input$date_selection[1]) & date <= req(input$date_selection[2]))
-  })
+  #measure_table<- reactive({
+   # measure %>% dplyr::filter(creation_date >= input$date_selection[1] & creation_date <= input$date_selection[2]) %>% dplyr::collect()
+  #})
 
-  client_table<- reactive({
-    client %>% dplyr::filter(creation_date >= req(input$date_selection[1]) & creation_date <= req(input$date_selection[2]))
-  })
 
-  posttherapy_analytics_table<- reactive({
-    posttherapy_analytics %>% dplyr::filter(creation_date >= req(input$date_selection[1]) & creation_date <= req(input$date_selection[2]))
-  })
+  #client_table<- reactive({
+
+    #client<- client %>% dplyr::filter(creation_date >= input$date_selection[1] & creation_date <= input$date_selection[2]) %>%
+      #dplyr::collect()
+
+    #client$age<- measurelydashboard::age_cat(eeptools::age_calc(client$birth_date, units = 'years'), upper = 70)
+
+  #})
+
+  #posttherapy_analytics_table<- reactive({
+    #posttherapy_analytics %>% dplyr::filter(creation_date >= input$date_selection[1] & creation_date <= input$date_selection[2]) %>% dplyr::collect()
+  #})
 
 
   #Join the three imported tables and make reactive expression
@@ -176,7 +236,7 @@ server <- shinyServer(function(input, output, session) {
 
   callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data)
 
-  callModule(measurelydashboard::plot_demographics, "plot_demographics", client, client_table, joined_data, nested_data)
+  callModule(measurelydashboard::plot_demographics, "plot_demographics", client_table, joined_data, nested_data)
 
   callModule(measurelydashboard::plot_diagnoses, "plot_diagnoses", posttherapy_analytics_table)
 
@@ -184,10 +244,10 @@ server <- shinyServer(function(input, output, session) {
 
   callModule(measurelydashboard::plot_cases_by_measure, "plot_cases_by_measure", nested_data)
 
-  callModule(measurelydashboard::make_posttherapy_valueboxes, "make_posttherapy_valueboxes", posttherapy_analytics_table)
+  #callModule(measurelydashboard::make_posttherapy_valueboxes, "make_posttherapy_valueboxes", posttherapy_analytics_table)
 
-  callModule(measurelydashboard::plot_posttherapy_outcomes, "plot_posttherapy_outcomes", posttherapy_analytics,
-             posttherapy_analytics_table, joined_data, nested_data)
+  #callModule(measurelydashboard::plot_posttherapy_outcomes, "plot_posttherapy_outcomes", posttherapy_analytics,
+             #posttherapy_analytics_table, joined_data, nested_data)
 
 
 })

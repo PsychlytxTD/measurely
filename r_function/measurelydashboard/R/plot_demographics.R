@@ -41,8 +41,6 @@ plot_demographics_UI<- function(id) {
 #'
 #' @param joined_data A reactive df consisting of the joined database tables: client, scale & posttherapy.
 #'
-#' @param client A non-reactive df representing the data from the client table in the database.
-#'
 #' @param client_table A reactive df representing the data from the client table in the database.
 #'
 #' @param nested_data A reactive nested dataframe containing subscale scores for each individual.
@@ -50,7 +48,7 @@ plot_demographics_UI<- function(id) {
 #' @export
 
 
-plot_demographics<- function(input, output, session, client, client_table, joined_data, nested_data) {
+plot_demographics<- function(input, output, session, client_table, joined_data, nested_data) {
 
 #Generate the dropdown of demographics variables
 
