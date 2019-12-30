@@ -51,7 +51,7 @@ make_outcome_valueboxes_UI<- function(id) {
 #' @export
 
 
-make_outcome_valueboxes<- function(input, output, session, nested_data, joined_data) {
+make_outcome_valueboxes<- function(input, output, session, nested_data) {
 
 
 #Wrangle the data for the value boxes

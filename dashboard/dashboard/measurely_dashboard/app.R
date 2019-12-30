@@ -65,7 +65,7 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
 #Import the client table
 #Convert birth dates to ages (numerical variable), then cut it into discrete categories
 
-client<- tbl(pool, "client") %>% dplyr::collect() %>% as.data.frame() %>%
+client<- dplyr::tbl(pool, "client") %>% dplyr::collect() %>% as.data.frame() %>%
   dplyr::mutate(creation_date = as.Date(creation_date))
 
 client$age<- measurelydashboard::age_cat(eeptools::age_calc(client$birth_date, units = 'years'), upper = 70)
@@ -74,15 +74,12 @@ client$age<- measurelydashboard::age_cat(eeptools::age_calc(client$birth_date, u
 #Extract minimum and maximum date to use in dateRangeInput
 #Make the date filter
 
-measure<- tbl(pool, "scale") %>% dplyr::collect() %>% as.data.frame() %>%
+measure<- dplyr::tbl(pool, "scale") %>% dplyr::collect() %>% as.data.frame() %>%
   dplyr::mutate(date = as.Date(date))
-
-dates<- c(as.Date(min(measure$date)),
-          as.Date(max(measure$date)))
 
 #Import the posttherapy_analytics table
 
-posttherapy_analytics<- tbl(pool, "posttherapy_analytics") %>%
+posttherapy_analytics<- dplyr::tbl(pool, "posttherapy_analytics") %>%
   dplyr::collect() %>% as.data.frame() %>% dplyr::mutate(creation_date = as.Date(creation_date))
 
 
@@ -140,7 +137,7 @@ server <- shinyServer(function(input, output, session) {
   addClass(selector = "body", class = "sidebar-collapse")
 
   output$date_dropdown<- renderUI({
-    dateRangeInput("date_selection", "Select Date Range For Analyses", start = dates[1], end = dates[2], format = "dd-mm-yyyy")
+    dateRangeInput("date_selection", "Select Date Range For Analyses", start = lubridate::now("UTC") - lubridate::years(1), lubridate::now("UTC"), format = "dd-mm-yyyy")
   })
 
 
@@ -156,7 +153,7 @@ server <- shinyServer(function(input, output, session) {
   })
 
   posttherapy_analytics_table<- reactive({
-    posttherapy_analytics %>%  dplyr::filter(creation_date >= req(input$date_selection[1]) & creation_date <= req(input$date_selection[2]))
+    posttherapy_analytics %>% dplyr::filter(creation_date >= req(input$date_selection[1]) & creation_date <= req(input$date_selection[2]))
   })
 
 
@@ -177,7 +174,7 @@ server <- shinyServer(function(input, output, session) {
 
   nested_data<- callModule(measurelydashboard::make_nested_data, "make_nested_data", joined_data)
 
-  callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data, joined_data)
+  callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data)
 
   callModule(measurelydashboard::plot_demographics, "plot_demographics", client, client_table, joined_data, nested_data)
 
