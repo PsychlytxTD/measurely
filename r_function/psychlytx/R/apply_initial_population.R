@@ -127,7 +127,7 @@ apply_initial_population_UI<- function(id) {
                                                                                                         "$261-$270", "$271-$280",
                                                                                                         "$281-$290", "$291-$300",
                                                                                                         "More than $300"), width = '20%'),
-                                            actionButton(ns("submit_analytics_posttherapy"), "Submit Clinical Outcomes", class = "submit_data")
+                                            actionButton(ns("submit_analytics_posttherapy"), "Submit Clinical Outcomes", class = "submit_button")
 
                                           )),
 

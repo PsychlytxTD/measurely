@@ -15,7 +15,7 @@ tagList(
 titlePanel(span(tagList(icon("f07c", lib = "font-awesome", class = "far fa-folder-open"), h4("Find And Select Your Client")))),
 
 
-uiOutput(ns("client_dropdown")), actionButton(ns("refresh"), "Refresh List", class = "submit_data_blue")
+uiOutput(ns("client_dropdown")), actionButton(ns("refresh"), "Refresh List", class = "submit_button")
 
 
 )

@@ -24,7 +24,7 @@ download_report_UI<- function(id) {
                      sidebarPanel(
 
                        downloadButton(ns("report"), "Report Download",
-                                      class = "submit_data", lib = "font-awesome") %>%  helper(type = "inline",
+                                      class = "submit_button", lib = "font-awesome") %>%  helper(type = "inline",
                                                                                                title = "Problems with report generation",
                                                                                                colour = "#d35400",
                                                                                                content = c("<b>Your report may fail to generate for three reasons:</b>",

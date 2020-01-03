@@ -33,8 +33,6 @@ fluidRow(
 #'
 #' Make plots for posttherapy outcomes and clinical outcomes by posttherapy categories
 #'
-#' @param posttherapy_analytics A non-reactive df with posttherapy outcome data.
-#'
 #' @param posttherapy_analytics_table A reactive df with posttherapy outcome data.
 #'
 #' @param joined_data A reactive df consisting of the joined database tables: client, scale & posttherapy.
@@ -45,7 +43,7 @@ fluidRow(
 #'
 #' @export
 
-plot_posttherapy_outcomes<- function(input, output, session, posttherapy_analytics, posttherapy_analytics_table, joined_data, nested_data) {
+plot_posttherapy_outcomes<- function(input, output, session, posttherapy_analytics_table, joined_data, nested_data) {
 
 
 output$posttherapy_dropdown<- renderUI({
@@ -54,19 +52,21 @@ output$posttherapy_dropdown<- renderUI({
 
   #Make named list to pass to dropdown, to avoid underscores between words
 
-  posttherapy_vars<- names(req(joined_data()[, 38:49])) %>%
-    purrr::set_names(stringr::str_replace_all(names(joined_data()[, 38:49]), "_", " "))
+  posttherapy_names<- names(req(joined_data()[, 38:49]))
+
+  posttherapy_vars<-  posttherapy_names %>%
+    purrr::set_names(stringr::str_replace_all(posttherapy_names, "_", " "))
 
   selectInput(ns("posttherapy_variable"), "Select Therapy Outcome",
               choices = posttherapy_vars)
 })
 
 
-current_category_posttherapy<- reactiveVal()
+current_category<- reactiveVal()
 
 output$posttherapy_plot <- plotly::renderPlotly({
 
-  posttherapy<- tibble::tibble(req(posttherapy_analytics_table()[, req(input$posttherapy_variable)])) %>%
+  posttherapy<- tibble::as_tibble(joined_data()[[req(input$posttherapy_variable)]]) %>%
     dplyr::count(.[[1]]) %>% purrr::set_names(c("labels", "values")) %>% dplyr::mutate_if(is.factor, as.character)
 
   posttherapy$labels[posttherapy$labels == "" | is.na(posttherapy$labels)]<- "Missing"
@@ -89,14 +89,14 @@ observe({
 
   cd <- event_data("plotly_click")$customdata[[1]]
 
-  if (isTRUE(cd %in% posttherapy_analytics[,paste(input$posttherapy_variable)])) current_category_posttherapy(cd)
+  if (isTRUE(cd %in% posttherapy_analytics_table()[[req(input$posttherapy_variable)]])) current_category(cd)
 
 })
 
 
 outcomes_by_posttherapy<- reactive({
 
-  if(length(current_category_posttherapy())) {
+  if(length(current_category())) {
 
     outcomes_df<- posttherapy_analytics_table() %>% dplyr::inner_join(nested_data(), by = c("client_id" = "client_id"))
 
@@ -104,7 +104,7 @@ outcomes_by_posttherapy<- reactive({
 
     names(outcomes_df)<- c("selected", "Improved", "Reliably Improved", "No Change", "Deteriorated")
 
-    outcomes_df<- outcomes_df %>% dplyr::filter(selected %in% current_category_posttherapy())
+    outcomes_df<- outcomes_df %>% dplyr::filter(selected %in% current_category())
 
     outcomes_df_gathered<- outcomes_df %>% tidyr::gather("outcome", "status", -selected) %>% dplyr::filter(status == TRUE)
 
@@ -121,7 +121,7 @@ output$summary_outcomes_plot_by_posttherapy<- renderPlotly({
   validate(need(length(outcomes_by_posttherapy()$Percent) >= 1, "No data to show yet. Click on a category of the left plot."))
 
 
-  p<- ggplot(req(outcomes_by_posttherapy()), aes(x = paste(current_category_posttherapy()[1]),
+  p<- ggplot(req(outcomes_by_posttherapy()), aes(x = current_category()[[1]],
                                                  y = Percent,
                                                  fill = forcats::fct_reorder(Variable, Percent),
                                                  text = paste(Variable, "<br>","Count: ", Count))) +

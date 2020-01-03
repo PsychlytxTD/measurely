@@ -28,7 +28,7 @@ write_statistics_to_holding_UI<- function(id) {
  column(width = 4, #Create button to send measure to client via email, and to automatically write his or her statistics to the holding table in the db.
   br(),
   br(),
-  actionButton(ns("submit_holding_data"), "Email This Measure To My Client Instead", class = "submit_data", style = "margin-top: 9px") %>%
+  actionButton(ns("submit_holding_data"), "Email This Measure To My Client Instead", class = "submit_button", style = "margin-top: 9px") %>%
     helper( type = "inline", title = "What happens once I send this measure to my client?", colour = "#283747", #Make info icon to explain what happens when email is sent.
             content = c("1. Your client will receive a unique Measurely key and a link to complete this particular measure.",
                         "",

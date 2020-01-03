@@ -42,7 +42,7 @@ analytics_pretherapy_UI<- function(id) {
 
                      br(),
 
-                     actionButton(ns("submit_analytics_pretherapy"), "Register Client", class = "submit_data")
+                     actionButton(ns("submit_analytics_pretherapy"), "Register Client", class = "submit_button")
 
                       ),
 

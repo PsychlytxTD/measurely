@@ -86,6 +86,41 @@ ui<- function(request) {
       
       tabItems(
         
+        tabItem(tabName = "Landing",
+ 
+                # parent container
+                tags$div(class="landing-wrapper",
+                         
+                         # child element 1: images
+                         tags$div(class="landing-block background-content",
+                                  
+                                  # images - top -> bottom, left -> right
+                                  tags$img(src="talking.jpg"),
+                                  tags$img(src="faces.jpg"),
+                                  tags$img(src="deckchairs.jpg"), 
+                                  tags$img(src="headway.jpg")
+                         ),
+                         
+                         # child element 2: content
+                         tags$div(class="landing-block foreground-content",
+                                  
+                                  h1("Welcome to Measurely"),
+                                  
+                                  br(),
+                                  
+                                  actionButton("start_button", "Get Started", class = "start_button")
+                                  
+                         )
+                         
+                         
+                )
+                
+                ),
+                
+
+                
+
+        
         tabItem(tabName = "Home", 
                 
                 fluidRow(
@@ -105,11 +140,11 @@ ui<- function(request) {
                                   
                                   sidebarLayout(
                                     
-                                    sidebarPanel(
+                                    sidebarPanel(width = 6,
                                       
                                       psychlytx::render_client_dropdown_UI("client_dropdown"),
                                       
-                                      actionButton("retrieve_client_data", "Select Client", class = "submit_data"),
+                                      actionButton("retrieve_client_data", "Select Client", class = "submit_button"),
                                       
                                       psychlytx::retrieve_client_name_UI("retrieve_client_name"),
                                       
