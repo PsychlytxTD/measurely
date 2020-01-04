@@ -88,32 +88,7 @@ ui<- function(request) {
         
         tabItem(tabName = "Landing",
  
-                # parent container
-                tags$div(class="landing-wrapper",
-                         
-                         # child element 1: images
-                         tags$div(class="landing-block background-content",
-                                  
-                                  # images - top -> bottom, left -> right
-                                  tags$img(src="talking.jpg"),
-                                  tags$img(src="faces.jpg"),
-                                  tags$img(src="deckchairs.jpg"), 
-                                  tags$img(src="headway.jpg")
-                         ),
-                         
-                         # child element 2: content
-                         tags$div(class="landing-block foreground-content",
-                                  
-                                  h1("Welcome to Measurely"),
-                                  
-                                  br(),
-                                  
-                                  actionButton("start_button", "Get Started", class = "start_button")
-                                  
-                         )
-                         
-                         
-                )
+                psychlytx::make_landing_UI("make_landing")
                 
                 ),
                 
@@ -285,7 +260,9 @@ server <- function(input, output, session) {
   
   observe_helpers()#Needed for use of the shinyhelpers package
   
-  callModule(psychlytx::make_sidebar, "sidebar") #Make sidebar
+  start_button_input<- callModule(psychlytx::make_landing, "make_landing")
+  
+  callModule(psychlytx::make_sidebar, "sidebar", start_button_input) #Make sidebar
   
   callModule(psychlytx::make_header, "header") #Make header
   

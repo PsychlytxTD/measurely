@@ -25,7 +25,7 @@ write_statistics_to_holding_UI<- function(id) {
 
   fluidRow(
 
- column(width = 4, #Create button to send measure to client via email, and to automatically write his or her statistics to the holding table in the db.
+ column(width = 6, #Create button to send measure to client via email, and to automatically write his or her statistics to the holding table in the db.
   br(),
   br(),
   actionButton(ns("submit_holding_data"), "Email This Measure To My Client Instead", class = "submit_button", style = "margin-top: 9px") %>%

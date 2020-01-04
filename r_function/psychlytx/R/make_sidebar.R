@@ -9,19 +9,18 @@
 
 make_sidebar_UI<- function(id) {
 
+  ns <- NS(id)
 
   dashboardSidebar(  #Menu items are hyperlinks to website pages
-    sidebarMenu(
+    sidebarMenu(id = ns("tabs"),
       br(),
-      menuItem(h3("Landing"), tabName = "Landing", selected = TRUE),
+      menuItem(h4(""), tabName = "Landing"),
       br(),
-      menuItem(h3("Home"), icon = icon("line-chart", "fa-3x"), tabName = "Home"),
+      menuItem(h4("Home"), icon = icon("line-chart", "fa-2x"), tabName = "Home"),
       br(),
-      div( HTML('&nbsp;'), HTML('&nbsp;'), HTML('&nbsp;'), icon("info", "fa-3x"), HTML('&nbsp;'), HTML('&nbsp;'),
-            HTML('&nbsp;'), HTML('&nbsp;'), tags$a(h3("About Psychlytx"), href = "http://www.psychlytx.com", style = "color:white")),
+      menuItem(h4("About Psychlytx"), icon = icon("info", "fa-2x"), href = "http://www.psychlytx.com"),
       br(),
-      div( HTML('&nbsp;'), HTML('&nbsp;'), HTML('&nbsp;'), icon("user-cog", "fa-3x"), HTML('&nbsp;'),
-            HTML('&nbsp;'), tags$a(h3("Update Account Details"), href = "http://www.psychlytx.com", style = "color:white")),
+      menuItem(h4("Edit Client Records"), icon = icon("user-cog", "fa-2x"),  href = "http://www.psychlytx.com"),
       br(),
       br(),
       br(),
@@ -52,12 +51,17 @@ make_sidebar_UI<- function(id) {
 #' Make Sidebar
 #'
 #' Module to make sidebar
+#' @param start_button_value A reactive value containing value of start_button action button.
 #'
 #' @export
 
 
-make_sidebar<- function(input, output, session) {
+make_sidebar<- function(input, output, session, start_button_input) {
 
-  return(NULL)
+  observeEvent(start_button_input(), {
+
+    newtab <- switch(input$tabs, "Landing" = "Home")
+    updateTabItems(session, "tabs", newtab)
+  })
 
 }

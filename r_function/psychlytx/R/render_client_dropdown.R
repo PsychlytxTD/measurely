@@ -2,9 +2,9 @@
 #'
 #'#Render client dropdown menu
 #'
-#'@param id A string to create the namespace
+#' @param id A string to create the namespace
 #'
-#'@export
+#' @export
 
 render_client_dropdown_UI<- function(id) {
 

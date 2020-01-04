@@ -72,9 +72,15 @@
                                 border-width: 2px;
                                 }
                                 
-                                .well {background-color:#e5e5e5; 
+                                .well {background-color: white; 
                                        color: #000000;
-                                       border: 2px solid #827717
+                                       border: 4px solid #827717
+                                }
+                                
+                                .pretherapy_sidepanel {
+                                  
+                                  margin-left: 250px;
+                                  
                                 }
                                 
                                 .progress-bar {background-color: #d35400;}
@@ -189,7 +195,7 @@ html,body{
     margin-top: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
-    margin-left: 5px;
+    margin-left: 17px;
     padding-top: 11px;
     padding-right: 25px;
     padding-bottom: 11px;
