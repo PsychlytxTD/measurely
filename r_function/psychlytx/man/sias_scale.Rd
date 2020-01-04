@@ -4,7 +4,10 @@
 \alias{sias_scale}
 \title{SIAS Scale}
 \usage{
-sias_scale(input, output, session)
+sias_scale(input, output, session, selected_client)
+}
+\arguments{
+\item{selected_client}{A string indicating the unique id of the selected client.}
 }
 \description{
 Generates the SIAS for data entry

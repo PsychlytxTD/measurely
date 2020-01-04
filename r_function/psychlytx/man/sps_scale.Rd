@@ -4,7 +4,10 @@
 \alias{sps_scale}
 \title{SPS Scale}
 \usage{
-sps_scale(input, output, session)
+sps_scale(input, output, session, selected_client)
+}
+\arguments{
+\item{selected_client}{A string indicating the unique id of the selected client.}
 }
 \description{
 Generates the SPS for data entry

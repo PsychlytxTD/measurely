@@ -50,7 +50,7 @@ onStop(function() {
 global_subscale_info<- psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["PDSS_SR"]] #Subset the global list to retrive the subscale list(s) for this particular measure
-                                                  #All of the subscale lists should be upper case acronyms with words separated by underscores
+#All of the subscale lists should be upper case acronyms with words separated by underscores
 
 
 clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
@@ -86,6 +86,16 @@ ui<- function(request) {
       
       tabItems(
         
+        tabItem(tabName = "Landing",
+                
+                psychlytx::make_landing_UI("make_landing")
+                
+        ),
+        
+        
+        
+        
+        
         tabItem(tabName = "Home", 
                 
                 fluidRow(
@@ -105,26 +115,26 @@ ui<- function(request) {
                                   
                                   sidebarLayout(
                                     
-                                    sidebarPanel(
-                                      
-                                      psychlytx::render_client_dropdown_UI("client_dropdown"),
-                                      
-                                      actionButton("retrieve_client_data", "Select Client", class = "submit_data"),
-                                      
-                                      shinyBS::bsModal("show_population_modal", "Please Indicate Your Client's Stage of Assessment", "retrieve_client_data", size = "large",
-                                              
-                                              psychlytx::apply_initial_population_UI("apply_population"),
-                                              
-                                              psychlytx::analytics_posttherapy_UI("analytics_posttherapy") #End-of-therapy clinical outcomes panel
-                                              
-                                      ),
-                                      
-                                      
-                                      br(),
-                                      br(),
-                                      
-                                      tags$a(href = "https://measurely-edit-records.psychlytx.com/", "Edit your client's records here.", style = "color:#d35400; text-decoration: underline;")
-
+                                    sidebarPanel(width = 6,
+                                                 
+                                                 psychlytx::render_client_dropdown_UI("client_dropdown"),
+                                                 
+                                                 actionButton("retrieve_client_data", "Select Client", class = "submit_button"),
+                                                 
+                                                 psychlytx::retrieve_client_name_UI("retrieve_client_name"),
+                                                 
+                                                 shinyBS::bsModal("show_population_modal", "Please indicate the stage of treatment", "retrieve_client_data", size = "large",
+                                                                  
+                                                                  psychlytx::apply_initial_population_UI("apply_population")
+                                                                  
+                                                 ),
+                                                 
+                                                 
+                                                 br(),
+                                                 br(),
+                                                 
+                                                 tags$a(href = "https://measurely-edit-records.psychlytx.com/", "Edit your client's records here.", style = "color:#d35400; text-decoration: underline;")
+                                                 
                                     ),
                                     
                                     mainPanel(
@@ -135,19 +145,18 @@ ui<- function(request) {
                                     ))),
                          
                          
-                         tabPanel(tags$strong("Complete Measure"), 
+                         tabPanel(tags$strong("Complete Measure"),
                                   
+                                  psychlytx::show_client_name_UI("show_client_name_measure_tab"),
                                   
                                   psychlytx::extract_holding_statistics_UI("extract_holding_statistics"),
                                   
                                   psychlytx::combine_all_holding_data_UI("combine_all_holding_data"),
                                   
                                   psychlytx::write_statistics_to_holding_UI("write_holding_statistics_to_db"),
-
+                                  
                                   psychlytx::pdsssr_scale_UI("pdsssr_scale"), #Item of the specific measure
                                   
-                                  psychlytx::write_posttherapy_to_db_UI("write_posttherapy_to_db"),
-                                
                                   psychlytx::manual_data_UI("manual_data"), #Items of the specific measure are passed here as a string of numbers
                                   
                                   psychlytx::format_pdsssr_responses_for_email_UI("format_responses_for_email"),
@@ -164,7 +173,9 @@ ui<- function(request) {
                          tabPanel(tags$strong("Client Settings"), value = "go_custom_settings",
                                   
                                   fluidPage(
-                                      
+                                    
+                                    psychlytx::show_client_name_UI("show_client_name_settings_tab"),
+                                    
                                     psychlytx::show_population_message_UI("show_population_message"),
                                     
                                     
@@ -220,17 +231,19 @@ ui<- function(request) {
                          
                          tabPanel(tags$strong("Download Clinical Report", id = "trigger_most_recent_data"), 
                                   
+                                  psychlytx::show_client_name_UI("show_client_name_report_tab"),
+                                  
                                   psychlytx::download_report_UI("download_report") #Report download
                                   
                          )
                          
-                      ),
+                  ),
                   
-                  column(span(tagList(icon("copyright", lib = "font-awesome")), "Psychlytx 2019") , offset = 5, width = 12))
-                  
-                  )
+                  psychlytx::make_footer_UI("footer"))
                 
-                
+        )
+        
+        
         
         
       )))
@@ -247,9 +260,14 @@ server <- function(input, output, session) {
   
   observe_helpers()#Needed for use of the shinyhelpers package
   
-  callModule(psychlytx::make_sidebar, "sidebar") #Make sidebar
+  start_button_input<- callModule(psychlytx::make_landing, "make_landing")
+  
+  callModule(psychlytx::make_sidebar, "sidebar", start_button_input) #Make sidebar
   
   callModule(psychlytx::make_header, "header") #Make header
+  
+  callModule(psychlytx::make_footer, "footer") #Make footer
+  
   
   #Register a new client with pretherapy analytics data. Module 
   #creates unique client id. Need clinician id needs to be available 
@@ -269,38 +287,62 @@ server <- function(input, output, session) {
   
   input_retrieve_client_data<- reactive({input$retrieve_client_data}) #Store the value of the client selection button
   
+  client_name_for_display<- callModule(psychlytx::retrieve_client_name, "retrive_client_name", pool, input_retrieve_client_data, selected_client)
+  
+  callModule(psychlytx::show_client_name, "show_client_name_measure_tab", client_name_for_display, input_retrieve_client_data)
+  callModule(psychlytx::show_client_name, "show_client_name_settings_tab", client_name_for_display, input_retrieve_client_data)
+  callModule(psychlytx::show_client_name, "show_client_name_report_tab", client_name_for_display, input_retrieve_client_data)
+  
+  
   
   existing_data<- callModule(psychlytx::display_client_data, "display_client_data", pool, selected_client, measure = subscale_info_1$measure,
-                             input_retrieve_client_data) #Return the selected client's previous scores on this measure
+                             input_retrieve_client_data, client_name_for_display) #Return the selected client's previous scores on this measure
+  
+  
+  observeEvent(input_retrieve_client_data(), {
+    
+    if(nrow(existing_data()) >= 1) {
+      
+      hideTab(inputId = "tabset", target = "go_custom_settings")
+      
+    } else {
+      
+      showTab(inputId = "tabset", target = "go_custom_settings")
+    }
+    
+  })
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
-                                           subscale_info_1, existing_data)) #Store the selected population for downstream use in other modules
+                                           subscale_info_1, existing_data, pool, selected_client, clinician_id)) #Store the selected population for downstream use in other modules
+  #Posttherapy questions & processing have been relocated to apply_initial_population module
+  #analytics_posttherapy and write_posttherapy_to_db modules are now redundant
+  #Need to pass pool, selected_client, and clinician_id to allow this to occur
   
   
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client
   
+  shinyjs::useShinyjs(debug = TRUE) #Allows resetting of scale items on client change
+  scale_entry<- callModule(psychlytx::pdsssr_scale, "pdsssr_scale", selected_client) #Return the raw responses to the online scale
+  #Pass in selected_client to allow resetting
   
-  scale_entry<- callModule(psychlytx::pdsssr_scale, "pdsssr_scale") #Return the raw responses to the online scale
-  
-  
-  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry) #Raw item responses are stored as vector manual_entry to be used downstream
+  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 7) #Raw item responses are stored as vector manual_entry to be used downstream
   
   
   aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, item_index = list( subscale_info_1$items ), 
                                 aggregation_method = "sum")   #Make a list of aggregate scores across subscales (in this case there is only one subscale)
   
-
+  
   confidence<- callModule(psychlytx::confidence_level, "confidence_widget", existing_data)  #Return confidence level for intervals. Existing data passed in order to 
-                                                                                            #access & pull in the client's settings from db & prepopulate settings
-                                                                                            #widgets with these settings. Do same things for method, mean, sd, 
-                                                                                            #reliability and cutoffs
+  #access & pull in the client's settings from db & prepopulate settings
+  #widgets with these settings. Do same things for method, mean, sd, 
+  #reliability and cutoffs
   
   
   method<- callModule(psychlytx::method_widget, "method_widget", existing_data) #Return reliable change method (a string)
   
   
-#_________________________________________________________________________________________________
+  #_________________________________________________________________________________________________
   
   #For each subscale individually, collect the values from widgets and store them in a list 
   
@@ -316,9 +358,9 @@ server <- function(input, output, session) {
                             method, input_population, cutoff_input_1, subscale_number = 1)
   
   
-#_______________________________________________________________________________Currently, the code in between hashes must be written for each subscale 
+  #_______________________________________________________________________________Currently, the code in between hashes must be written for each subscale 
   
-
+  
   
   #Have to store the list of sublists as a reactive object
   
@@ -331,9 +373,9 @@ server <- function(input, output, session) {
   
   
   measure_data<- callModule(psychlytx::combine_all_input, "combine_all_input", input_list)  #Generate a dataframe with all necessary scale data (date, score, pts, se,
-                                                                                            #ci etc.). This dataframe will be sent to the db
+  #ci etc.). This dataframe will be sent to the db
   
-
+  
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the email body text to be sent.
   formatted_response_body_for_email<- callModule(psychlytx::format_pdsssr_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
@@ -343,8 +385,8 @@ server <- function(input, output, session) {
   
   
   holding_statistics_list_1<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics", clinician_id, client_id = selected_client, 
-                                  measure = subscale_info_1$measure, subscale = subscale_info_1$subscale, mean_input_1, sd_input_1, reliability_input_1,
-                                  confidence, method, input_population, cutoff_input_1, subscale_number = 1)
+                                         measure = subscale_info_1$measure, subscale = subscale_info_1$subscale, mean_input_1, sd_input_1, reliability_input_1,
+                                         confidence, method, input_population, cutoff_input_1, subscale_number = 1)
   
   holding_statistics_list<- reactive({ list( holding_statistics_list_1() ) })
   
@@ -354,32 +396,23 @@ server <- function(input, output, session) {
   callModule(psychlytx::write_statistics_to_holding, "write_holding_statistics_to_db", pool, holding_data)
   
   
-  
-  
   most_recent_client_data<- reactiveValues()
   
-onclick("trigger_most_recent_data",  #Query database when user clicks report tab to make sure that the most recent data is pulled in before report generation
+  onclick("trigger_most_recent_data",  #Query database when user clicks report tab to make sure that the most recent data is pulled in before report generation
           
           observe({ 
             
-          most_recent_client_sql<- "SELECT *
+            most_recent_client_sql<- "SELECT *
           FROM scale
           WHERE client_id = ?client_id;"
-          
-          most_recent_client_query<- sqlInterpolate(pool, most_recent_client_sql, client_id = selected_client())
-          
-          most_recent_client_data$value<- dbGetQuery(pool, most_recent_client_query)
-          
+            
+            most_recent_client_query<- sqlInterpolate(pool, most_recent_client_sql, client_id = selected_client())
+            
+            most_recent_client_data$value<- dbGetQuery(pool, most_recent_client_query)
+            
           })
           
-          )
-  
-  
-  #Write post-therapy analytics data to db
-  
-  analytics_posttherapy<- callModule(psychlytx::analytics_posttherapy, "analytics_posttherapy", clinician_id, selected_client) #Collect posttherapy info
-  
-  callModule(psychlytx::write_posttherapy_to_db, "write_posttherapy_to_db", pool, analytics_posttherapy) #Write posttherapy info to db
+  )
   
   
   

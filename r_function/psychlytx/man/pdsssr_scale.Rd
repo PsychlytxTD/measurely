@@ -4,7 +4,10 @@
 \alias{pdsssr_scale}
 \title{PDSS-SR Scale}
 \usage{
-pdsssr_scale(input, output, session)
+pdsssr_scale(input, output, session, selected_client)
+}
+\arguments{
+\item{selected_client}{A string indicating the unique id of the selected client.}
 }
 \description{
 Generates the PDSS-SR for data entry

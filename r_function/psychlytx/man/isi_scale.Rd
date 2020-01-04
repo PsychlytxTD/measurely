@@ -4,7 +4,10 @@
 \alias{isi_scale}
 \title{ISI Scale}
 \usage{
-isi_scale(input, output, session)
+isi_scale(input, output, session, selected_client)
+}
+\arguments{
+\item{selected_client}{A string indicating the unique id of the selected client.}
 }
 \description{
 Generates the ISI for data entry

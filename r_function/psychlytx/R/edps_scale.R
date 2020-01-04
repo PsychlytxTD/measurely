@@ -10,7 +10,11 @@ edps_scale_UI<- function(id) {
 
   ns<- NS(id)
 
+  div(id = ns("reset_id"),
+
   tagList(
+
+    br(),
 
     wellPanel(style = "background-color: white; color: black",
               fluidRow(
@@ -29,48 +33,48 @@ edps_scale_UI<- function(id) {
               fluidRow(
                 column(width = 6,
                        h4(tags$strong("1. I have been able to laugh and see the funny side of things:")),
-                       radioButtons(ns("item_1"), "", choices = c("As much as I always could" = "0",
+                       checkboxGroupInput(ns("item_1"), "", choices = c("As much as I always could" = "0",
                                                               "Not quite as much now" = "1",
                                                               "Definietly not so much now" = "2",
-                                                              "Not at all" = "3"), inline = F, selected = character(0))
+                                                              "Not at all" = "3"), inline = F, selected = NULL)
                 ),
                 column(width = 6, h4(tags$strong("6. Things have been getting on top of me:")),
-                       radioButtons(ns("item_6"), "", choices = c("Yes, most of the time I haven't been able to cope at all" = "3",
+                       checkboxGroupInput(ns("item_6"), "", choices = c("Yes, most of the time I haven't been able to cope at all" = "3",
                                                               "Yes, sometimes I haven't been coping as well as usual" = "2",
                                                               "No, most of the time I have coped quite well" = "1",
-                                                              "No, I have been coping as well as ever" = "0"), inline = F, selected = character(0))
+                                                              "No, I have been coping as well as ever" = "0"), inline = F, selected = NULL)
                 )
               ),
 
               fluidRow(
                 column(width = 6,
                        h4(tags$strong("2. I have looked forward with enjoyment to things:")),
-                       radioButtons(ns("item_2"), "", choices = c("As much as I ever did" = "0",
+                       checkboxGroupInput(ns("item_2"), "", choices = c("As much as I ever did" = "0",
                                                               "Rather less than I used to" = "1",
                                                               "Definietly less than I used to" = "2",
-                                                              "Hardly at all" = "3"), inline = F, selected = character(0))
+                                                              "Hardly at all" = "3"), inline = F, selected = NULL)
                 ),
                 column(width = 6, h4(tags$strong("7. I have been so unhappy that I have had difficulty sleeping:")),
-                       radioButtons(ns("item_7"), "", choices = c("Yes, most of the time" = "3",
+                       checkboxGroupInput(ns("item_7"), "", choices = c("Yes, most of the time" = "3",
                                                               "Yes, sometimes" = "2",
                                                               "No, not very often" = "1",
-                                                              "No, not at all" = "0"), inline = F, selected = character(0))
+                                                              "No, not at all" = "0"), inline = F, selected = NULL)
                 )
               ),
 
               fluidRow(
                 column(width = 6,
                        h4(tags$strong("3. I have blamed myself unneccesarily when things went wrong:")),
-                       radioButtons(ns("item_3"), "", choices = c("Yes, most of the time" = "3",
+                       checkboxGroupInput(ns("item_3"), "", choices = c("Yes, most of the time" = "3",
                                                               "Yes, some of the time" = "2",
                                                               "Not very often" = "1",
-                                                              "No, never" = "0"), inline = F, selected = character(0))
+                                                              "No, never" = "0"), inline = F, selected = NULL)
                 ),
                 column(width = 6, h4(tags$strong("8. I have felt sad or miserable:")),
-                       radioButtons(ns("item_8"), "", choices = c("Yes, most of the time" = "3",
+                       checkboxGroupInput(ns("item_8"), "", choices = c("Yes, most of the time" = "3",
                                                               "Yes, quite often" = "2",
                                                               "Not very often" = "1",
-                                                              "No, not at all" = "0"), inline = F, selected = character(0))
+                                                              "No, not at all" = "0"), inline = F, selected = NULL)
                 )
               ),
 
@@ -78,16 +82,16 @@ edps_scale_UI<- function(id) {
               fluidRow(
                 column(width = 6,
                        h4(tags$strong("4. I have been anxious or worried for no good reason")),
-                       radioButtons(ns("item_4"), "", choices = c("No, not at all" = "0",
+                       checkboxGroupInput(ns("item_4"), "", choices = c("No, not at all" = "0",
                                                               "Hardly ever" = "1",
                                                               "Yes, sometimes" = "2",
-                                                              "Yes, very often" = "3"), inline = F, selected = character(0))
+                                                              "Yes, very often" = "3"), inline = F, selected = NULL)
                 ),
                 column(width = 6, h4(tags$strong("9.I have been so unhappy that I have been crying")),
-                       radioButtons(ns("item_9"), "", choices = c("Yes, most of the time" = "3",
+                       checkboxGroupInput(ns("item_9"), "", choices = c("Yes, most of the time" = "3",
                                                               "Yes, quite often" = "2",
                                                               "Only occasionally" = "1",
-                                                              "No, never" = "0"), inline = F, selected = character(0))
+                                                              "No, never" = "0"), inline = F, selected = NULL)
                 )
               ),
 
@@ -95,16 +99,16 @@ edps_scale_UI<- function(id) {
               fluidRow(
                 column(width = 6,
                        h4(tags$strong("5. I have felt scared or panicky for no very good reason:")),
-                       radioButtons(ns("item_5"), "", choices = c("Yes, quite a lot" = "3",
+                       checkboxGroupInput(ns("item_5"), "", choices = c("Yes, quite a lot" = "3",
                                                               "Yes, sometimes" = "2",
                                                               "No, not much" = "1",
-                                                              "No, not at all" = "0"), inline = F, selected = character(0))
+                                                              "No, not at all" = "0"), inline = F, selected = NULL)
                 ),
                 column(width = 6, h4(tags$strong("10. The thought of harming myself has occurred to me:")),
-                       radioButtons(ns("item_10"), "", choices = c("Yes, quite often" = "3",
+                       checkboxGroupInput(ns("item_10"), "", choices = c("Yes, quite often" = "3",
                                                                "Sometimes" = "2",
                                                                "Hardly ever" = "1",
-                                                               "Never" = "0"), inline = F, selected = character(0))
+                                                               "Never" = "0"), inline = F, selected = NULL)
                 )
               ),
 
@@ -114,7 +118,7 @@ edps_scale_UI<- function(id) {
 
     )
 
-   )
+   ))
 
 }
 
@@ -122,9 +126,30 @@ edps_scale_UI<- function(id) {
 #'
 #' Generates the EDPS for data entry
 #'
-#'@export
+#' @param selected_client A string indicating the unique id of the selected client.
 #'
-edps_scale<- function(input, output, session) {
+#' @export
+#'
+edps_scale<- function(input, output, session, selected_client) {
+
+  observeEvent(selected_client(), {
+
+    shinyjs::reset("reset_id")
+
+  })
+
+  observe({
+    #Make a logical vector indicating whether a scale item had more than one response endorsed.
+
+    item_too_long<- purrr::map_lgl(list(c(input$item_1), c(input$item_2), c(input$item_3), c(input$item_4),
+                                        c(input$item_5), c(input$item_6), c(input$item_7), c(input$item_8),
+                                        c(input$item_9), c(input$item_10)), ~length(.x) > 1)
+
+    #Generate a sweet alert as soon as more than one responsennisngiven for an item
+
+    psychlytx::warn_too_many_responses(session, item_too_long)
+
+  })
 
   scale_entry <- reactive({ paste(input$item_1, input$item_2, input$item_3, input$item_4, input$item_5, input$item_6, input$item_7,
                                   input$item_8, input$item_9, input$item_10, sep = ",") })

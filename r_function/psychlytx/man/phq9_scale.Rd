@@ -4,7 +4,10 @@
 \alias{phq9_scale}
 \title{PHQ-9 Scale}
 \usage{
-phq9_scale(input, output, session)
+phq9_scale(input, output, session, selected_client)
+}
+\arguments{
+\item{selected_client}{A string indicating the unique id of the selected client.}
 }
 \description{
 Generates the PHQ-9 for data entry
