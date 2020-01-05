@@ -115,7 +115,7 @@ ui<- function(request) {
                                   
                                   sidebarLayout(
                                     
-                                    sidebarPanel(width = 6,
+                                    sidebarPanel(width = 4,
                                       
                                       psychlytx::render_client_dropdown_UI("client_dropdown"),
                                       

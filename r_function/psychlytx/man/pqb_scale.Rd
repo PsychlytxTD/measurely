@@ -4,7 +4,10 @@
 \alias{pqb_scale}
 \title{PQ-B Scale}
 \usage{
-pqb_scale(input, output, session)
+pqb_scale(input, output, session, selected_client)
+}
+\arguments{
+\item{selected_client}{A string indicating the unique id of the selected client.}
 }
 \description{
 Generates the PQ-B for data entry

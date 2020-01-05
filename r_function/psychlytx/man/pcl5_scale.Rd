@@ -4,7 +4,10 @@
 \alias{pcl5_scale}
 \title{PCL-5 Scale}
 \usage{
-pcl5_scale(input, output, session)
+pcl5_scale(input, output, session, selected_client)
+}
+\arguments{
+\item{selected_client}{A string indicating the unique id of the selected client.}
 }
 \description{
 Generates the PCL-5 for data entry

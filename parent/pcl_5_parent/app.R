@@ -88,6 +88,12 @@ ui<- function(request) {
       
       tabItems(
         
+        tabItem(tabName = "Landing",
+                
+                psychlytx::make_landing_UI("make_landing")
+                
+        ),
+        
         tabItem(tabName = "Home", 
                 
                 fluidRow(
@@ -107,26 +113,25 @@ ui<- function(request) {
                                   
                                   sidebarLayout(
                                     
-                                    sidebarPanel(
-                                      
-                                      psychlytx::render_client_dropdown_UI("client_dropdown"),
-                                      
-                                      actionButton("retrieve_client_data", "Select Client", class = "submit_data"),
-                                      
-                                      shinyBS::bsModal("show_population_modal", "Please Indicate Your Client's Stage of Assessment", "retrieve_client_data", size = "large",
-                                              
-                                              psychlytx::apply_initial_population_UI("apply_population"),
-                                              
-                                              psychlytx::analytics_posttherapy_UI("analytics_posttherapy") #End-of-therapy clinical outcomes panel
-                                              
-                                      ),
-                                      
-                                      
-                                      br(),
-                                      br(),
-                                      
-                                      tags$a(href = "https://measurely-edit-records.psychlytx.com/", "Edit your client's records here.", style = "color:#d35400; text-decoration: underline;")
-
+                                    sidebarPanel(width = 4,
+                                                 
+                                                 psychlytx::render_client_dropdown_UI("client_dropdown"),
+                                                 
+                                                 actionButton("retrieve_client_data", "Select Client", class = "submit_button"),
+                                                 
+                                                 psychlytx::retrieve_client_name_UI("retrieve_client_name"),
+                                                 
+                                                 shinyBS::bsModal("show_population_modal", "Please indicate the stage of treatment", "retrieve_client_data", size = "large",
+                                                                  
+                                                                  psychlytx::apply_initial_population_UI("apply_population")
+                                                                  
+                                                 ),
+                                                 
+                                                 br(),
+                                                 br(),
+                                                 
+                                                 tags$a(href = "https://measurely-edit-records.psychlytx.com/", "Edit your client's records here.", style = "color:#d35400; text-decoration: underline;")
+                                                 
                                     ),
                                     
                                     mainPanel(
@@ -145,15 +150,15 @@ ui<- function(request) {
                                   psychlytx::extract_holding_statistics_UI("extract_holding_statistics_3"),
                                   psychlytx::extract_holding_statistics_UI("extract_holding_statistics_4"),
                                   psychlytx::extract_holding_statistics_UI("extract_holding_statistics_5"),
-                                  
+
                                   psychlytx::combine_all_holding_data_UI("combine_all_holding_data"),
                                   
                                   psychlytx::write_statistics_to_holding_UI("write_holding_statistics_to_db"),
-
+                                  
                                   psychlytx::pcl5_scale_UI("pcl5_scale"), #Item of the specific measure
                                   
                                   psychlytx::write_posttherapy_to_db_UI("write_posttherapy_to_db"),
-                                
+                                  
                                   psychlytx::manual_data_UI("manual_data"), #Items of the specific measure are passed here as a string of numbers
                                   
                                   psychlytx::format_pcl5_responses_for_email_UI("format_responses_for_email"),
@@ -166,6 +171,7 @@ ui<- function(request) {
                                   psychlytx::collect_input_UI("collect_input_4"),
                                   psychlytx::collect_input_UI("collect_input_5"),
                                   
+                                  
                                   psychlytx::combine_all_input_UI("combine_all_input"), #Combine collected inputs from all subscales
                                   
                                   psychlytx::write_measure_data_to_db_UI("write_measure_data")
@@ -174,7 +180,9 @@ ui<- function(request) {
                          tabPanel(tags$strong("Client Settings"), value = "go_custom_settings",
                                   
                                   fluidPage(
-                                      
+                                    
+                                    psychlytx::show_client_name_UI("show_client_name_settings_tab"),
+                                    
                                     psychlytx::show_population_message_UI("show_population_message"),
                                     
                                     
@@ -194,7 +202,6 @@ ui<- function(request) {
                                                            psychlytx::generate_mean_widget_UI("mean_widget_3"),
                                                            psychlytx::generate_mean_widget_UI("mean_widget_4"),
                                                            psychlytx::generate_mean_widget_UI("mean_widget_5")
-                                                           
                                                   ),
                                                   
                                                   tabPanel("Sd", width = 12,
@@ -204,7 +211,6 @@ ui<- function(request) {
                                                            psychlytx::generate_sd_widget_UI("sd_widget_3"),
                                                            psychlytx::generate_sd_widget_UI("sd_widget_4"),
                                                            psychlytx::generate_sd_widget_UI("sd_widget_5")
-
                                                   ),
                                                   
                                                   tabPanel("Test-Retest Reliability", width = 12,
@@ -213,7 +219,7 @@ ui<- function(request) {
                                                            psychlytx::generate_reliability_widget_UI("reliability_widget_2"), 
                                                            psychlytx::generate_reliability_widget_UI("reliability_widget_3"), 
                                                            psychlytx::generate_reliability_widget_UI("reliability_widget_4"), 
-                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_5"),
+                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_5"), 
                                                            
                                                            psychlytx::reliability_calc_UI("reliability_derivation") #Derive reliability from stats (if required)
                                                            
@@ -232,7 +238,7 @@ ui<- function(request) {
                                                            psychlytx::generate_cutoff_widget_UI("cutoff_widget_3"),
                                                            psychlytx::generate_cutoff_widget_UI("cutoff_widget_4"),
                                                            psychlytx::generate_cutoff_widget_UI("cutoff_widget_5")
-
+                                                           
                                                   )
                                                   
                                                   
@@ -248,17 +254,17 @@ ui<- function(request) {
                          
                          tabPanel(tags$strong("Download Clinical Report", id = "trigger_most_recent_data"), 
                                   
+                                  psychlytx::show_client_name_UI("show_client_name_report_tab"),
+                                  
                                   psychlytx::download_report_UI("download_report") #Report download
                                   
                          )
                          
-                      ),
+                  ),
                   
-                  column(span(tagList(icon("copyright", lib = "font-awesome")), "Psychlytx 2019") , offset = 5, width = 12))
-                  
-                  )
+                  psychlytx::make_footer_UI("footer"))
                 
-                
+        )
         
         
       )))
@@ -275,7 +281,9 @@ server <- function(input, output, session) {
   
   observe_helpers()#Needed for use of the shinyhelpers package
   
-  callModule(psychlytx::make_sidebar, "sidebar") #Make sidebar
+  start_button_input<- callModule(psychlytx::make_landing, "make_landing")
+  
+  callModule(psychlytx::make_sidebar, "sidebar", start_button_input) #Make sidebar
   
   callModule(psychlytx::make_header, "header") #Make header
   
@@ -297,40 +305,58 @@ server <- function(input, output, session) {
   
   input_retrieve_client_data<- reactive({input$retrieve_client_data}) #Store the value of the client selection button
   
+  client_name_for_display<- callModule(psychlytx::retrieve_client_name, "retrive_client_name", pool, input_retrieve_client_data, selected_client)
+  
+  callModule(psychlytx::show_client_name, "show_client_name_measure_tab", client_name_for_display, input_retrieve_client_data)
+  callModule(psychlytx::show_client_name, "show_client_name_settings_tab", client_name_for_display, input_retrieve_client_data)
+  callModule(psychlytx::show_client_name, "show_client_name_report_tab", client_name_for_display, input_retrieve_client_data)
   
   existing_data<- callModule(psychlytx::display_client_data, "display_client_data", pool, selected_client, measure = subscale_info_1$measure,
-                             input_retrieve_client_data) #Return the selected client's previous scores on this measure
+                             input_retrieve_client_data, client_name_for_display) #Return the selected client's previous scores on this measure
+  
+  observeEvent(input_retrieve_client_data(), {
+    
+    if(nrow(existing_data()) >= 1) {
+      
+      hideTab(inputId = "tabset", target = "go_custom_settings")
+      
+    } else {
+      
+      showTab(inputId = "tabset", target = "go_custom_settings")
+    }
+    
+  })
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
-                                           subscale_info_1, existing_data)) #Store the selected population for downstream use in other modules
+                                           subscale_info_1, existing_data, pool, selected_client, clinician_id)) #Store the selected population for downstream use in other modules
   
   
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client
   
   
-  scale_entry<- callModule(psychlytx::pcl5_scale, "pcl5_scale") #Return the raw responses to the online scale
+  scale_entry<- callModule(psychlytx::pcl5_scale, "pcl5_scale", selected_client) #Return the raw responses to the online scale
   
   
-  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry) #Raw item responses are stored as vector manual_entry to be used downstream
+  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 20) #Raw item responses are stored as vector manual_entry to be used downstream
   
   
   aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, 
                                 item_index = list( subscale_info_1$items, subscale_info_2$items, subscale_info_3$items, subscale_info_4$items,
-                                                   subscale_info_5$items), 
+                                                   subscale_info_5$items, subscale_info_6$items, subscale_info_7$items), 
                                 aggregation_method = "sum")   #Make a list of aggregate scores across subscales (in this case there is only one subscale)
   
-
+  
   confidence<- callModule(psychlytx::confidence_level, "confidence_widget", existing_data)  #Return confidence level for intervals. Existing data passed in order to 
-                                                                                            #access & pull in the client's settings from db & prepopulate settings
-                                                                                            #widgets with these settings. Do same things for method, mean, sd, 
-                                                                                            #reliability and cutoffs
+  #access & pull in the client's settings from db & prepopulate settings
+  #widgets with these settings. Do same things for method, mean, sd, 
+  #reliability and cutoffs
   
   
   method<- callModule(psychlytx::method_widget, "method_widget", existing_data) #Return reliable change method (a string)
   
   
-#_________________________________________________________________________________________________
+  #_________________________________________________________________________________________________
   
   #For each subscale individually, collect the values from widgets and store them in a list 
   
@@ -346,7 +372,7 @@ server <- function(input, output, session) {
                             method, input_population, cutoff_input_1, subscale_number = 1)
   
   
-#_______________________________________________________________________________Currently, the code in between hashes must be written for each subscale 
+  #_______________________________________________________________________________Currently, the code in between hashes must be written for each subscale 
   
   #_________________________________________________________________________________________________
   
@@ -419,8 +445,6 @@ server <- function(input, output, session) {
                             method, input_population, cutoff_input_5, subscale_number = 5)
   
   
-  #_______________________________________________________________________________Currently, the code in between hashes must be written for each subscale 
-  
   #Have to store the list of sublists as a reactive object
   
   
@@ -434,9 +458,9 @@ server <- function(input, output, session) {
   
   
   measure_data<- callModule(psychlytx::combine_all_input, "combine_all_input", input_list)  #Generate a dataframe with all necessary scale data (date, score, pts, se,
-                                                                                            #ci etc.). This dataframe will be sent to the db
+  #ci etc.). This dataframe will be sent to the db
   
-
+  
   #Use the appropriate response formatting module (one for each measure). Returns a string representing the email body text to be sent.
   formatted_response_body_for_email<- callModule(psychlytx::format_pcl5_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
@@ -446,8 +470,8 @@ server <- function(input, output, session) {
   
   
   holding_statistics_list_1<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_1", clinician_id, client_id = selected_client, 
-                                  measure = subscale_info_1$measure, subscale = subscale_info_1$subscale, mean_input_1, sd_input_1, reliability_input_1,
-                                  confidence, method, input_population, cutoff_input_1, subscale_number = 1)
+                                         measure = subscale_info_1$measure, subscale = subscale_info_1$subscale, mean_input_1, sd_input_1, reliability_input_1,
+                                         confidence, method, input_population, cutoff_input_1, subscale_number = 1)
   
   holding_statistics_list_2<- callModule(psychlytx::extract_holding_statistics, "extract_holding_statistics_2", clinician_id, client_id = selected_client, 
                                          measure = subscale_info_2$measure, subscale = subscale_info_2$subscale, mean_input_2, sd_input_2, reliability_input_2,
@@ -465,7 +489,6 @@ server <- function(input, output, session) {
                                          measure = subscale_info_5$measure, subscale = subscale_info_5$subscale, mean_input_5, sd_input_5, reliability_input_5,
                                          confidence, method, input_population, cutoff_input_5, subscale_number = 5)
   
-  
   holding_statistics_list<- reactive({ list( holding_statistics_list_1(), holding_statistics_list_2(), holding_statistics_list_3(),
                                              holding_statistics_list_4(), holding_statistics_list_5() ) })
   
@@ -479,30 +502,21 @@ server <- function(input, output, session) {
   
   most_recent_client_data<- reactiveValues()
   
-onclick("trigger_most_recent_data",  #Query database when user clicks report tab to make sure that the most recent data is pulled in before report generation
+  onclick("trigger_most_recent_data",  #Query database when user clicks report tab to make sure that the most recent data is pulled in before report generation
           
           observe({ 
             
-          most_recent_client_sql<- "SELECT *
+            most_recent_client_sql<- "SELECT *
           FROM scale
           WHERE client_id = ?client_id;"
-          
-          most_recent_client_query<- sqlInterpolate(pool, most_recent_client_sql, client_id = selected_client())
-          
-          most_recent_client_data$value<- dbGetQuery(pool, most_recent_client_query)
-          
+            
+            most_recent_client_query<- sqlInterpolate(pool, most_recent_client_sql, client_id = selected_client())
+            
+            most_recent_client_data$value<- dbGetQuery(pool, most_recent_client_query)
+            
           })
           
-          )
-  
-  
-  #Write post-therapy analytics data to db
-  
-  analytics_posttherapy<- callModule(psychlytx::analytics_posttherapy, "analytics_posttherapy", clinician_id, selected_client) #Collect posttherapy info
-  
-  callModule(psychlytx::write_posttherapy_to_db, "write_posttherapy_to_db", pool, analytics_posttherapy) #Write posttherapy info to db
-  
-  
+  )
   
   #Pull selected client's data from db, create a nested df containing all necessary info for report (plots and tables) and send to R Markdown doc.
   
