@@ -20,17 +20,16 @@ plot_demographics_UI<- function(id) {
 
   fluidRow(
 
-    box(collapsible = TRUE, title = "Explore Demographical Information", status = "primary", solidHeader = TRUE, width = 7,
+        column(width = 7,
         plotly::plotlyOutput(ns("demographics_plot"))
+        ),
 
-    ),
 
-    box(collapsible = TRUE, title = "Clinical Outcomes By Demographics", status = "primary", solidHeader = TRUE, width = 5,
+        column(width = 5,
         plotly::plotlyOutput(ns("summary_outcomes_plot_by_demographics"))
-
+        )
     ))
 
-  )
 
 }
 
@@ -87,7 +86,8 @@ output$demographics_plot <- plotly::renderPlotly({
       hole = 0.6,
       customdata = ~labels,
       colors = "BrBG"
-    )
+    ) %>% layout(legend = list(orientation = 'h')) %>% layout(plot_bgcolor='#e5e5e5') %>%
+    layout(paper_bgcolor='#e5e5e5')
 
 })
 
@@ -140,7 +140,11 @@ output$summary_outcomes_plot_by_demographics<- renderPlotly({
     theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.background = element_blank(),
-          axis.line = element_blank()) + xlab("")
+          axis.line = element_blank()) + xlab("") +
+    theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
+          plot.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
+          legend.background = element_rect(fill = '#e5e5e5'))
+
 
 
   plotly::ggplotly(p, tooltip = "text")

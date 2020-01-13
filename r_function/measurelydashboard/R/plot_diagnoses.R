@@ -10,12 +10,13 @@ plot_diagnoses_UI<- function(id) {
 
   ns<- NS(id)
 
+  tagList(
+
 fluidRow(
 
-  box(width = 12, collapsible = TRUE, title = "Client Diagnoses", status = "primary", solidHeader = TRUE,
       plotly::plotlyOutput(ns("diagnosis_plot"))
-     )
-)
+
+))
 
 }
 
@@ -68,7 +69,9 @@ plot_diagnoses<- function(input, output, session, posttherapy_analytics_table) {
             panel.grid.major.y = element_blank(),
             panel.background = element_blank(),
             panel.grid.major.x = element_line("grey")
-      )
+      ) + theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
+            plot.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
+            legend.background = element_rect(fill = '#e5e5e5'))
 
 
     ggplotly(p, tooltip = "text")

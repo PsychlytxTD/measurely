@@ -95,7 +95,11 @@
                                    ))) + geom_point(shape = 1) + geom_line() +
        facet_wrap(~subscale, ncol = 2) + xlab("") + ylab("Score")
 
-     p<- p + geom_line(data = means_df, aes(x = timepoint, y = mean_score, group = 1, text = NULL), color = "red", shape = 0)
+     p<- p + geom_line(data = means_df, aes(x = timepoint, y = mean_score, group = 1, text = NULL),
+                       color = "red", shape = 0) +
+       theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
+             plot.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
+             legend.background = element_rect(fill = '#e5e5e5'))
 
      plotly::ggplotly(p, tooltip = "text")
 

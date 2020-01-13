@@ -16,25 +16,25 @@ make_outcome_valueboxes_UI<- function(id) {
     shinycssloaders::withSpinner(valueBoxOutput(ns("improved"), width = 3), type = getOption("spinner.type", default = 7),
                                  color = getOption("spinner.color", default = "#d35400")),
 
-    bsModal(ns("mod_1"),"Clients Showing Improvement","btn", size = "large",
+    bsModal(ns("mod_1"),"Cases of Symptom Improvement","btn", size = "large",
             DT::dataTableOutput(ns("table_improved"))),
 
 
     valueBoxOutput(ns("sig_improved"), width = 3),
 
-    bsModal(ns("mod_2"),"Clients Showing Statistically Reliable Improvement","btn", size = "large",
+    bsModal(ns("mod_2"),"Cases of Statistically Reliable Symptom Improvement","btn", size = "large",
             DT::dataTableOutput(ns("table_sig_improved"))),
 
 
     valueBoxOutput(ns("remained_same"), width = 3),
 
-    bsModal(ns("mod_3"),"Clients Showing No Change","btn", size = "large",
+    bsModal(ns("mod_3"),"Cases of Nil Symptom Change","btn", size = "large",
             DT::dataTableOutput(ns("table_remained_same"))),
 
 
     valueBoxOutput(ns("deteriorated"), width = 3),
 
-    bsModal(ns("mod_4"),"Clients Showing Deterioration","btn", size = "large",
+    bsModal(ns("mod_4"),"Cases of Symptom Deterioration","btn", size = "large",
             DT::dataTableOutput(ns("table_deteriorated")))
   )
 

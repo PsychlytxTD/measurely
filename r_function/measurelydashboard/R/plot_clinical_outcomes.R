@@ -10,13 +10,15 @@ plot_clinical_outcomes_UI<- function(id) {
 
 ns<- NS(id)
 
+tagList(
+
 fluidRow(
   radioGroupButtons(ns("outcome_type"), "Select Outcome", choices = c("Improvement", "Statistically Reliable Improvement",
                                                                   "No Change", "Deterioration")),
-  box(width = 12,
-      plotly::plotlyOutput(ns("plot_outcomes_by_measure"))
-  )
-)
+
+  plotly::plotlyOutput(ns("plot_outcomes_by_measure"))
+
+))
 
 }
 
@@ -92,7 +94,9 @@ output$plot_outcomes_by_measure<- plotly::renderPlotly({
           panel.grid.major.x = element_line("grey"),
           axis.text.x = element_text(angle=65, vjust=0.6),
           legend.position="none"
-    )
+    ) + theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
+          plot.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
+          legend.background = element_rect(fill = '#e5e5e5'))
 
 
 
