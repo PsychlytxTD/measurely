@@ -33,6 +33,7 @@ library(glue)
 library(plotly)
 
 
+
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
   dbname = "postgres",

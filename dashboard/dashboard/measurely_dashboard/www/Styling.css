@@ -7,6 +7,8 @@
 
                                .small-box{border-radius: 7px}
 
+                               .modal-dialog {border-radius:15px!important;}
+
 
                                .box.box-solid.box-primary{
                                  border-bottom-color:#283747;

@@ -97,7 +97,17 @@ output$improved <- renderValueBox({
 
 output$table_improved<- DT::renderDataTable({
 
-  measurelydashboard::identify_clients_by_outcome_modal(nested_data, improve)
+  DT::datatable(
+
+    measurelydashboard::identify_clients_by_outcome_modal(nested_data, improve),
+    extensions = 'Scroller', rownames = FALSE,
+    options = list(initComplete = JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color': '#e5e5e5', 'color': '#d35400'});",
+      "}"), deferRender = TRUE, scrollY = 200, scroller = TRUE, dom = "t" )
+
+  )
+
 
 })
 
@@ -127,7 +137,16 @@ output$sig_improved <- renderValueBox({
 
 output$table_sig_improved<- DT::renderDataTable({
 
-  measurelydashboard::identify_clients_by_outcome_modal(nested_data, sig_improve)
+  DT::datatable(
+
+    measurelydashboard::identify_clients_by_outcome_modal(nested_data, sig_improve),
+    extensions = 'Scroller', rownames = FALSE,
+    options = list(initComplete = JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color': '#e5e5e5', 'color': '#d35400'});",
+      "}"), deferRender = TRUE, scrollY = 200, scroller = TRUE, dom = "t" )
+
+  )
 
 })
 
@@ -156,7 +175,16 @@ output$remained_same <- renderValueBox({
 
 output$table_remained_same<- DT::renderDataTable({
 
-  measurelydashboard::identify_clients_by_outcome_modal(nested_data, remained_same)
+  DT::datatable(
+
+    measurelydashboard::identify_clients_by_outcome_modal(nested_data, remained_same),
+    extensions = 'Scroller', rownames = FALSE,
+    options = list(initComplete = JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color': '#e5e5e5', 'color': '#d35400'});",
+      "}"), deferRender = TRUE, scrollY = 200, scroller = TRUE, dom = "t" )
+
+  )
 
 })
 
@@ -184,7 +212,16 @@ output$deteriorated <- renderValueBox({
 
 output$table_deteriorated<- DT::renderDataTable({
 
-  measurelydashboard::identify_clients_by_outcome_modal(nested_data, deteriorated)
+  DT::datatable(
+
+    measurelydashboard::identify_clients_by_outcome_modal(nested_data, deteriorated),
+    extensions = 'Scroller', rownames = FALSE,
+    options = list(initComplete = JS(
+      "function(settings, json) {",
+      "$(this.api().table().header()).css({'background-color': '#e5e5e5', 'color': '#d35400'});",
+      "}"), deferRender = TRUE, scrollY = 200, scroller = TRUE, dom = "t" )
+
+  )
 
 })
 

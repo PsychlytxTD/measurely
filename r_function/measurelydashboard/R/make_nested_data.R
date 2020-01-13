@@ -54,7 +54,8 @@ make_nested_data<- function(input, output, session, joined_data) {
                                       improve = purrr::map_lgl( data, ~ .x$score[length(.x$score)] < .x$score[1] & .x$score[length(.x$score)] >= .x$ci_lower[1]  ),
                                       sig_improve = purrr::map_lgl( data, ~.x$score[length(.x$score)] < .x$ci_lower[1] ),
                                       remained_same = purrr::map_lgl( data, ~ (length(.x$score) > 1) & (.x$score[length(.x$score)] == .x$score[1]) ),
-                                      deteriorated = purrr::map_lgl(data, ~.x$score[length(.x$score)] > .x$score[1] )
+                                      deteriorated = purrr::map_lgl(data, ~.x$score[length(.x$score)] > .x$score[1] ),
+                                      last_assessment_date = as.Date(purrr::map_dbl(data, ~purrr::pluck(.x$date[length(.x$date)])))
     )
 
   })
