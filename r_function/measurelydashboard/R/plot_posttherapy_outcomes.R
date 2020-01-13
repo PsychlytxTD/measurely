@@ -35,15 +35,13 @@ fluidRow(
 #'
 #' @param posttherapy_analytics_table A reactive df with posttherapy outcome data.
 #'
-#' @param joined_data A reactive df consisting of the joined database tables: client, scale & posttherapy.
-#'
 #' @param nested_data A reactive nested dataframe containing subscale scores for each individual.
 #'
 #'
 #'
 #' @export
 
-plot_posttherapy_outcomes<- function(input, output, session, posttherapy_analytics_table, joined_data, nested_data) {
+plot_posttherapy_outcomes<- function(input, output, session, posttherapy_analytics_table, nested_data) {
 
 
 output$posttherapy_dropdown<- renderUI({
@@ -52,7 +50,9 @@ output$posttherapy_dropdown<- renderUI({
 
   #Make named list to pass to dropdown, to avoid underscores between words
 
-  posttherapy_names<- names(req(joined_data()[, 38:49]))
+  posttherapy_names<- c("principal_diagnosis", "secondary_diagnosis", "attendance_schedule", "cancellations", "non_attendances",
+                        "attendances", "premature_dropout", "therapy", "funding",
+                        "private_health_fund", "referrer", "out_of_pocket")
 
   posttherapy_vars<-  posttherapy_names %>%
     purrr::set_names(stringr::str_replace_all(posttherapy_names, "_", " "))
@@ -66,7 +66,7 @@ current_category<- reactiveVal()
 
 output$posttherapy_plot <- plotly::renderPlotly({
 
-  posttherapy<- tibble::as_tibble(joined_data()[[req(input$posttherapy_variable)]]) %>%
+  posttherapy<- tibble::as_tibble(posttherapy_analytics_table()[[req(input$posttherapy_variable)]]) %>%
     dplyr::count(.[[1]]) %>% purrr::set_names(c("labels", "values")) %>% dplyr::mutate_if(is.factor, as.character)
 
   posttherapy$labels[posttherapy$labels == "" | is.na(posttherapy$labels)]<- "Missing"

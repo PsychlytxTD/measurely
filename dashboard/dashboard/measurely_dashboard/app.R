@@ -35,9 +35,9 @@ library(plotly)
 
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
-  dbname = "scaladb",
-  host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
-  user = "jameslovie",
+  dbname = "postgres",
+  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  user = "timothydeitz",
   password = Sys.getenv("PGPASSWORD")
 )
 
@@ -100,7 +100,7 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
 
    measurelydashboard::plot_posttherapy_outcomes_UI("plot_posttherapy_outcomes"),
 
-   measurelydashboard::plot_cases_by_measure_UI("plot_cases_by_measure")
+   measurelydashboard::plot_outcomes_by_measure_UI("plot_outcomes_by_measure")
 
 
   ))
@@ -172,14 +172,9 @@ server <- shinyServer(function(input, output, session) {
 
   joined_data<- reactive({
 
-    measure_table() %>%
-      dplyr::inner_join(client_table(), by = c("client_id" = "id")) %>%
-      dplyr::left_join(posttherapy_analytics_table(), by = "client_id") %>% filter(clinician_id == clinician_id) %>%
-      dplyr::select(clinician_id, client_id, first_name, last_name, birth_date, age, sex, postcode, marital_status, sexuality,
-                    ethnicity, indigenous, children, workforce_status, education, entry_id, measure, subscale, date,
-                    score, pts, se, ci, ci_upper, ci_lower, contains("cutoff_value"), contains("cutoff_label"),
-                    principal_diagnosis, secondary_diagnosis, attendance_schedule, cancellations, non_attendances,
-                    attendances, premature_dropout, therapy, funding, private_health_fund, referrer, out_of_pocket)
+    initial_join<- measure_table() %>%
+      dplyr::inner_join(client_table(), by = c("client_id" = "id"))
+
   })
 
 
@@ -187,18 +182,18 @@ server <- shinyServer(function(input, output, session) {
 
   callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data)
 
-  callModule(measurelydashboard::plot_demographics, "plot_demographics", client_table, joined_data, nested_data)
+  callModule(measurelydashboard::plot_demographics, "plot_demographics", client_table, nested_data)
 
   callModule(measurelydashboard::plot_diagnoses, "plot_diagnoses", posttherapy_analytics_table)
 
   callModule(measurelydashboard::plot_clinical_outcomes, "plot_clinical_outcomes", nested_data)
 
-  callModule(measurelydashboard::plot_cases_by_measure, "plot_cases_by_measure", nested_data)
+  callModule(measurelydashboard::plot_outcomes_by_measure, "plot_outcomes_by_measure", nested_data)
 
   callModule(measurelydashboard::make_posttherapy_valueboxes, "make_posttherapy_valueboxes", posttherapy_analytics_table)
 
   callModule(measurelydashboard::plot_posttherapy_outcomes, "plot_posttherapy_outcomes",
-             posttherapy_analytics_table, joined_data, nested_data)
+             posttherapy_analytics_table, nested_data)
 
 
 })

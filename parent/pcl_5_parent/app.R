@@ -343,7 +343,7 @@ server <- function(input, output, session) {
   
   aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, 
                                 item_index = list( subscale_info_1$items, subscale_info_2$items, subscale_info_3$items, subscale_info_4$items,
-                                                   subscale_info_5$items, subscale_info_6$items, subscale_info_7$items), 
+                                                   subscale_info_5$items), 
                                 aggregation_method = "sum")   #Make a list of aggregate scores across subscales (in this case there is only one subscale)
   
   

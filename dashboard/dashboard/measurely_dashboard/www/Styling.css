@@ -1,9 +1,23 @@
 
-                               .inner { background-color: #d35400;}
+                               .content {background-color: #e5e5e5;}
 
-                               .box.box-solid.box-primary{ border-bottom-color:#283747; border-left-color:#283747; border-right-color:#283747; border-top-color:#283747;}
+                               .inner { background-color: #283747;
 
-                               .box.box-solid.box-primary>.box-header {color:#fff; background:#283747}
+                               }
+
+                               .small-box{border-radius: 7px}
+
+
+                               .box.box-solid.box-primary{
+                                 border-bottom-color:#283747;
+                                 border-left-color:#283747;
+                                 border-right-color:#283747;
+                                 border-top-color:#283747;
+                                 border-width: 4px;
+
+                               }
+
+                               .box.box-solid.box-primary>.box-header {color:#d35400; background:white;}
 
 
                                .main-header .logo {
@@ -14,33 +28,34 @@
                                }
 
                                 .skin-blue .main-header .logo {
-                                background-color: #283747;
+                                background-color: #e5e5e5;
+                                color:#d35400
                                 }
 
 
                                 .skin-blue .main-header .logo:hover {
-                                background-color:  #283747 ;
+                                background-color: #e5e5e5 ;
                                 }
 
 
                                 .skin-blue .main-header .navbar {
-                                background-color: #283747;
+                                background-color: #e5e5e5;
                                 }
 
 
                                 .skin-blue .main-sidebar {
-                                background-color: #283747;
+                                background-color: #e5e5e5;
                                 }
 
 
                                 .skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
-                                background-color:   #283747  ;
+                                background-color:   #e5e5e5  ;
 
                                 }
 
 
                                 .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
-                                background-color:  #283747 ;
+                                background-color:  #e5e5e5 ;
                                 }
 
                                 .skin-blue .main-header .navbar .sidebar-toggle:hover{

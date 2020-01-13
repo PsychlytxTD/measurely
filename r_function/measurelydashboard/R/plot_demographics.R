@@ -39,8 +39,6 @@ plot_demographics_UI<- function(id) {
 #'
 #' Generate pie chart for demographics and stacked bar chart for clinical outcomes by demographic category
 #'
-#' @param joined_data A reactive df consisting of the joined database tables: client, scale & posttherapy.
-#'
 #' @param client_table A reactive df representing the data from the client table in the database.
 #'
 #' @param nested_data A reactive nested dataframe containing subscale scores for each individual.
@@ -48,7 +46,7 @@ plot_demographics_UI<- function(id) {
 #' @export
 
 
-plot_demographics<- function(input, output, session, client_table, joined_data, nested_data) {
+plot_demographics<- function(input, output, session, client_table, nested_data) {
 
 #Generate the dropdown of demographics variables
 
@@ -58,7 +56,8 @@ output$demographics_dropdown<- renderUI({
 
   #Make named list to pass to dropdown, to avoid underscores between words
 
-  demographic_var_names<- names(joined_data()[6:14])
+  demographic_var_names<- c("age", "sex", "postcode", "marital_status", "sexuality",
+                            "ethnicity", "indigenous", "children", "workforce_status", "education")
 
   demographic_vars<- demographic_var_names %>%
     purrr::set_names(stringr::str_replace_all(demographic_var_names, "_", " "))
@@ -75,7 +74,7 @@ current_category<- reactiveVal()
 
 output$demographics_plot <- plotly::renderPlotly({
 
-  demographics<- tibble::as_tibble(joined_data()[[req(input$demographic_variable)]]) %>%
+  demographics<- tibble::as_tibble(client_table()[[req(input$demographic_variable)]]) %>%
     dplyr::count(.[[1]]) %>% purrr::set_names(c("labels", "values")) %>% dplyr::mutate_if(is.factor, as.character)
 
   demographics$labels[demographics$labels == "" | is.na(demographics$labels)]<- "Missing"
