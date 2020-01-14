@@ -87,11 +87,11 @@ output$plot_outcomes_by_measure<- plotly::renderPlotly({
 
   p<- ggplot(outcomes_by_measure(), aes(x= measure, y= percent, color = measure, fill = measure,
                                         text = paste0("Percentage of ", gsub('_', '-', measure),
-                                                      " respondents that showed", " ", stringr::str_to_lower(input$outcome_type), ": ", percent, "%", "<br>",
-                                                      "Mean change (pre to post) on the: ", gsub('_', '-', measure), ": ", average_change))) +
+                                                      " respondents having completed at least two assessments who showed", " ", stringr::str_to_lower(input$outcome_type), ": ", percent, "%", "<br>",
+                                                      "Average pre-to-post change in ", gsub('_', '-', measure), "scores: ", average_change))) +
     geom_col() +
-    xlab("Outcome Measure") + ylab(paste("% Of Respondents:", stringr::str_to_sentence(input$outcome_type))) +
-    ggtitle(paste("", stringr::str_to_sentence(input$outcome_type))) +
+    xlab("Outcome Measure") + ylab(paste("%")) +
+    ggtitle(paste("Percentage of", gsub('_', '-', outcomes_by_measure()$measure), "respondents (having completed at least 2 assessments) showing", stringr::str_to_sentence(input$outcome_type))) +
     scale_x_discrete(labels = measures_whitespace) +
     theme(panel.grid.minor.y = element_blank(),
           panel.grid.major.y = element_blank(),

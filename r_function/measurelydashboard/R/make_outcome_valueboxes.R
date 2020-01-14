@@ -26,7 +26,8 @@ make_outcome_valueboxes_UI<- function(id) {
             DT::dataTableOutput(ns("table_sig_improved"))),
 
 
-    valueBoxOutput(ns("remained_same"), width = 3),
+    valueBoxOutput(ns("remained_same"),
+                   width = 3),
 
     bsModal(ns("mod_3"),"Cases of Nil Symptom Change","btn", size = "large",
             DT::dataTableOutput(ns("table_remained_same"))),
@@ -85,8 +86,12 @@ output$improved <- renderValueBox({
   box1<- valueBox(
     value = paste0(value_box_outcomes() %>% dplyr::pull(1), " ", "(",
                    value_box_outcomes() %>% dplyr::pull(2), "%", ")"),
+    icon = tags$i(
+      class = "far fa-thumbs-up",
+      style = "color: #7FFF00"
+    ),
     href = "#",
-    subtitle = HTML("<b>Clients Improved</b>")
+    subtitle = HTML("<b>Improvements</b>")
   )
   box1$children[[1]]$attribs$class<-"action-button"
   box1$children[[1]]$attribs$id<-ns("button_box_01")
@@ -127,8 +132,12 @@ output$sig_improved <- renderValueBox({
   box2<- valueBox(
     value = paste0(value_box_outcomes() %>% dplyr::pull(3), " ", "(",
                    value_box_outcomes() %>% dplyr::pull(4), "%", ")"),
+    icon = tags$i(
+      class = "far fa-thumbs-up",
+      style = "color: green"
+    ),
     href = "#",
-    subtitle = HTML("<b>Clients Significantly Improved</b>")
+    subtitle = HTML("<b>Reliable* Improvements</b>")
   )
   box2$children[[1]]$attribs$class<-"action-button"
   box2$children[[1]]$attribs$id<-ns("button_box_02")
@@ -164,8 +173,12 @@ output$remained_same <- renderValueBox({
   box3<- valueBox(
     value = paste0(value_box_outcomes() %>% dplyr::pull(5), " ", "(",
                    value_box_outcomes() %>% dplyr::pull(6), "%", ")"),
+    icon = tags$i(
+      class = "far fa-thumbs-down",
+      style = "color: #d35400"
+    ),
     href = "#",
-    subtitle = HTML("<b>Clients Did Not Change</b>")
+    subtitle = HTML("<b>No Change</b>")
   )
   box3$children[[1]]$attribs$class<-"action-button"
   box3$children[[1]]$attribs$id<- ns("button_box_03")
@@ -201,8 +214,12 @@ output$deteriorated <- renderValueBox({
   box4<- valueBox(
     value = paste0(value_box_outcomes() %>% dplyr::pull(7), " ", "(",
                    value_box_outcomes() %>% dplyr::pull(8), "%", ")"),
+    icon = tags$i(
+      class = "far fa-thumbs-down",
+      style = "color: #CD5C5C"
+    ),
     href = "#",
-    subtitle = HTML("<b>Clients Deteriorated</b>")
+    subtitle = HTML("<b>Deteriorations</b>")
   )
   box4$children[[1]]$attribs$class<-"action-button"
   box4$children[[1]]$attribs$id<- ns("button_box_04")
