@@ -12,11 +12,19 @@ plot_diagnoses_UI<- function(id) {
 
   tagList(
 
+  h2("Primary & Secondary Diagnosis Summaries", class = "headings"),
+
 fluidRow(
 
       plotly::plotlyOutput(ns("diagnosis_plot"))
 
-))
+),
+
+br(),
+br(),
+br()
+
+)
 
 }
 

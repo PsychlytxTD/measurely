@@ -12,11 +12,16 @@ ns<- NS(id)
 
 tagList(
 
-fluidRow(
-  radioGroupButtons(ns("outcome_type"), "Select Outcome", choices = c("Improvement", "Statistically Reliable Improvement",
-                                                                  "No Change", "Deterioration")),
+h2("Symptom Change Summaries For Each Outcome Measure", class = "headings"),
 
-  plotly::plotlyOutput(ns("plot_outcomes_by_measure"))
+fluidRow(
+  radioGroupButtons(ns("outcome_type"), "", choices = c("Improvement", "Statistically Reliable Improvement",
+                                                                  "No Change", "Deterioration"), selected = NULL),
+
+  plotly::plotlyOutput(ns("plot_outcomes_by_measure")),
+
+  br(),
+  br()
 
 ))
 
@@ -85,8 +90,8 @@ output$plot_outcomes_by_measure<- plotly::renderPlotly({
                                                       " respondents that showed", " ", stringr::str_to_lower(input$outcome_type), ": ", percent, "%", "<br>",
                                                       "Mean change (pre to post) on the: ", gsub('_', '-', measure), ": ", average_change))) +
     geom_col() +
-    xlab("Outcome Measure") + ylab(paste("%", stringr::str_to_sentence(input$outcome_type), "Per Measure")) +
-    ggtitle(paste("Comparison of Outcome Measures:", stringr::str_to_sentence(input$outcome_type))) +
+    xlab("Outcome Measure") + ylab(paste("% Of Respondents:", stringr::str_to_sentence(input$outcome_type))) +
+    ggtitle(paste("", stringr::str_to_sentence(input$outcome_type))) +
     scale_x_discrete(labels = measures_whitespace) +
     theme(panel.grid.minor.y = element_blank(),
           panel.grid.major.y = element_blank(),

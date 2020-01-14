@@ -14,6 +14,11 @@ plot_demographics_UI<- function(id) {
   tagList(
 
   fluidRow(
+  h2("Practice Demographics", class = "headings"),
+  h3("Select A Demographic Outcome", class = "dropdown_headings")
+  ),
+
+  fluidRow(
 
     uiOutput(ns("demographics_dropdown"))
   ),
@@ -28,7 +33,12 @@ plot_demographics_UI<- function(id) {
         column(width = 5,
         plotly::plotlyOutput(ns("summary_outcomes_plot_by_demographics"))
         )
-    ))
+    ),
+
+  br(),
+  br()
+
+  )
 
 
 }
@@ -61,8 +71,14 @@ output$demographics_dropdown<- renderUI({
   demographic_vars<- demographic_var_names %>%
     purrr::set_names(stringr::str_replace_all(demographic_var_names, "_", " "))
 
-  selectInput(ns("demographic_variable"), "Select Demographic Outcome",
-              choices = demographic_vars)
+  selectizeInput(inputId = ns("demographic_variable"),
+              "",
+              choices = demographic_vars,
+              options = list(
+                placeholder = 'Start typing or scroll down..',
+                onInitialize = I('function() { this.setValue(""); }')
+              )
+              )
 
 })
 

@@ -86,6 +86,9 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
 
       ),
 
+    br(),
+    br(),
+
 
    measurelydashboard::make_nested_data_UI("make_nested_data"),
 
@@ -117,7 +120,7 @@ server <- shinyServer(function(input, output, session) {
   addClass(selector = "body", class = "sidebar-collapse")
 
   output$date_dropdown<- renderUI({
-    dateRangeInput("date_selection", "Select Date Range For Analyses", start = Sys.Date() - lubridate::years(1), Sys.Date(), format = "dd-mm-yyyy")
+    dateRangeInput("date_selection", h3("Select A Date Range For Analyses", class = "dropdown_headings"), start = Sys.Date() - lubridate::years(1), Sys.Date(), format = "dd-mm-yyyy", width = '50%')
   })
 
 

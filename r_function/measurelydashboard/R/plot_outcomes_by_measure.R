@@ -15,12 +15,20 @@
     tagList(
 
     fluidRow(
+    h2("Outcome Measure Trends", class = "headings"),
+    h3("Select One or More Clients", class = "dropdown_headings")
+    ),
+
+    fluidRow(
      uiOutput(ns("client_dropdown"))
     ),
 
     fluidRow(
     plotly::plotlyOutput(ns("outcomes_by_measure"))
-    )
+    ),
+
+    br(),
+    br()
 
     )
 
@@ -56,7 +64,6 @@
    })
 
 
-   observe({ print( unnested_outcomes()[["Client"]] )})
 
    output$client_dropdown<- renderUI({
 
@@ -69,7 +76,7 @@
      clients<- client_names %>%
        purrr::set_names(stringr::str_replace_all(client_names, "_", " "))
 
-     selectizeInput(ns("client_selection"), "Select One or More Clients",
+     selectizeInput(ns("client_selection"), "",
                  choices = clients, multiple = TRUE)
 
 

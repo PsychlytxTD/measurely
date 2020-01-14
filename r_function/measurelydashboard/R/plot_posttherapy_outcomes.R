@@ -12,6 +12,11 @@ plot_posttherapy_outcomes_UI<- function(id) {
 
   tagList(
 
+  h2("Attendance Characteristics", class = "headings"),
+
+  h3("Select An Attendance Outcome", class = "dropdown_headings"),
+
+
   fluidRow(
     uiOutput(ns("posttherapy_dropdown"))
   ),
@@ -24,7 +29,10 @@ fluidRow(
       column(width = 5,
       plotly::plotlyOutput(ns("summary_outcomes_plot_by_posttherapy"))
       )
-  )
+  ),
+
+br(),
+br()
 
 )
 
@@ -59,8 +67,13 @@ output$posttherapy_dropdown<- renderUI({
   posttherapy_vars<-  posttherapy_names %>%
     purrr::set_names(stringr::str_replace_all(posttherapy_names, "_", " "))
 
-  selectInput(ns("posttherapy_variable"), "Select Therapy Outcome",
-              choices = posttherapy_vars)
+  selectizeInput(inputId = ns("posttherapy_variable"),
+                 "",
+                choices = posttherapy_vars,
+                options = list(
+                  placeholder = 'Start typing or scroll down..',
+                  onInitialize = I('function() { this.setValue(""); }')
+                ))
 })
 
 
