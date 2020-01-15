@@ -82,6 +82,8 @@ output$demographics_dropdown<- renderUI({
 
 })
 
+outputOptions(output, "demographics_dropdown", suspendWhenHidden = FALSE)
+
 
 #Plot the demographics pie graph
 
