@@ -174,5 +174,94 @@
 
                                .button.btn.btn-default {content: 'Done';}
 
+                               html,body{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+
+/* layout css */
+.landing-wrapper .landing-block{
+    width: 100%;
+    height: 100vh;
+}
+
+.landing-wrapper .background-content{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-row-gap: 0;
+}
+
+.landing-wrapper .background-content img{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.landing-wrapper .foreground-content{
+    position: absolute;
+    top: 9%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.landing-wrapper .foreground-content h1 {
+
+  color: white;
+}
+
+.start_button {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 17px;
+    padding-top: 11px;
+    padding-right: 25px;
+    padding-bottom: 11px;
+    padding-left: 18px;
+    border-top-style: solid;
+    border-top-width: 3px;
+    border-top-color: white;
+    border-right-style: solid;
+    border-right-width: 3px;
+    border-right-color: white;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: white;
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-left-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: transparent;
+    opacity: 1;
+    transition-property: background-color, border, color, text-shadow, opacity;
+    transition-duration: 500ms, 500ms, 500ms, 500ms, 200ms;
+    transition-timing-function: ease, ease, ease, ease, ease;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+
+}
+
+.start_button:hover {
+  color: white;
+  background-color: #d35400;
+}
+
+.content {
+
+  padding-left:0px;
+  padding-right:0px;
+  padding-top: 0px;
+}
+
+
 
                                 )

@@ -65,7 +65,16 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
 
   header<- dashboardHeader(title ="Measurely | Clinical Outcomes Dashboard", titleWidth = 800)
 
-  sidebar<- dashboardSidebar()
+  sidebar<- dashboardSidebar(
+
+    sidebarMenu(id = "tabs",
+
+    menuItem(h4(""), tabName = "Landing"),
+    br(),
+    menuItem(h4("Home"),  tabName = "Home")
+    )
+
+  )
 
   body<- dashboardBody(
 
@@ -76,6 +85,19 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
       tags$link(rel = "stylesheet", type = "text/css", href = "Styling.css") #Link to the css style sheet,
 
     ),
+
+    fluidPage(
+
+    tabItems(
+
+      tabItem(tabName = "Landing",
+
+              psychlytx::make_landing_UI("make_landing")
+
+      ),
+
+
+      tabItem(tabName = "Home",
 
 
     fluidPage(
@@ -107,7 +129,7 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
    measurelydashboard::plot_outcomes_by_measure_UI("plot_outcomes_by_measure")
 
 
-  ))
+  )))))
 
 
 ui <- dashboardPage(header = header,
@@ -117,7 +139,20 @@ ui <- dashboardPage(header = header,
 
 server <- shinyServer(function(input, output, session) {
 
+
+
+
+  start_button_input<- callModule(psychlytx::make_landing, "make_landing")
+
+  observeEvent(start_button_input(), {
+
+    newtab <- switch(input$tabs, "Landing" = "Home")
+    updateTabItems(session, "tabs", newtab)
+  })
+
   addClass(selector = "body", class = "sidebar-collapse")
+
+
 
   output$date_dropdown<- renderUI({
     dateRangeInput("date_selection", h3("Select A Date Range For Analyses", class = "dropdown_headings"), start = Sys.Date() - lubridate::years(1), Sys.Date(), format = "dd-mm-yyyy", width = '50%')
