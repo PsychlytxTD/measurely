@@ -31,6 +31,7 @@ library(tibble)
 library(aws.s3)
 library(glue)
 library(plotly)
+library(grDevices)
 
 
 

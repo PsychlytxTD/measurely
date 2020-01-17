@@ -103,7 +103,7 @@ output$demographics_plot <- plotly::renderPlotly({
       values = ~values,
       hole = 0.6,
       customdata = ~labels,
-      colors = "BrBG"
+      marker = list(colors=rev(dutchmasters::dutchmasters$milkmaid))
     ) %>% layout(legend = list(orientation = 'h')) %>% layout(plot_bgcolor='#e5e5e5') %>%
     layout(paper_bgcolor='#e5e5e5')
 
@@ -148,13 +148,12 @@ output$summary_outcomes_plot_by_demographics<- renderPlotly({
 
   validate(need(length(outcomes_by_demographic()$Percent) >= 1, "No data to show yet. Click on a category of the left plot."))
 
-
   p<- ggplot(outcomes_by_demographic(), aes(x = current_category()[[1]],
                                                  y = Percent,
                                                  fill = forcats::fct_reorder(Variable, Percent),
                                                  text = paste(Variable, "<br>","Count: ", Count))) +
     geom_col() + geom_text(aes(label = paste0(round(Percent, 1), "%")), size = 3,
-                           position = position_stack(vjust = 0.5)) +
+                           position = position_stack(vjust = 0.5)) + scale_fill_manual(values = c("Improved" = "#7fff00", "Reliably Improved" = "green", "No Change" = "#d35400", "Deteriorated" = "#cd5c5c")) +
     theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.background = element_blank(),

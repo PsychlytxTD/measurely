@@ -44,6 +44,10 @@ plot_diagnoses<- function(input, output, session, posttherapy_analytics_table) {
 
   process_diagnoses<- reactive({
 
+    #Generate a large number of random colors (need to accomodate a large number of secondary diagnoses)
+
+    plot_colours<- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+
 
     df_dsm<- req(posttherapy_analytics_table()) %>% count(principal_diagnosis, secondary_diagnosis) %>% select(principal_diagnosis, secondary_diagnosis, number = n)
 
@@ -61,17 +65,17 @@ plot_diagnoses<- function(input, output, session, posttherapy_analytics_table) {
 
     #create the stacked bar plot based on your data
     p<- ggplot(data = df_dsm, aes(y= number, x=principal_diagnosis, fill=secondary_diagnosis,
-                                  text = paste("Primary Diagnosis: ", principal_diagnosis, "<br>",
-                                               "Number of Cases:", diagnosis_count, "<br>",
-                                               "Representents ", round((diagnosis_count/nrow(df_dsm) * 100), 2), "% of all primary diagnoses")
+                                  text = paste0("Primary Diagnosis: ", principal_diagnosis, "<br>",
+                                               "Number of Cases: ", diagnosis_count, "<br>",
+                                               "Represents ", round((diagnosis_count/nrow(df_dsm) * 100), 2), "% of all primary diagnoses", "<br>",
+                                               "Secondary Diagnoses: ", secondary_diagnosis, "<br>",
+                                                "Represents ", relative, "% of clients with a primary diagnosis of ", principal_diagnosis
+                                               )
 
     )) +
-      geom_bar(stat="identity", width = 0.5) +
+      geom_bar(stat="identity", width = 0.5) + scale_fill_manual(values = plot_colours) +
+      scale_y_continuous(labels = scales::percent) +
       xlab('Primary Diagnosis') + ylab('Number of Cases') +
-      #use JOELS great solution for the label position
-      #and add percentage based on variable 'relative', otherwise use 'number'
-      geom_text(aes(x = principal_diagnosis, label = paste0(relative,'%')),
-                colour = 'white', position=position_stack(vjust=0.5)) +
       labs(fill='Secondary Diagnosis') + coord_flip() +
       theme(panel.grid.minor.y = element_blank(),
             panel.grid.major.y = element_blank(),

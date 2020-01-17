@@ -76,8 +76,13 @@
      clients<- client_names %>%
        purrr::set_names(stringr::str_replace_all(client_names, "_", " "))
 
-     selectizeInput(ns("client_selection"), "",
-                 choices = clients, multiple = TRUE)
+     selectizeInput(ns("client_selection"),
+                    "",
+                    choices = clients,
+                    options = list(
+                        placeholder = 'Start typing or scroll down..',
+                        onInitialize = I('function() { this.setValue(""); }')
+                    ))
 
 
    })
