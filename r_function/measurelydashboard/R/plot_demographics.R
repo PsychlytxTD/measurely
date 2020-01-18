@@ -156,6 +156,7 @@ output$summary_outcomes_plot_by_demographics<- renderPlotly({
                            position = position_stack(vjust = 0.5)) + scale_fill_manual(values = c("Improved" = "#7fff00", "Reliably Improved" = "green", "No Change" = "#d35400", "Deteriorated" = "#cd5c5c")) +
     theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
+          panel.grid.major.y = element_line("grey"),
           panel.background = element_blank(),
           axis.line = element_blank()) + xlab("") +
     theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),

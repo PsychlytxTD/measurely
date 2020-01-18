@@ -77,7 +77,7 @@ outcomes_by_measure<- reactive({
 })
 
 
-
+plot_colours<- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
 
 #Generate a plot displaying outcomes by measure (allowing comparison of measures)
 
@@ -88,15 +88,15 @@ output$plot_outcomes_by_measure<- plotly::renderPlotly({
   p<- ggplot(outcomes_by_measure(), aes(x= measure, y= percent, color = measure, fill = measure,
                                         text = paste0("Percentage of ", gsub('_', '-', measure),
                                                       " respondents having completed at least two assessments who showed", " ", stringr::str_to_lower(input$outcome_type), ": ", percent, "%", "<br>",
-                                                      "Average pre-to-post change in ", gsub('_', '-', measure), "scores: ", average_change))) +
-    geom_col() +
+                                                      "Average pre-to-post change in ", gsub('_', '-', measure), " scores: ", average_change))) +
+    geom_col() + scale_fill_manual(values = plot_colours) +
     xlab("Outcome Measure") + ylab(paste("%")) +
     ggtitle(paste("Percentage of", gsub('_', '-', outcomes_by_measure()$measure), "respondents (having completed at least 2 assessments) showing", stringr::str_to_sentence(input$outcome_type))) +
     scale_x_discrete(labels = measures_whitespace) +
-    theme(panel.grid.minor.y = element_blank(),
-          panel.grid.major.y = element_blank(),
-          panel.background = element_blank(),
-          panel.grid.major.x = element_line("grey"),
+    theme(panel.grid.minor.x = element_blank(),
+          panel.grid.major.x = element_blank(),
+          panel.grid.minor.y = element_blank(),
+          panel.grid.major.y = element_line("grey"),
           axis.text.x = element_text(angle=65, vjust=0.6),
           legend.position="none"
     ) + theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
