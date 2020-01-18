@@ -103,19 +103,27 @@ clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) 
 
     fluidPage(
 
-    fluidRow(
-
-      uiOutput("date_dropdown")
-
-      ),
-
-    br(),
-    br(),
-
 
    measurelydashboard::make_nested_data_UI("make_nested_data"),
 
    measurelydashboard::make_outcome_valueboxes_UI("make_outcome_valueboxes"),
+
+   fluidRow(
+
+      uiOutput("date_dropdown")
+
+     ),
+
+
+   fluidRow(
+
+            measurelydashboard::make_registration_plot_UI("make_registration_plot")
+
+    ),
+
+   br(),
+   br(),
+
 
    measurelydashboard::plot_demographics_UI("plot_demographics"),
 
@@ -216,6 +224,10 @@ server <- shinyServer(function(input, output, session) {
       dplyr::inner_join(client_table(), by = c("client_id" = "id"))
 
   })
+
+
+
+  callModule(measurelydashboard::make_registration_plot, "make_registration_plot", client_table)
 
 
   nested_data<- callModule(measurelydashboard::make_nested_data, "make_nested_data", joined_data)
