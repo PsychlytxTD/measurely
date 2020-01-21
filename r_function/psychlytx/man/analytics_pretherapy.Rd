@@ -4,12 +4,14 @@
 \alias{analytics_pretherapy}
 \title{New or existing client status widget and headings}
 \usage{
-analytics_pretherapy(input, output, session, clinician_id)
+analytics_pretherapy(input, output, session, clinician_id, practice_id)
 }
 \arguments{
 \item{session}{A session object.}
 
 \item{clinician_id}{String indicating clinician's unique identifier.}
+
+\item{practice_id}{String indicating the id of the practice.}
 }
 \description{
 Module generates client status widget and headings.

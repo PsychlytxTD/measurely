@@ -4,10 +4,13 @@
 \alias{combine_all_holding_data}
 \title{Combine All Holding Statistics}
 \usage{
-combine_all_holding_data(input, output, session, holding_statistics_list)
+combine_all_holding_data(input, output, session, holding_statistics_list,
+  practice_id)
 }
 \arguments{
 \item{holding_statistics_list}{A list of input lists (one for each subscale).}
+
+\item{practice_id}{String indicating the id of the practice.}
 }
 \description{
 Combine all lists of holding statistics

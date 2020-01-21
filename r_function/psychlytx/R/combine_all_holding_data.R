@@ -21,10 +21,12 @@ combine_all_holding_data_UI<- function(id) {
 #'
 #' @param holding_statistics_list A list of input lists (one for each subscale).
 #'
+#' @param practice_id String indicating the id of the practice.
+#'
 #' @export
 
 
-combine_all_holding_data<- function(input, output, session, holding_statistics_list) {
+combine_all_holding_data<- function(input, output, session, holding_statistics_list, practice_id) {
 
   reactive({
     #Once we have the inputs from all widgets, flatten each sublist so we end up with one list of sublists
@@ -43,6 +45,7 @@ combine_all_holding_data<- function(input, output, session, holding_statistics_l
 
         clinician_id = purrr::map_chr(., "clinician_id"),
         client_id = purrr::map_chr(., "client_id"),
+        practice_id = practice_id, #Pass in the environment variable representing the practice id
         measure = purrr::map_chr(., "measure"),
         subscale = purrr::map_chr(., "subscale"),
         mean = purrr::map_dbl(., "mean"),

@@ -4,10 +4,12 @@
 \alias{combine_all_input}
 \title{Combine All Input}
 \usage{
-combine_all_input(input, output, session, input_list)
+combine_all_input(input, output, session, input_list, practice_id)
 }
 \arguments{
 \item{input_list}{A list of input lists (one for each subscale).}
+
+\item{practice_id}{String indicating the id of the practice.}
 }
 \description{
 Combine all lists of widget input values

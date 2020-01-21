@@ -63,9 +63,11 @@ analytics_pretherapy_UI<- function(id) {
 #'
 #' @param clinician_id String indicating clinician's unique identifier.
 #'
+#' @param practice_id String indicating the id of the practice.
+#'
 #' @export
 
-analytics_pretherapy<- function(input, output, session, clinician_id) {
+analytics_pretherapy<- function(input, output, session, clinician_id, practice_id) {
 
   output$pretherapy_data_entry_message<- renderText({ #Send message to ensure that fields for first and last name are filled out by user
 
@@ -109,6 +111,7 @@ analytics_pretherapy<- function(input, output, session, clinician_id) {
 
       id = purrr::map_chr(., "id"),
       clinician_id = purrr::map_chr(., "clinician_id"),
+      practice_id = practice_id, #Pass in the environment variable representing the practice id
       first_name = purrr::map_chr(., "first_name"),
       last_name = purrr::map_chr(., "last_name"),
       email_address = purrr::map_chr(., "email_address"),

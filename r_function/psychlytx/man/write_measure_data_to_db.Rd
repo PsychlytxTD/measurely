@@ -5,7 +5,7 @@
 \title{Write client's measure data to db}
 \usage{
 write_measure_data_to_db(input, ouput, session, pool, measure_data,
-  manual_entry, formatted_response_body_for_email)
+  manual_entry, formatted_response_body_for_email, practice_id)
 }
 \arguments{
 \item{pool}{A pooled db connection}
@@ -15,6 +15,8 @@ write_measure_data_to_db(input, ouput, session, pool, measure_data,
 \item{manual_entry}{A list of values returned when clinician submits new scale responses. Of list items, only accessing the button value, to trigger the query.}
 
 \item{formatted_response_body_for_email}{A string containing all required values for email body.}
+
+\item{practice_id}{String indicating the id of the practice.}
 }
 \description{
 Write the client's new scores and associated statistics to the db

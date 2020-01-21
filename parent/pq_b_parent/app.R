@@ -269,7 +269,7 @@ server <- function(input, output, session) {
   #creates unique client id. Need clinician id needs to be available 
   #to module so pass it in.
   
-  analytics_pretherapy<- callModule(psychlytx::analytics_pretherapy, "analytics_pretherapy", clinician_id) #Return the pretherapy analytics responses
+  analytics_pretherapy<- callModule(psychlytx::analytics_pretherapy, "analytics_pretherapy", clinician_id, practice_id) #Return the pretherapy analytics responses
   
   
   callModule(psychlytx::write_pretherapy_to_db, "write_pretherapy_to_db", pool, analytics_pretherapy) #Write pre-therapy analytics responses data to db
@@ -307,7 +307,7 @@ server <- function(input, output, session) {
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
-                                           subscale_info_1, existing_data, pool, selected_client, clinician_id)) #Store the selected population for downstream use in other modules
+                                           subscale_info_1, existing_data, pool, selected_client, clinician_id, practice_id)) #Store the selected population for downstream use in other modules
   
   
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client
@@ -379,7 +379,7 @@ server <- function(input, output, session) {
   #So pass the input_list object to the combine_all_input module.
   
   
-  measure_data<- callModule(psychlytx::combine_all_input, "combine_all_input", input_list)  #Generate a dataframe with all necessary scale data (date, score, pts, se,
+  measure_data<- callModule(psychlytx::combine_all_input, "combine_all_input", input_list, practice_id)  #Generate a dataframe with all necessary scale data (date, score, pts, se,
   #ci etc.). This dataframe will be sent to the db
   
   
@@ -387,7 +387,7 @@ server <- function(input, output, session) {
   formatted_response_body_for_email<- callModule(psychlytx::format_pqb_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
-  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
+  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email, practice_id)  #Write newly entered item responses from measure to db
   
   
   
@@ -402,7 +402,7 @@ server <- function(input, output, session) {
   
   holding_statistics_list<- reactive({ list( holding_statistics_list_1(), holding_statistics_list_2() ) })
   
-  holding_data<- callModule(psychlytx::combine_all_holding_data, "combine_all_holding_data", holding_statistics_list)
+  holding_data<- callModule(psychlytx::combine_all_holding_data, "combine_all_holding_data", holding_statistics_list, practice_id)
   
   
   callModule(psychlytx::write_statistics_to_holding, "write_holding_statistics_to_db", pool, holding_data)

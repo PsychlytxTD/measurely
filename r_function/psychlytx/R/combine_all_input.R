@@ -21,10 +21,12 @@ combine_all_input_UI<- function(id) {
 #'
 #' @param input_list A list of input lists (one for each subscale).
 #'
+#' @param practice_id String indicating the id of the practice.
+#'
 #' @export
 
 
-combine_all_input<- function(input, output, session, input_list) {
+combine_all_input<- function(input, output, session, input_list, practice_id) {
 
   reactive({
                         #Once we have the inputs from all widgets, flatten each sublist so we end up with one list of sublists
@@ -42,6 +44,7 @@ combine_all_input<- function(input, output, session, input_list) {
 
         clinician_id = purrr::map_chr(., "clinician_id"),
         client_id = purrr::map_chr(., "client_id"),
+        practice_id = practice_id, #Pass in the environment variable representing the practice id
         measure = purrr::map_chr(., "measure"),
         subscale = purrr::map_chr(., "subscale"),
         date = as.character(lubridate::as_date(purrr::map_dbl(., "date"))), #Convert to correct SQL format and conver to character

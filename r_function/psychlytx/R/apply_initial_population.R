@@ -205,13 +205,15 @@ apply_initial_population_UI<- function(id) {
 #'
 #' @param clinician_id A string indicating the unique id of the clinician.
 #'
+#' @param practice_id String indicating the id of the practice.
+#'
 #' @export
 
 
 apply_initial_population<- function(input, output, session, title, brief_title, measure, subscale, population_quantity, populations, sds, means,
                                     mean_sd_references, reliabilities, reliability_references, cutoff_values, cutoff_labels, cutoff_references, cutoff_quantity,
                                     items, max_score, min_score, plot_shading_gap, plot_cutoff_label_start, plot_cutoff_label_size, description,
-                                    sample_overview, journal_references, existing_data, pool, selected_client, clinician_id) {
+                                    sample_overview, journal_references, existing_data, pool, selected_client, clinician_id, practice_id) {
 
 
   observeEvent(selected_client(), {
@@ -384,6 +386,7 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
 
         clinician_id = purrr::map_chr(., "clinician_id"),
         client_id = purrr::map_chr(., "client_id"),
+        practice_id = practice_id,
         principal_diagnosis = purrr::map_chr(., "principal_diagnosis"),
         secondary_diagnosis = purrr::map_chr(., "secondary_diagnosis"),
         referrer = purrr::map_chr(., "referrer"),
