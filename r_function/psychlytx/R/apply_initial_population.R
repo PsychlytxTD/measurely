@@ -207,13 +207,15 @@ apply_initial_population_UI<- function(id) {
 #'
 #' @param practice_id String indicating the id of the practice.
 #'
+#' @param initial_population_selection A numeric value indicating which population to show first in dropdown. 1 by default.
+#'
 #' @export
 
 
 apply_initial_population<- function(input, output, session, title, brief_title, measure, subscale, population_quantity, populations, sds, means,
                                     mean_sd_references, reliabilities, reliability_references, cutoff_values, cutoff_labels, cutoff_references, cutoff_quantity,
                                     items, max_score, min_score, plot_shading_gap, plot_cutoff_label_start, plot_cutoff_label_size, description,
-                                    sample_overview, journal_references, existing_data, pool, selected_client, clinician_id, practice_id) {
+                                    sample_overview, journal_references, existing_data, pool, selected_client, clinician_id, practice_id, initial_population_selection = 1) {
 
 
   observeEvent(selected_client(), {
@@ -229,7 +231,7 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
 
     if(nrow(existing_data()) >= 1) {
 
-      checkboxGroupInput(ns("assessment_stage"), "", c(
+      radioButtons(ns("assessment_stage"), "", c(
         "My client is continuing therapy after this assessment." = "ongoing",
         "My client is finishing therapy and this will be the last assessment." = "last"),
         selected = "ongoing")
@@ -262,7 +264,7 @@ apply_initial_population<- function(input, output, session, title, brief_title, 
 
 
     selectInput(ns("population"), "",
-                choices = population_list, width = "60%") #Make the population selection widget
+                choices = population_list, selected = population_list[initial_population_selection], width = "60%") #Make the population selection widget
 
 
   })

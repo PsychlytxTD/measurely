@@ -29,12 +29,11 @@ library(tibble)
 library(aws.s3)
 library(glue)
 
-
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
-  dbname = "scaladb",
-  host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
-  user = "jameslovie",
+  dbname = "postgres",
+  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  user = "timothydeitz",
   password = Sys.getenv("PGPASSWORD")
 )
 
@@ -47,7 +46,7 @@ onStop(function() {
 
 
 
-global_subscale_info<- psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
+global_subscale_info<- readRDS("global_subscale_info_list.Rds") #psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["PCL_5"]] #Subset the global list to retrive the subscale list(s) for this particular measure
 subscale_info_2<- global_subscale_info[["PCL_5_Intrusion"]] #All of the subscale lists should be upper case acronyms with words separated by underscores
@@ -66,7 +65,7 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
 
-
+practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j" #In practice, will pass in practice id as an environment variable.
 
 
 ui<- function(request) {
@@ -329,7 +328,7 @@ server <- function(input, output, session) {
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
-                                           subscale_info_1, existing_data, pool, selected_client, clinician_id, practice_id)) #Store the selected population for downstream use in other modules
+                                           subscale_info_1, existing_data, pool, selected_client, clinician_id, practice_id, initial_population_selection = 2)) #Store the selected population for downstream use in other modules
   
   
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client

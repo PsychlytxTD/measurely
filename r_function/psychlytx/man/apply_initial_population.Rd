@@ -10,7 +10,8 @@ apply_initial_population(input, output, session, title, brief_title,
   cutoff_labels, cutoff_references, cutoff_quantity, items, max_score,
   min_score, plot_shading_gap, plot_cutoff_label_start,
   plot_cutoff_label_size, description, sample_overview, journal_references,
-  existing_data, pool, selected_client, clinician_id, practice_id)
+  existing_data, pool, selected_client, clinician_id, practice_id,
+  initial_population_selection = 1)
 }
 \arguments{
 \item{title}{A string (white space allowed) indicating the name of the subscale, to be used as a panel title.}
@@ -70,6 +71,8 @@ apply_initial_population(input, output, session, title, brief_title,
 \item{clinician_id}{A string indicating the unique id of the clinician.}
 
 \item{practice_id}{String indicating the id of the practice.}
+
+\item{initial_population_selection}{A numeric value indicating which population to show first in dropdown. 1 by default.}
 
 \item{input_population}{A string (reactive value) representing the name of the selected population.}
 }

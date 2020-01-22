@@ -314,7 +314,7 @@ server <- function(input, output, session) {
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
-                                           subscale_info_1, existing_data, pool, selected_client, clinician_id, practice_id)) #Store the selected population for downstream use in other modules
+                                           subscale_info_1, existing_data, pool, selected_client, clinician_id, practice_id, initial_population_selection = 2)) #Store the selected population for downstream use in other modules
   #Posttherapy questions & processing have been relocated to apply_initial_population module
   #analytics_posttherapy and write_posttherapy_to_db modules are now redundant
   #Need to pass pool, selected_client, and clinician_id to allow this to occur

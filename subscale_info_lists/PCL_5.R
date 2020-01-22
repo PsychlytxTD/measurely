@@ -3,7 +3,7 @@ PCL_5<- list(  title = "PTSD Checklist for DSM-5 (PCL-5)", #Title can contain wh
                measure = "PCL_5", #The overal measure (which may contain subscales)
                subscale = "PCL_5", #The specific subscale of the measure.
                population_quantity = 5,
-               populations = list("Psychiatric_Inpatient", "University_Student", "Active_Military_Service", "Veteran",
+               populations = list("Psychiatric_Inpatient", "Normative_Sample", "Active_Military_Service", "Veteran",
                                   "Institutional_Abuse", "Other"),
                means = list(39.98, 20.9, 42.41, 36.97, 28.28, 0),
                sds = list(21.11, 17.7, 15.06, 21.16, 18.19, 0),
@@ -92,7 +92,7 @@ PCL_5_Intrusion<- list(  title = "PCL-5 Intrusion", #Title can contain white spa
                measure = "PCL_5", #The overal measure (which may contain subscales)
                subscale = "PCL_5_Intrusion", #The specific subscale of the measure.
                population_quantity = 6,
-               populations = list("Psychiatric_Inpatient", "University_Student", "Active_Military_Service", "Veteran", "Institutional_Abuse",
+               populations = list("Psychiatric_Inpatient", "Normative_Sample", "Active_Military_Service", "Veteran", "Institutional_Abuse",
                                   "Other"),
                means = list(9.93, 5.6, 10.57, 9.28, 7.92, 0),
                sds = list(5.99, 4.9, 4.45, 5.87, 6.35, 0),
@@ -180,7 +180,7 @@ PCL_5_Cognition_Mood<- list(  title = "PCL-5 Negative Cognition/Mood", #Title ca
                          measure = "PCL_5", #The overal measure (which may contain subscales)
                          subscale = "PCL_5_Cognition_Mood", #The specific subscale of the measure.
                          population_quantity = 6,
-                         populations = list("Psychiatric_Inpatient", "University_Student", "Active_Military_Service", "Veteran",
+                         populations = list("Psychiatric_Inpatient", "Normative_Sample", "Active_Military_Service", "Veteran",
                                             "Institutional_Abuse", "Other"),
                          means = list(13.61, 7.1, 12.91, 12.54, 8.26, 0),
                          sds = list(8.71, 6.9, 6.59, 8.15, 6.8, 0),
@@ -193,7 +193,7 @@ PCL_5_Cognition_Mood<- list(  title = "PCL-5 Negative Cognition/Mood", #Title ca
                                                        "Ashbaugh, Houle-Johnson, El-Hage & Brunet (2016)", "Define Value"),
                          cutoff_values = list(
                            c(13.61 - 8.71, 13.61 - (0.5 * 8.71),  13.61, 13.61 + (0.5 * 8.71), 13.61 +  8.71, 13.61 + (1.5 * 8.71)),
-                           c(7.1 - 6.9, 7.1 - (0.5 *6.9), 7.1, 7.1 + 6.9, 7.1 + (1.5 *6.9), 7.1 + (2 *6.9), 7.1 + (2.5 * 6.9)),
+                           c(7.1 - 6.9, 7.1 - (0.5 *6.9), 7.1, 7.1 + 6.9, 7.1 + (2 *6.9), 7.1 + (2.5 * 6.9)),
                            c(12.91 - (1.5 * 6.59), 12.91 - 6.59, 12.91, 12.91 + (0.5 * 6.59), 12.91 + 6.59, 12.91 + (1.5 * 6.59)),
                            c(12.54 - 8.15, 12.54 - (0.5 * 8.15), 12.54, 12.54 + (0.5 * 8.15), 12.54 + 8.15, 12.54 + (1.5 * 8.15)),
                            c(8.26 - 6.8, 8.26, 8.26 + (0.5 * 6.8), 8.26 + 6.8, 8.26 + (2 * 6.8), 8.26 + (2.5 * 6.8)),
@@ -265,7 +265,7 @@ PCL_5_Hyperarousal<- list(  title = "PCL-5 Hyperarousal", #Title can contain whi
                          measure = "PCL_5", #The overal measure (which may contain subscales)
                          subscale = "PCL_5_Hyperarousal", #The specific subscale of the measure.
                          population_quantity = 6,
-                         populations = list("Psychiatric_Inpatient", "University_Student", "Active_Military_Service",
+                         populations = list("Psychiatric_Inpatient", "Normative_Sample", "Active_Military_Service",
                                             "Veteran", "Institutional_Abuse", "Other"),
                          means = list(12.3, 5.5, 14.07, 11.09, 8.91, 0),
                          sds = list(6.42, 5.3, 4.68, 6.75, 5.43, 0),
@@ -351,7 +351,7 @@ PCL_5_Avoidance<- list(  title = "PCL-5 Avoidance", #Title can contain white spa
                          measure = "PCL_5", #The overal measure (which may contain subscales)
                          subscale = "PCL_5_Avoidance", #The specific subscale of the measure.
                          population_quantity = 6,
-                         populations = list("Psychiatric_Inpatient", "University_Student", "Active_Military_Service",
+                         populations = list("Psychiatric_Inpatient", "Normative_Sample", "Active_Military_Service",
                                             "Veteran", "Institutional_Abuse", "Other"),
                          means = list(4.13, 2.7, 4.88, 4.06, 3.19, 0),
                          sds = list(2.63, 2.4, 2.35, 2.6, 2.72, 0),

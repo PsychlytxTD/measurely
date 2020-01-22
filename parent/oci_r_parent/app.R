@@ -346,7 +346,7 @@ server <- function(input, output, session) {
   
   
   input_population<- do.call(callModule, c(psychlytx::apply_initial_population, "apply_population", 
-                                           subscale_info_1, existing_data, pool, selected_client, clinician_id, practice_id)) #Store the selected population for downstream use in other modules
+                                           subscale_info_1, existing_data, pool, selected_client, clinician_id, practice_id, initial_population_selection = 2)) #Store the selected population for downstream use in other modules
   
   
   callModule(psychlytx::show_population_message, "show_population_message", input_population) #Prompt user to select a population to generate settings for this client
