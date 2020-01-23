@@ -59,20 +59,48 @@ make_outcome_valueboxes<- function(input, output, session, nested_data) {
 
 value_box_outcomes<- reactive({
 
-  total_administrations<- nrow(nested_data())
+  #total_administrations<- nrow(nested_data())
 
-  nested_data() %>% dplyr::summarise(
+  #Only select cases with at least two timepoints on a subscale
 
-    improved = sum(improve, na.rm = TRUE),
-    improved_percent = round((improved/total_administrations) * 100 , 1),
-    sig_improved = sum(sig_improve, na.rm = TRUE),
-    sig_improved_percent = round((sig_improved/total_administrations) * 100, 1),
-    remained_same = sum(remained_same, na.rm = TRUE),
-    remained_same_percent = round((remained_same/total_administrations) * 100, 1),
-    deteriorated = sum(deteriorated, na.rm = TRUE),
-    deteriorated_percent = round((deteriorated/total_administrations) * 100, 1)
+  at_least_two_timepoints_cases<-  req(nested_data()) %>% dplyr::filter(at_least_two == TRUE)
 
-  )
+  #Create separate dataframes for each client, then select only the list column containing this data
+
+  by_client<- at_least_two_timepoints_cases %>% dplyr::group_by(client_id) %>% tidyr::nest() %>% dplyr::select(data)
+
+  #Calculate the number of unique clients that have two timepoints
+
+  n_at_least_two_timepoints<- dplyr::n_distinct(at_least_two_timepoints_cases$client_id)
+
+
+    #Calculate the number and percentage of patients (with at least 2 timepoints) that
+    #showed at least one outcome (improved, sig_improved, remained_same or deteriorated).
+
+    improved<- sum(by_client$data %>% purrr::map_lgl(~any(.x$improve) == TRUE), na.rm = TRUE)
+    improved_percent<- round(improved /  n_at_least_two_timepoints * 100, 1)
+    sig_improved<- sum(by_client$data %>% purrr::map_lgl(~any(.x$sig_improve) == TRUE), na.rm = TRUE)
+    sig_improved_percent<- round(sig_improved /  n_at_least_two_timepoints * 100, 1)
+    remained_same<- sum(by_client$data %>% purrr::map_lgl(~any(.x$remained_same) == TRUE), na.rm = TRUE)
+    remained_same_percent<- round(remained_same /  n_at_least_two_timepoints * 100, 1)
+    deteriorated<- sum(by_client$data %>% purrr::map_lgl(~any(.x$deteriorated) == TRUE), na.rm = TRUE)
+    deteriorated_percent<- round(deteriorated /  n_at_least_two_timepoints * 100, 1)
+
+    tibble::tibble(improved, improved_percent, sig_improved, sig_improved_percent,
+                   remained_same, remained_same_percent, deteriorated, deteriorated_percent)
+
+    #Old way of calculating outcomes
+
+    #improved = sum(improve, na.rm = TRUE),
+    #improved_percent = round((improved/total_administrations) * 100 , 1),
+    #sig_improved = sum(sig_improve, na.rm = TRUE),
+    #sig_improved_percent = round((sig_improved/total_administrations) * 100, 1),
+    #remained_same = sum(remained_same, na.rm = TRUE),
+    #remained_same_percent = round((remained_same/total_administrations) * 100, 1),
+    #deteriorated = sum(deteriorated, na.rm = TRUE),
+    #deteriorated_percent = round((deteriorated/total_administrations) * 100, 1)
+
+
 
 })
 
@@ -91,7 +119,7 @@ output$improved <- renderValueBox({
       style = "color: #7FFF00"
     ),
     href = "#",
-    subtitle = HTML("<b>Improvements</b>")
+    subtitle = HTML("<b>Improved</b>")
   )
   box1$children[[1]]$attribs$class<-"action-button"
   box1$children[[1]]$attribs$id<-ns("button_box_01")
@@ -137,7 +165,7 @@ output$sig_improved <- renderValueBox({
       style = "color: green"
     ),
     href = "#",
-    subtitle = HTML("<b>Reliable* Improvements</b>")
+    subtitle = HTML("<b>Reliably Improved</b>")
   )
   box2$children[[1]]$attribs$class<-"action-button"
   box2$children[[1]]$attribs$id<-ns("button_box_02")
@@ -178,7 +206,7 @@ output$remained_same <- renderValueBox({
       style = "color: #d35400"
     ),
     href = "#",
-    subtitle = HTML("<b>No Change</b>")
+    subtitle = HTML("<b>Did Not Change</b>")
   )
   box3$children[[1]]$attribs$class<-"action-button"
   box3$children[[1]]$attribs$id<- ns("button_box_03")
@@ -219,7 +247,7 @@ output$deteriorated <- renderValueBox({
       style = "color: #CD5C5C"
     ),
     href = "#",
-    subtitle = HTML("<b>Deteriorations</b>")
+    subtitle = HTML("<b>Deteriorated</b>")
   )
   box4$children[[1]]$attribs$class<-"action-button"
   box4$children[[1]]$attribs$id<- ns("button_box_04")

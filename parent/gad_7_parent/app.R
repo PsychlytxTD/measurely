@@ -62,7 +62,7 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 #clinician_object<- httr::content(clinician_object)
 
-clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
+clinician_id<- "78478b9f-c091-4227-bf81-ddc24313a7f3" #paste(clinician_object["sub"]) #Access the id object
 
 practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j" #In practice, will pass in practice id as an environment variable.
 

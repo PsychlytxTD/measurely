@@ -55,7 +55,7 @@ ui <- fluidPage(
     fluidRow(
         column(offset = 4, width = 8,
 
-    h5("An asterix (*) indicates that a response is required.", class = "title_heading")
+    h6("An asterix (*) indicates that a response is required.", class = "title_heading")
         )),
 
     br(),
@@ -74,8 +74,8 @@ ui <- fluidPage(
                                                         "Community Psychologist", "Educational & Developmental Psychologist",
                                                         "Forensic Psychologist", "Health Psychologist",
                                                         "Organisational Psychologist", "Psychology Registrar",
-                                                        "Clinical Neuropsychologist", "Psychiatrist", "Occupational Therapist",
-                                                        "Allied Health Practitioner", "Nurse"), selectize = FALSE, selected = FALSE, size = 4),
+                                                        "Clinical Neuropsychologist", "Psychiatrist", "General Practitioner",
+                                                        "Occupational Therapist", "Allied Health Practitioner", "Nurse"), selectize = FALSE, selected = FALSE, size = 4),
     selectInput("highest_qualification", "Highest Academic Qualification", choices = c("Secondary School Completion",
                                                                                        "TAFE Diploma/Certificate", "Bachelor Degree",
                                                                                        "Masters Degree", "Doctorate",
