@@ -81,6 +81,8 @@ current_category<- reactiveVal()
 
 output$posttherapy_plot <- plotly::renderPlotly({
 
+  validate(need(nrow(posttherapy_analytics_table()) >= 1, "No results to show yet"))
+
   posttherapy<- tibble::as_tibble(posttherapy_analytics_table()[[req(input$posttherapy_variable)]]) %>%
     dplyr::count(.[[1]]) %>% purrr::set_names(c("labels", "values")) %>% dplyr::mutate_if(is.factor, as.character)
 

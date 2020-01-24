@@ -91,6 +91,8 @@ current_category<- reactiveVal()
 
 output$demographics_plot <- plotly::renderPlotly({
 
+  validate(need(nrow(client_table()) >= 1, "No results to show yet"))
+
   demographics<- tibble::as_tibble(client_table()[[req(input$demographic_variable)]]) %>%
     dplyr::count(.[[1]]) %>% purrr::set_names(c("labels", "values")) %>% dplyr::mutate_if(is.factor, as.character)
 

@@ -44,6 +44,8 @@ plot_diagnoses<- function(input, output, session, posttherapy_analytics_table) {
 
   process_diagnoses<- reactive({
 
+    validate(need(nrow(posttherapy_analytics_table()) >= 1, "No results to show yet"))
+
     #Generate a large number of random colors (need to accomodate a large number of secondary diagnoses)
 
     plot_colours<- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]

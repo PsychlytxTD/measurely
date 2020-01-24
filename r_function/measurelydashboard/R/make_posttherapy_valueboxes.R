@@ -31,6 +31,8 @@ make_posttherapy_valueboxes<- function(input, output, session, posttherapy_analy
 
 value_box_posttherapy<- reactive({
 
+  validate(need(nrow(posttherapy_analytics_table()) >= 1, "No results to show yet"))
+
   posttherapy_analytics_table() %>% dplyr::summarise(
 
     avg_attendances<- round(mean(attendances, na.rm = TRUE), 1),
