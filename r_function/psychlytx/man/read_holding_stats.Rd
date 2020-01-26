@@ -5,7 +5,7 @@
 \title{Simplified Application Statistics Read-In}
 \usage{
 read_holding_stats(input, output, session, pool, measure,
-  tabsetpanel_id = "tabset")
+  tabsetpanel_id = "tabset", client_id)
 }
 \arguments{
 \item{pool}{A pooled db object.}

@@ -62,7 +62,10 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 #clinician_object<- httr::content(clinician_object)
 
-clinician_id<- "78478b9f-c091-4227-bf81-ddc24313a7f3" #paste(clinician_object["sub"]) #Access the id object
+#clinician_id<- "78478b9f-c091-4227-bf81-ddc24313a7f3" #paste(clinician_object["sub"]) #Access the id object
+
+clinician_id<- "af7c5ab1-a862-466d-9e56-98580891db9f"
+
 
 practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j" #In practice, will pass in practice id as an environment variable.
 
@@ -382,7 +385,7 @@ server <- function(input, output, session) {
   formatted_response_body_for_email<- callModule(psychlytx::format_gad7_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
-  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email, practice_id)  #Write newly entered item responses from measure to db
+  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
   
   
   

@@ -63,10 +63,12 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
 
-practice_id<- "90f7ad5c-1061-4cbe-8b1d-161e04b76c07" #In practice, this value will be passed in from authentication
+practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j" #In practice, this value will be passed in from authentication
+
+super_user<- TRUE
 
 
-  header<- dashboardHeader(title ="Measurely | Clinical Outcomes Dashboard", titleWidth = 800)
+  header<- dashboardHeader(title = "Measurely | Clinical Outcomes Dashboard", titleWidth = 800)
 
   sidebar<- dashboardSidebar(
 
@@ -116,6 +118,7 @@ practice_id<- "90f7ad5c-1061-4cbe-8b1d-161e04b76c07" #In practice, this value wi
 
       measurelydashboard::make_clinician_dropdown_UI("clinician_dropdown")
 
+
      ),
 
 
@@ -154,7 +157,6 @@ server <- shinyServer(function(input, output, session) {
 
 
 
-
   start_button_input<- callModule(psychlytx::make_landing, "make_landing")
 
   observeEvent(start_button_input(), {
@@ -173,20 +175,36 @@ server <- shinyServer(function(input, output, session) {
 
 
 
-  selected_clinician<- callModule(measurelydashboard::make_clinician_dropdown, "clinician_dropdown", pool, practice_id)
-
+selected_clinician<- callModule(measurelydashboard::make_clinician_dropdown, "clinician_dropdown", pool, practice_id, super_user)
 
 
  measure_table<- reactive({
-         date_filter_sql<- "SELECT *
+
+   if(isTRUE(super_user)) {
+
+         date_filter_sql<- 'SELECT *
           FROM scale
           WHERE creation_date >= ?creation_date_1
           AND creation_date <= ?creation_date_2
-          AND clinician_id = ?selected_clinician;"
+          AND practice_id = ?practice_id;'
 
- date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
+         date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
                                     creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")),
-                                    selected_clinician = selected_clinician())
+                                    practice_id = practice_id)
+
+   } else {
+
+     date_filter_sql<- 'SELECT *
+          FROM scale
+          WHERE creation_date >= ?creation_date_1
+          AND creation_date <= ?creation_date_2
+          AND clinician_id = ?clinician_id;'
+
+     date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
+                                        creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")),
+                                        clinician_id = clinician_id)
+   }
+
 
  measure<- dbGetQuery(pool, date_filter_query)
 
@@ -195,16 +213,33 @@ server <- shinyServer(function(input, output, session) {
  })
 
 
+ client_table<- reactive({
 
- client_table<- reactive({ date_filter_sql<- "SELECT *
+
+   if(isTRUE(super_user)) {
+
+     date_filter_sql<- 'SELECT *
           FROM client
           WHERE creation_date >= ?creation_date_1
           AND creation_date <= ?creation_date_2
-          AND clinician_id = ?selected_clinician;"
+          AND practice_id = ?practice_id;'
 
- date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
-                                    creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")),
-                                    selected_clinician = selected_clinician())
+   date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
+                                      creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")),
+                                      practice_id = practice_id)
+
+ } else  {
+
+   date_filter_sql<- 'SELECT *
+          FROM client
+          WHERE creation_date >= ?creation_date_1
+          AND creation_date <= ?creation_date_2
+          AND clinician_id = ?clinician_id;'
+
+   date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
+                                      creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")),
+                                      clinician_id = clinician_id)
+ }
 
  client<- dbGetQuery(pool, date_filter_query)
 
@@ -214,23 +249,40 @@ server <- shinyServer(function(input, output, session) {
 
  })
 
+ posttherapy_analytics_table<- reactive({
 
 
- posttherapy_analytics_table<- reactive({ date_filter_sql<- "SELECT *
+   if(isTRUE(super_user)) {
+
+     date_filter_sql<- 'SELECT *
           FROM posttherapy_analytics
           WHERE creation_date >= ?creation_date_1
           AND creation_date <= ?creation_date_2
-          AND clinician_id = ?selected_clinician;"
+          AND practice_id = ?practice_id;'
 
- date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
-                                    creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")),
-                                    selected_clinician = selected_clinician())
+   date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
+                                      creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")),
+                                      practice_id = practice_id)
+
+ } else {
+
+   date_filter_sql<- 'SELECT *
+          FROM posttherapy_analytics
+          WHERE creation_date >= ?creation_date_1
+          AND creation_date <= ?creation_date_2
+          AND clinician_id = ?clinician_id;'
+
+   date_filter_query<- sqlInterpolate(pool, date_filter_sql, creation_date_1 = stringr::str_trim(as.POSIXct(req(input$date_selection[1]), tz = "GMT")),
+                                      creation_date_2 = stringr::str_trim(as.POSIXct(req(input$date_selection[2]), tz = "GMT")),
+                                      clinician_id = clinician_id)
+ }
 
  posttherapy_analytics<- dbGetQuery(pool, date_filter_query)
 
  tibble::as_tibble(posttherapy_analytics)
 
  })
+
 
 
   #Join the three imported tables and make reactive expression

@@ -26,7 +26,7 @@ combine_all_input_UI<- function(id) {
 #' @export
 
 
-combine_all_input<- function(input, output, session, input_list, practice_id) {
+combine_all_input<- function(input, output, session, input_list, practice_id = NULL) {
 
   reactive({
                         #Once we have the inputs from all widgets, flatten each sublist so we end up with one list of sublists

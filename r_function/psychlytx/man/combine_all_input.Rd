@@ -4,7 +4,7 @@
 \alias{combine_all_input}
 \title{Combine All Input}
 \usage{
-combine_all_input(input, output, session, input_list, practice_id)
+combine_all_input(input, output, session, input_list, practice_id = NULL)
 }
 \arguments{
 \item{input_list}{A list of input lists (one for each subscale).}

@@ -9,33 +9,36 @@
 
 make_simplified_sidebar_UI<- function(id) {
 
+  ns <- NS(id)
 
   dashboardSidebar(  #Menu items are hyperlinks to website pages
-    sidebarMenu(
-      br(),
-      menuItem("Home", icon = icon("line-chart"), tabName = "Home", selected = TRUE),    #Remove menu items for changing account settings etc. Clients don't need to see this.
-      br(),
-      div( HTML('&nbsp;'), HTML('&nbsp;'), HTML('&nbsp;'), icon("info"), HTML('&nbsp;'), HTML('&nbsp;'),
-           HTML('&nbsp;'), HTML('&nbsp;'), tags$a("About Psychlytx", href = "https:://psychlytx.com", style = "color:white")),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      tags$footer(tags$a(href = "http://psychlytx.com", target = "_blank", HTML("<br><center>"), "PsychlytX", tags$sup(icon("registered"))))
+    sidebarMenu(id = ns("tabs"),
+                br(),
+                menuItem(h4(""), tabName = "Landing"),
+                br(),
+                menuItem(h4("Home"), icon = icon("line-chart", "fa-2x"), tabName = "Home"),
+                br(),
+                menuItem(h4("About Psychlytx"), icon = icon("info", "fa-2x"), href = "http://www.psychlytx.com"),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                br(),
+                tags$footer(tags$a(href = "http://psychlytx.com.au", target = "_blank", HTML("<br><center>"), "Psychlytx", tags$sup(icon("registered"))
+                ))
     )
   )
 
@@ -46,12 +49,17 @@ make_simplified_sidebar_UI<- function(id) {
 #' Make Sidebar
 #'
 #' Module to make sidebar
+#' @param start_button_value A reactive value containing value of start_button action button.
 #'
 #' @export
 
 
-make_simplified_sidebar<- function(input, output, session) {
+make_simplified_sidebar<- function(input, output, session, start_button_input) {
 
-  return(NULL)
+  observeEvent(start_button_input(), {
+
+    newtab <- switch(input$tabs, "Landing" = "Home")
+    updateTabItems(session, "tabs", newtab)
+  })
 
 }

@@ -4,7 +4,10 @@
 \alias{make_simplified_sidebar}
 \title{Make Sidebar}
 \usage{
-make_simplified_sidebar(input, output, session)
+make_simplified_sidebar(input, output, session, start_button_input)
+}
+\arguments{
+\item{start_button_value}{A reactive value containing value of start_button action button.}
 }
 \description{
 Module to make sidebar

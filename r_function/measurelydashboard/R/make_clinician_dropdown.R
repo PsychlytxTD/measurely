@@ -11,7 +11,20 @@ make_clinician_dropdown_UI<- function(id) {
 
   ns<- NS(id)
 
+tagList(
+
+  fluidRow(
+
+  column(width = 6,
+    checkboxGroupInput(ns("filter_by_clinician"), "", choices = c("Filter")),
+
+  column(width = 6,
+
   uiOutput(ns("clinician_dropdown"))
+
+    ))
+
+))
 
 
 }
@@ -26,7 +39,8 @@ make_clinician_dropdown_UI<- function(id) {
 #'
 #' @export
 
-make_clinician_dropdown<- function(input, output, session, pool, practice_id) {
+make_clinician_dropdown<- function(input, output, session, pool, practice_id, super_user) {
+
 
   clinicians<- reactive({
 
@@ -53,6 +67,7 @@ make_clinician_dropdown<- function(input, output, session, pool, practice_id) {
 
   })
 
+
   output$clinician_dropdown<- renderUI({ #Make the client selection widget
 
     ns <- session$ns
@@ -60,19 +75,26 @@ make_clinician_dropdown<- function(input, output, session, pool, practice_id) {
     req(clinicians())
 
     selectizeInput(
-      inputId = ns("clinician_selection"),
-      label = "",
+     inputId = ns("clinician_selection"),
+      label = h3("Select A Clinician", class = "dropdown_headings"),
       choices = clinicians(),
       options = list(
-        placeholder = 'Type a name or scroll down..',
+       placeholder = 'Type a name or scroll down..',
         onInitialize = I('function() { this.setValue(""); }')
       ))
-
 
   })
 
 
   reactive({ input$clinician_selection })
+
+
+
+
+
+
+
+
 
 
 
