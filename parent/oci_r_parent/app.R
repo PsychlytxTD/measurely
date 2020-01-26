@@ -69,7 +69,7 @@ practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j"
 
 #clinician_object<- httr::content(clinician_object)
 
-clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
+clinician_id<- "af7c5ab1-a862-466d-9e56-98580891db9f" #paste(clinician_object["sub"]) #Access the id object
 
 
 
@@ -523,7 +523,7 @@ server <- function(input, output, session) {
   formatted_response_body_for_email<- callModule(psychlytx::format_ocir_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
-  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email, practice_id)  #Write newly entered item responses from measure to db
+  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
   
   
   
