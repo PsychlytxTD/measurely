@@ -4,10 +4,13 @@
 \alias{pqb_scale}
 \title{PQ-B Scale}
 \usage{
-pqb_scale(input, output, session, selected_client)
+pqb_scale(input, output, session, selected_client = NULL,
+  simplified = FALSE)
 }
 \arguments{
 \item{selected_client}{A string indicating the unique id of the selected client.}
+
+\item{simplified}{A boolean value indicating whether scale is being inserted in the remote app.}
 }
 \description{
 Generates the PQ-B for data entry

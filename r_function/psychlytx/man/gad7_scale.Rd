@@ -4,10 +4,13 @@
 \alias{gad7_scale}
 \title{GAD-7 Scale}
 \usage{
-gad7_scale(input, output, session, selected_client)
+gad7_scale(input, output, session, selected_client = NULL,
+  simplified = FALSE)
 }
 \arguments{
 \item{selected_client}{A string indicating the unique id of the selected client.}
+
+\item{simplified}{A boolean value indicating whether scale is being inserted in the remote app.}
 }
 \description{
 Generates the GAD-7 for data entry

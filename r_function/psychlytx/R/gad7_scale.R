@@ -76,11 +76,15 @@ fluidRow(
 #'
 #' @param selected_client A string indicating the unique id of the selected client.
 #'
+#' @param simplified A boolean value indicating whether scale is being inserted in the remote app.
+#'
 #' @export
 #'
-gad7_scale<- function(input, output, session, selected_client) {
+gad7_scale<- function(input, output, session, selected_client = NULL, simplified = FALSE) {
 
+  #Need to refresh questionnaire with selection of new client from dropdown - but only for the parent app!
 
+  if(isFALSE(simplified)) {
 
   observeEvent(selected_client(), {
 
@@ -88,7 +92,7 @@ gad7_scale<- function(input, output, session, selected_client) {
 
   })
 
-
+}
 
   observe({
              #Make a logical vector indicating whether a scale item had more than one response endorsed.

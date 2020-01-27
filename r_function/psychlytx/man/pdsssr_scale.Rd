@@ -4,10 +4,13 @@
 \alias{pdsssr_scale}
 \title{PDSS-SR Scale}
 \usage{
-pdsssr_scale(input, output, session, selected_client)
+pdsssr_scale(input, output, session, selected_client = NULL,
+  simplified = FALSE)
 }
 \arguments{
 \item{selected_client}{A string indicating the unique id of the selected client.}
+
+\item{simplified}{A boolean value indicating whether scale is being inserted in the remote app.}
 }
 \description{
 Generates the PDSS-SR for data entry

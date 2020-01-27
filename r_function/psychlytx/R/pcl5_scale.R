@@ -125,16 +125,21 @@ pcl5_scale_UI<- function(id) {
 #'
 #' @param selected_client A string indicating the unique id of the selected client.
 #'
+#' @param simplified A boolean value indicating whether scale is being inserted in the remote app.
+#'
 #' @export
 #'
-pcl5_scale<- function(input, output, session, selected_client) {
+pcl5_scale<- function(input, output, session, selected_client = NULL, simplified = FALSE) {
 
-  observeEvent(selected_client(), {
+  if(isFALSE(simplified)) {
 
-    shinyjs::reset("reset_id")
+    observeEvent(selected_client(), {
 
-  })
+      shinyjs::reset("reset_id")
 
+    })
+
+  }
 
 
   observe({

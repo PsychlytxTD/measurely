@@ -4,10 +4,13 @@
 \alias{sds_scale}
 \title{SDS Scale}
 \usage{
-sds_scale(input, output, session, selected_client)
+sds_scale(input, output, session, selected_client = NULL,
+  simplified = FALSE)
 }
 \arguments{
 \item{selected_client}{A string indicating the unique id of the selected client.}
+
+\item{simplified}{A boolean value indicating whether scale is being inserted in the remote app.}
 }
 \description{
 Generates the SDS for data entry

@@ -32,9 +32,11 @@ sds_scale_UI<- function(id) {
 #'
 #' @param selected_client A string indicating the unique id of the selected client.
 #'
+#' @param simplified A boolean value indicating whether scale is being inserted in the remote app.
+#'
 #' @export
 #'
-sds_scale<- function(input, output, session, selected_client) {
+sds_scale<- function(input, output, session, selected_client = NULL, simplified = FALSE) {
 
  output$sds_scale_out<- renderUI({
 
@@ -121,12 +123,15 @@ sds_scale<- function(input, output, session, selected_client) {
   })
 
 
- observeEvent(selected_client(), {
+ if(isFALSE(simplified)) {
 
-   shinyjs::reset("reset_id")
+   observeEvent(selected_client(), {
 
- })
+     shinyjs::reset("reset_id")
 
+   })
+
+ }
 
 
  observe({

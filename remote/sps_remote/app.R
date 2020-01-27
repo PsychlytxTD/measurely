@@ -99,7 +99,7 @@ ui<- function(request) {
                                   
                                   psychlytx::read_holding_stats_UI("read_holding_stats"),
                                   
-                                  psychlytx::simplified_sps_scale_UI("sps_scale"), #Item of the specific measure
+                                  psychlytx::sps_scale_UI("sps_scale"), #Item of the specific measure
                                   
                                   psychlytx::manual_data_UI("manual_data"), #Items of the specific measure are passed here as a string of numbers
                                   
@@ -208,7 +208,7 @@ server <- function(input, output, session) {
   
   
   shinyjs::useShinyjs(debug = TRUE) 
-  scale_entry<- callModule(psychlytx::simplified_sps_scale, "sps_scale", client_id) #Return the raw responses to the online scale
+  scale_entry<- callModule(psychlytx::sps_scale, "sps_scale", simplified = TRUE) #Return the raw responses to the online scale
                                                                                  #Pass in client_id to allow resetting
   
   manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 20) #Raw item responses are stored as vector manual_entry to be used downstream

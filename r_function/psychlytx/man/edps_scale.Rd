@@ -4,10 +4,13 @@
 \alias{edps_scale}
 \title{EDPS Scale}
 \usage{
-edps_scale(input, output, session, selected_client)
+edps_scale(input, output, session, selected_client = NULL,
+  simplified = FALSE)
 }
 \arguments{
 \item{selected_client}{A string indicating the unique id of the selected client.}
+
+\item{simplified}{A boolean value indicating whether scale is being inserted in the remote app.}
 }
 \description{
 Generates the EDPS for data entry
