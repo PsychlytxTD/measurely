@@ -106,6 +106,21 @@ write_statistics_to_holding<- function(input, ouput, session, pool, holding_data
                          verbose())
 
 
+    #Delete existing rows in the db for this client (only for this measure) to avoid
+    #the remote app pulling in more rows than necessary.
+
+    conn<- poolCheckout(pool)
+
+    delete_old_holding_query<- glue::glue_sql("DELETE FROM holding
+                                              WHERE client_id = {holding_data()$client_id[1]}
+                                              AND measure = {holding_data()$measure[1]}", .con = conn
+                                              )
+
+    dbExecute(conn, sqlInterpolate(ANSI(), delete_old_holding_query))
+
+    poolReturn(conn)
+
+
 
     #Write the client's holding statistics to the holding table in the databse (so they can be used when client completes the simplified app).
 
