@@ -64,7 +64,7 @@ read_holding_stats<- function(input, output, session, pool, measure, tabsetpanel
 
     sendSweetAlert(
       session = session,
-      title = paste("Welcome", holding_statistics()$first_name, "!"),
+      title = paste("Welcome", holding_statistics()$first_name[length(holding_statistics()$first_name)], "!"),
       text = "",
       type = "success"
     )

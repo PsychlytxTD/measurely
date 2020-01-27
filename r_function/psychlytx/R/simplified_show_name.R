@@ -33,7 +33,8 @@ simplified_show_name<- function(input, output, session, holding_data) {
 
     ns <- session$ns
 
-    selectInput(ns("client_name"), "Name", choices = c(paste(holding_data()$first_name, holding_data()$last_name)))
+    selectInput(ns("client_name"), "Name", choices = c(paste(holding_data()$first_name[1], holding_data()$last_name[1])),
+                selected = paste(holding_data()$first_name[1], holding_data()$last_name[1]))
 
   })
 

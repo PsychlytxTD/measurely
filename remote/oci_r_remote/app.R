@@ -50,8 +50,12 @@ onStop(function() {
 global_subscale_info<- readRDS("global_subscale_info_list.Rds") #psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["OCI_R"]] #Subset the global list to retrive the subscale list(s) for this particular measure
-                                                  #All of the subscale lists should be upper case acronyms with words separated by underscores
-
+subscale_info_2<- global_subscale_info[["OCI_R_Washing"]] #All of the subscale lists should be upper case acronyms with words separated by underscores
+subscale_info_3<- global_subscale_info[["OCI_R_Ordering"]]
+subscale_info_4<- global_subscale_info[["OCI_R_Checking"]]
+subscale_info_5<- global_subscale_info[["OCI_R_Obsessing"]]
+subscale_info_6<- global_subscale_info[["OCI_R_Hoarding"]]
+subscale_info_7<- global_subscale_info[["OCI_R_Neutralizing"]]
 
 clinician_email<- "timothydeitz@gmail.com"  
 
@@ -108,6 +112,12 @@ ui<- function(request) {
                                   psychlytx::calculate_subscale_UI("calculate_subscales"), #Calculate all aggregate subscale scores for the measure
                                   
                                   psychlytx::simplified_collect_holding_input_UI("collect_input_1"), #Collect all input for a subscale
+                                  psychlytx::simplified_collect_holding_input_UI("collect_input_2"), #Collect all input for a subscale
+                                  psychlytx::simplified_collect_holding_input_UI("collect_input_3"), #Collect all input for a subscale
+                                  psychlytx::simplified_collect_holding_input_UI("collect_input_4"), #Collect all input for a subscale
+                                  psychlytx::simplified_collect_holding_input_UI("collect_input_5"), #Collect all input for a subscale
+                                  psychlytx::simplified_collect_holding_input_UI("collect_input_6"), #Collect all input for a subscale
+                                  psychlytx::simplified_collect_holding_input_UI("collect_input_7"), #Collect all input for a subscale
                                   
                                   psychlytx::combine_all_input_UI("combine_all_input"), #Combine collected inputs from all subscales
                                   
@@ -134,17 +144,35 @@ ui<- function(request) {
                                                   
                                                   tabPanel("Mean", width = 12, 
                                                            
-                                                           psychlytx::generate_simplified_mean_widget_UI("mean_widget_1") #Mean widget for one subscale
+                                                           psychlytx::generate_mean_widget_UI("mean_widget_1"), #Mean widget for one subscale
+                                                           psychlytx::generate_mean_widget_UI("mean_widget_2"),
+                                                           psychlytx::generate_mean_widget_UI("mean_widget_3"),
+                                                           psychlytx::generate_mean_widget_UI("mean_widget_4"),
+                                                           psychlytx::generate_mean_widget_UI("mean_widget_5"),
+                                                           psychlytx::generate_mean_widget_UI("mean_widget_6"),
+                                                           psychlytx::generate_mean_widget_UI("mean_widget_7")
                                                   ),
                                                   
                                                   tabPanel("Sd", width = 12,
                                                            
-                                                           psychlytx::generate_simplified_sd_widget_UI("sd_widget_1") #Sd widget for one subscale
+                                                           psychlytx::generate_sd_widget_UI("sd_widget_1"), #Sd widget for one subscale
+                                                           psychlytx::generate_sd_widget_UI("sd_widget_2"),
+                                                           psychlytx::generate_sd_widget_UI("sd_widget_3"),
+                                                           psychlytx::generate_sd_widget_UI("sd_widget_4"),
+                                                           psychlytx::generate_sd_widget_UI("sd_widget_5"),
+                                                           psychlytx::generate_sd_widget_UI("sd_widget_6"),
+                                                           psychlytx::generate_sd_widget_UI("sd_widget_7")
                                                   ),
                                                   
                                                   tabPanel("Test-Retest Reliability", width = 12,
                                                            
-                                                           psychlytx::generate_simplified_reliability_widget_UI("reliability_widget_1"), #Reliability widget for one subscale
+                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_1"), #Reliability widget for one subscale
+                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_2"), 
+                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_3"), 
+                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_4"), 
+                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_5"), 
+                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_6"), 
+                                                           psychlytx::generate_reliability_widget_UI("reliability_widget_7"), 
                                                            
                                                            psychlytx::reliability_calc_UI("reliability_derivation") #Derive reliability from stats (if required)
                                                            
@@ -158,7 +186,13 @@ ui<- function(request) {
                                                   
                                                   tabPanel("User-Defined Cut-Off Scores", width = 12,
                                                            
-                                                           psychlytx::generate_simplified_cutoff_widget_UI("cutoff_widget_1") #Cutoff widgets for one subscale
+                                                           psychlytx::generate_cutoff_widget_UI("cutoff_widget_1"), #Cutoff widgets for one subscale
+                                                           psychlytx::generate_cutoff_widget_UI("cutoff_widget_2"),
+                                                           psychlytx::generate_cutoff_widget_UI("cutoff_widget_3"),
+                                                           psychlytx::generate_cutoff_widget_UI("cutoff_widget_4"),
+                                                           psychlytx::generate_cutoff_widget_UI("cutoff_widget_5"),
+                                                           psychlytx::generate_cutoff_widget_UI("cutoff_widget_6"),
+                                                           psychlytx::generate_cutoff_widget_UI("cutoff_widget_7")
                                                            
                                                   )))))),
                   
@@ -203,7 +237,7 @@ server <- function(input, output, session) {
   
   holding_data<- callModule(psychlytx::read_holding_stats, "read_holding_stats", pool, measure = subscale_info_1$measure, client_id = client_id) 
   
- 
+  
   callModule(psychlytx::simplified_show_name, "show_name", holding_data)
   
   
@@ -212,9 +246,10 @@ server <- function(input, output, session) {
                                                                                  #Pass in client_id to allow resetting
   
   manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 18) #Raw item responses are stored as vector manual_entry to be used downstream
-  
-  
-  aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, item_index = list( subscale_info_1$items ), 
+
+  aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, 
+                                item_index = list( subscale_info_1$items, subscale_info_2$items, subscale_info_3$items, subscale_info_4$items,
+                                                   subscale_info_5$items, subscale_info_6$items, subscale_info_7$items), 
                                 aggregation_method = "sum")   #Make a list of aggregate scores across subscales (in this case there is only one subscale)
   
 
@@ -364,7 +399,7 @@ server <- function(input, output, session) {
   
   
   input_list<- reactive({ list( input_list_1(), input_list_2(), input_list_3(), input_list_4(), input_list_5(),
-                                input_list_6(), input_list_7()) })  #Store each list of input values in a larger list object. If there were more than one 
+                                input_list_6(), input_list_7() ) })  #Store each list of input values in a larger list object. If there were more than one 
   #subscale it would look like this: input_list<- reactive({ list( input_list_1(), input_list_2(), etc. ) })
   #After creating the list of lists, flatten each sublist and set the names of sublist elements so that they 
   #are the same across lists - this will ensure we can iterate over the lists using purrr. 
