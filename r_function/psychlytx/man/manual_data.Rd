@@ -5,7 +5,8 @@
 \title{Manual Entry Widgets}
 \usage{
 manual_data(input, output, session, scale_entry, do_recode = FALSE,
-  items_to_recode = NULL, recoding_key = NULL, expected_responses)
+  items_to_recode = NULL, recoding_key = NULL, expected_responses,
+  pq_b = FALSE, missing_allowed = FALSE)
 }
 \arguments{
 \item{scale_entry}{The item scores passed from the online scale (if completed).}

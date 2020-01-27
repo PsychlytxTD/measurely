@@ -52,6 +52,7 @@ global_subscale_info<- readRDS("global_subscale_info_list.Rds") #psychlytx::impo
 subscale_info_1<- global_subscale_info[["PQ_B"]] #Subset the global list to retrive the subscale list(s) for this particular measure
 subscale_info_2<- global_subscale_info[["PQ_B_Distress"]] #All of the subscale lists should be upper case acronyms with words separated by underscores
 
+
 clinician_email<- "timothydeitz@gmail.com"  
 
 client_id<- "810695bf-a00e-473d-b798-9767455dd030"
@@ -133,17 +134,22 @@ ui<- function(request) {
                                                   
                                                   tabPanel("Mean", width = 12, 
                                                            
-                                                           psychlytx::generate_simplified_mean_widget_UI("mean_widget_1") #Mean widget for one subscale
+                                                           psychlytx::generate_simplified_mean_widget_UI("mean_widget_1"),
+                                                           psychlytx::generate_simplified_mean_widget_UI("mean_widget_2")
+                                                           #Mean widget for one subscale
                                                   ),
                                                   
                                                   tabPanel("Sd", width = 12,
                                                            
-                                                           psychlytx::generate_simplified_sd_widget_UI("sd_widget_1") #Sd widget for one subscale
+                                                           psychlytx::generate_simplified_sd_widget_UI("sd_widget_1"),
+                                                           psychlytx::generate_simplified_sd_widget_UI("sd_widget_2")
                                                   ),
                                                   
                                                   tabPanel("Test-Retest Reliability", width = 12,
                                                            
-                                                           psychlytx::generate_simplified_reliability_widget_UI("reliability_widget_1"), #Reliability widget for one subscale
+                                                           psychlytx::generate_simplified_reliability_widget_UI("reliability_widget_1"),
+                                                           psychlytx::generate_simplified_reliability_widget_UI("reliability_widget_2"),
+                                                           #Reliability widget for one subscale
                                                            
                                                            psychlytx::reliability_calc_UI("reliability_derivation") #Derive reliability from stats (if required)
                                                            
@@ -157,7 +163,9 @@ ui<- function(request) {
                                                   
                                                   tabPanel("User-Defined Cut-Off Scores", width = 12,
                                                            
-                                                           psychlytx::generate_simplified_cutoff_widget_UI("cutoff_widget_1") #Cutoff widgets for one subscale
+                                                           psychlytx::generate_simplified_cutoff_widget_UI("cutoff_widget_1"),
+                                                           psychlytx::generate_simplified_cutoff_widget_UI("cutoff_widget_2")
+                                                           #Cutoff widgets for one subscale
                                                            
                                                   )))))),
                   
@@ -210,10 +218,12 @@ server <- function(input, output, session) {
   scale_entry<- callModule(psychlytx::pqb_scale, "pqb_scale", simplified = TRUE) #Return the raw responses to the online scale
                                                                                  #Pass in client_id to allow resetting
   
-  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 20) #Raw item responses are stored as vector manual_entry to be used downstream
+  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 20,
+                            pq_b = TRUE, missing_allowed = TRUE) #Raw item responses are stored as vector manual_entry to be used downstream
   
   
-  aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, item_index = list( subscale_info_1$items ), 
+  aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, 
+                                item_index = list( subscale_info_1$items, subscale_info_2$items), 
                                 aggregation_method = "sum")   #Make a list of aggregate scores across subscales (in this case there is only one subscale)
   
 
@@ -263,8 +273,9 @@ server <- function(input, output, session) {
   
   #_______________________________________________________________________________Currently, the code in between hashes must be written for each subscale 
   
-  
+
   #Have to store the list of sublists as a reactive object
+
   
   input_list<- reactive({ list( input_list_1(), input_list_2() ) })  #Store each list of input values in a larger list object. If there were more than one 
   #subscale it would look like this: input_list<- reactive({ list( input_list_1(), input_list_2(), etc. ) })

@@ -32,9 +32,9 @@ library(glue)
 
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
-  dbname = "scaladb",
-  host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
-  user = "jameslovie",
+  dbname = "postgres",
+  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  user = "timothydeitz",
   password = Sys.getenv("PGPASSWORD")
 )
 
@@ -47,13 +47,12 @@ onStop(function() {
 
 
 
-global_subscale_info<- psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
+global_subscale_info<- global_subscale_info<- readRDS("global_subscale_info_list.Rds") #psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["PQ_B"]] #Subset the global list to retrive the subscale list(s) for this particular measure
 subscale_info_2<- global_subscale_info[["PQ_B_Distress"]] #All of the subscale lists should be upper case acronyms with words separated by underscores
 
 clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
-
 
 #url<- "https://scala.au.auth0.com/userinfo"
 
@@ -62,8 +61,12 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 #clinician_object<- httr::content(clinician_object)
 
-clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
+#clinician_id<- "78478b9f-c091-4227-bf81-ddc24313a7f3" #paste(clinician_object["sub"]) #Access the id object
 
+clinician_id<- "af7c5ab1-a862-466d-9e56-98580891db9f"
+
+
+practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j" #In practice, will pass in practice id as an environment variable.
 
 
 
@@ -316,12 +319,12 @@ server <- function(input, output, session) {
   scale_entry<- callModule(psychlytx::pqb_scale, "pqb_scale", selected_client) #Return the raw responses to the online scale
   
   
-  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 20) #Raw item responses are stored as vector manual_entry to be used downstream
+  manual_entry<- callModule(psychlytx::manual_data, "manual_data", scale_entry, expected_responses = 21, 
+                            pq_b = TRUE, missing_allowed = TRUE) #Raw item responses are stored as vector manual_entry to be used downstream
   
   
   aggregate_scores<- callModule(psychlytx::calculate_subscale, "calculate_subscales",  manual_entry = manual_entry, 
-                                item_index = list( subscale_info_1$items, subscale_info_2$items, subscale_info_3$items, subscale_info_4$items,
-                                                   subscale_info_5$items, subscale_info_6$items, subscale_info_7$items), 
+                                item_index = list( subscale_info_1$items, subscale_info_2$items), 
                                 aggregation_method = "sum")   #Make a list of aggregate scores across subscales (in this case there is only one subscale)
   
   
@@ -387,7 +390,7 @@ server <- function(input, output, session) {
   formatted_response_body_for_email<- callModule(psychlytx::format_pqb_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
-  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email, practice_id)  #Write newly entered item responses from measure to db
+  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
   
   
   

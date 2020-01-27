@@ -75,7 +75,8 @@ manual_data_UI<- function(id) {
 
 #The scale_entry_scores object refers to the item scores from the online scale (if completed)
 
-manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, items_to_recode = NULL, recoding_key = NULL, expected_responses) {
+manual_data<- function(input, output, session, scale_entry, do_recode = FALSE,
+                       items_to_recode = NULL, recoding_key = NULL, expected_responses, pq_b = FALSE, missing_allowed = FALSE) {
 
   observe({
 
@@ -110,7 +111,6 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
     })
 
 
-
   item_warning_reac<- eventReactive(input$submit_scores, {
 
     missing<- which(is.na(item_scores()))
@@ -124,9 +124,13 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
 
   output$item_warning<- renderText({
 
-  req(item_warning_reac())
+    req(item_warning_reac())
 
   })
+
+
+
+  if(isFALSE(missing_allowed)) {
 
 
   observeEvent(input$submit_scores, {
@@ -158,5 +162,16 @@ manual_data<- function(input, output, session, scale_entry, do_recode = FALSE, i
     })
   #On click of 'submit' questionnaire scores, return list of date, item scores and the value of the submit button (to use to trigger db writing.)
 
+  } else if(isTRUE(missing_allowed)) {
+
+    eventReactive(input$submit_scores, {
+
+
+  list( date = date(), item_scores = item_scores(), submit_scores_button_value = input$submit_scores )
+
+
+})
+
+  }
 
 }
