@@ -34,13 +34,18 @@ CREATE TABLE clinician (
     sex text,
     profession text,
     highest_qualification text,
-    years_practiced text,
-    weekly_hours,
-    organisation_name,
-    organisation_type,
-    organisation_location,
-    primary_therapy_orientation,
-    secondary_therapy_orientation  
+    years_practiced float,
+    weekly_hours float,
+    primary_therapy_orientation text,
+    secondary_therapy_orientation text  
+);
+
+CREATE TABLE practice (
+    name text UNIQUE NOT NULL,
+    id text UNIQUE NOT NULL PRIMARY KEY,
+    type text,
+    location text
+
 );
 
 

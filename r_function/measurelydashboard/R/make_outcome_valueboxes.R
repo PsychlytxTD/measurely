@@ -11,6 +11,16 @@ make_outcome_valueboxes_UI<- function(id) {
 
   ns<- NS(id)
 
+  tagList(
+
+  fluidRow(
+
+  column(width = 9, offset = 3,
+  actionButton(ns("valuebox_info"), "Information About Clinical Outcome Value Boxes", class = "submit_button")
+  )),
+
+  br(),
+
   fluidRow(
 
     shinycssloaders::withSpinner(valueBoxOutput(ns("improved"), width = 3), type = getOption("spinner.type", default = 7),
@@ -37,7 +47,7 @@ make_outcome_valueboxes_UI<- function(id) {
 
     bsModal(ns("mod_4"),"Cases of Symptom Deterioration","btn", size = "large",
             DT::dataTableOutput(ns("table_deteriorated")))
-  )
+  ))
 
 
 }
@@ -53,6 +63,20 @@ make_outcome_valueboxes_UI<- function(id) {
 
 
 make_outcome_valueboxes<- function(input, output, session, nested_data) {
+
+  observeEvent(input$valuebox_info, {
+
+    sendSweetAlert(
+      session = session,
+      title = "How clinical change outcomes displayed in value boxes are derived:",
+      text = "Only clients who have been assessed at least twice using an outcome measure are included in analyses. The number and percentage of clients that 'improved',
+      'reliably improved', 'did not change' and 'deteriorated' are shown. Clients are not included more than once when
+      calculating clinical change outcomes. For example, if John Smith displays an improvement on both the GAD-7 and
+      PCL-5, this counts as 1 patient improvement, and he will be added to the 'improved' value box. Click on a value box to view episodes of assessment and clinical outcomes for individual clients.",
+      type = "info"
+    )
+
+  })
 
 
 #Wrangle the data for the value boxes

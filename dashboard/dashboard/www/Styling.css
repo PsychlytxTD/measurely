@@ -265,5 +265,46 @@
 }
 
 
+.submit_button {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-top: 11px;
+    padding-right: 25px;
+    padding-bottom: 11px;
+    padding-left: 18px;
+    border-top-style: solid;
+    border-top-width: 3px;
+    border-top-color: #d35400;
+    border-right-style: solid;
+    border-right-width: 3px;
+    border-right-color: #d35400;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: #d35400;
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-left-color: #d35400;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: transparent;
+    opacity: 1;
+    transition-property: background-color, border, color, text-shadow, opacity;
+    transition-duration: 500ms, 500ms, 500ms, 500ms, 200ms;
+    transition-timing-function: ease, ease, ease, ease, ease;
+    color: #d35400;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
 
+}
+
+.submit_button:hover{
+  color: white;
+  background-color: #d35400;
+  border-color: white;
+}
                                 )

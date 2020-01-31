@@ -76,7 +76,6 @@ plot_diagnoses<- function(input, output, session, posttherapy_analytics_table) {
 
     )) +
       geom_bar(stat="identity", width = 0.5) + scale_fill_manual(values = plot_colours) +
-      scale_y_continuous(labels = scales::percent) +
       xlab('Primary Diagnosis') + ylab('Number of Cases') +
       labs(fill='Secondary Diagnosis') + coord_flip() +
       theme(panel.grid.minor.y = element_blank(),

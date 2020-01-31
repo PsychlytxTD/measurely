@@ -114,22 +114,18 @@ super_user<- TRUE
 
    fluidRow(
 
-      uiOutput("date_dropdown"),
+      column(width = 6,
+      uiOutput("date_dropdown")
+      ),
 
-      measurelydashboard::make_clinician_dropdown_UI("clinician_dropdown")
+      column(width = 6,
+             measurelydashboard::make_registration_plot_UI("make_registration_plot")
+             )
+
+      #measurelydashboard::make_clinician_dropdown_UI("clinician_dropdown")
 
 
      ),
-
-
-   fluidRow(
-
-            measurelydashboard::make_registration_plot_UI("make_registration_plot")
-
-    ),
-
-   br(),
-   br(),
 
 
    measurelydashboard::plot_demographics_UI("plot_demographics"),
@@ -170,12 +166,12 @@ server <- shinyServer(function(input, output, session) {
 
 
   output$date_dropdown<- renderUI({
-    dateRangeInput("date_selection", h3("Select A Date Range For Analyses", class = "dropdown_headings"), start = Sys.Date() - lubridate::years(1), Sys.Date(), format = "dd-mm-yyyy", width = '50%')
+    dateRangeInput("date_selection", h3("Select A Date Range For Analyses", class = "dropdown_headings"), start = Sys.Date() - lubridate::years(1), Sys.Date(), format = "dd-mm-yyyy", width = '100%')
   })
 
 
 
-selected_clinician<- callModule(measurelydashboard::make_clinician_dropdown, "clinician_dropdown", pool, practice_id, super_user)
+#selected_clinician<- callModule(measurelydashboard::make_clinician_dropdown, "clinician_dropdown", pool, practice_id, super_user)
 
 
  measure_table<- reactive({
@@ -300,6 +296,9 @@ selected_clinician<- callModule(measurelydashboard::make_clinician_dropdown, "cl
 
 
   nested_data<- callModule(measurelydashboard::make_nested_data, "make_nested_data", joined_data)
+
+  observe({ tbl_df(nested_data()) %>% print(n = Inf) })
+
 
   callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data)
 

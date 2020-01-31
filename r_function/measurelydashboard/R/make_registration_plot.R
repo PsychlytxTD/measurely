@@ -11,7 +11,7 @@ make_registration_plot_UI<- function(id) {
   ns<- NS(id)
  tagList(
  h3("New Client Registrations", class = "dropdown_headings"),
- plotly::plotlyOutput(ns("registration_plot"))
+ plotly::plotlyOutput(ns("registration_plot"), height = '200px')
  )
 
 }

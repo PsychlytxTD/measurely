@@ -9,8 +9,13 @@
 
 library(shiny)
 library(pool)
+library(DBI)
 library(RPostgreSQL)
 library(shinyWidgets)
+library(dplyr)
+library(purrr)
+library(magrittr)
+
 
 pool <- dbPool( #Set up the connection with the db
     drv = dbDriver("PostgreSQL"),
@@ -82,16 +87,6 @@ ui <- fluidPage(
                                                                                        "PhD"), selectize = FALSE, selected = FALSE, size = 4),
     numericInput("years_practiced", "Number of Years Practicing", value = NULL),
     numericInput("weekly_hours", "Number of Client-Facing Hours Per Week", value = NULL),
-    textInput("organisation_name", "Name of Organisation/Practice"),
-    selectInput("organisation_type", "Type of Organisation/Practice", choices = c("Private Practice", "Medical Hospital",
-                                                                                  "Private Mental Health Facility",
-                                                                                  "Alcohol And Other Drug Service",
-                                                                                  "Public Mental Health Service",
-                                                                                  "Community/Not-For-Profit Organisation",
-                                                                                  "Secondary School",
-                                                                                  "University",
-                                                                                  "Corporate Setting"), selectize = FALSE, selected = FALSE, size = 4),
-    numericInput("organisation_location", "Postcode at Current Place of Practice", value = NULL),
     selectizeInput("primary_therapy_orientation", "Primary Therapeutic Approach Used", choices = psychlytx::therapies_list,
                    options = list(
                        placeholder = 'Type a word or scroll down..',
@@ -103,6 +98,24 @@ ui <- fluidPage(
                        onInitialize = I('function() { this.setValue(""); }')
                    )),
 
+    uiOutput("practice_dropdown"),
+    #If clinician is not part of an existing practice, he/she must add details of their practice, to be stored in db practice table.
+
+    conditionalPanel(condition = "input.practice_selection == 'no_listing'",
+
+    textInput("practice_name", "Name of Organisation/Practice*"),
+
+    selectInput("practice_type", "Type of Organisation/Practice", choices = c("Private Practice", "Medical Hospital",
+                                                                                  "Private Mental Health Facility",
+                                                                                  "Alcohol And Other Drug Service",
+                                                                                  "Public Mental Health Service",
+                                                                                  "Community/Not-For-Profit Organisation",
+                                                                                  "Secondary School",
+                                                                                  "University",
+                                                                                  "Corporate Setting"), selectize = FALSE, selected = FALSE, size = 4),
+    numericInput("practice_location", "Postcode at Current Place of Practice", value = NULL)
+    ),
+
     br(),
 
     actionButton("submit_clinician_registration", "Submit", class = "submit_clinician_registration")
@@ -113,12 +126,58 @@ ui <- fluidPage(
 
 )
 
+
+
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
 
+
+    practices<- reactive({
+
+        practice_list_sql<- "SELECT id, name
+                           FROM practice;"
+
+        practice_list_query<- sqlInterpolate(pool, practice_list_sql)
+
+        practice_list<- dbGetQuery( pool, practice_list_query )
+
+        practice_list<- practice_list %>%
+            collect  %>%
+            split( .$name ) %>%    # Field that will be used for the labels
+            purrr::map(~.$id)
+
+       practice_list[["My practice is not listed"]]<- "no_listing"
+
+       return(practice_list)
+
+
+    })
+
+
+
+
+    output$practice_dropdown<- renderUI({
+
+        req(practices())
+
+        selectizeInput(
+            inputId = "practice_selection",
+            label = "Link To An Existing Practice Or Create A New Practice Listing*",
+            choices = practices(),
+            options = list(
+                placeholder = 'Type a name or scroll down..',
+                onInitialize = I('function() { this.setValue(""); }')
+            ))
+    })
+
+    outputOptions(output, "practice_dropdown", suspendWhenHidden = FALSE)
+
+
+
+
     observeEvent(input$submit_clinician_registration, {
 
-        if(any(c(input$first_name, input$last_name, input$email_address) == "")) {
+        if(any(c(input$first_name, input$last_name, input$email_address, input$practice_selection) == "")) {
 
             sendSweetAlert(
                 session = session,
@@ -129,21 +188,39 @@ server <- function(input, output, session) {
         }
 
 
-
         clinician_data<- data.frame(id = uuid::UUIDgenerate(),
-                                    practice_id = uuid::UUIDgenerate(), #In production this will need to be replaced with an environment variable
-                                                                        #- because multiple clinicians can have the same practice id.
+                                    practice_id = ifelse( input$practice_selection == 'no_listing', uuid::UUIDgenerate(), input$practice_selection),
                                     first_name = req(input$first_name), last_name = req(input$last_name),
                                     email_address = req(input$email_address), birth_date = input$birth_date,
-                                    sex = input$sex, profession = input$profession,
+                                    sex = input$sex,
+                                    profession = input$profession,
                                     highest_qualification = input$highest_qualification,
-                                    years_practiced = input$years_practiced, weekly_hours = input$weekly_hours,
-                                    organisation_name = input$organisation_name,
-                                    organisation_type = input$organisation_type,
-                                    organisation_location = input$organisation_location,
+                                    years_practiced = input$years_practiced,
+                                    weekly_hours = input$weekly_hours,
                                     primary_therapy_orientation = input$primary_therapy_orientation,
                                     secondary_therapy_orientation = input$secondary_therapy_orientation
                                     )
+
+
+        #Write the measure data (from this entry) to the scale table in the db.
+
+        dbWriteTable(pool, "clinician",  clinician_data, row.names = FALSE, append = TRUE)
+
+
+        if(input$practice_selection == "no_listing") {
+
+            practice_data<- data.frame(
+                name = input$practice_name,
+                id = uuid::UUIDgenerate(),
+                type = input$practice_type,
+                location = input$practice_location
+            )
+
+
+        dbWriteTable(pool, "practice", practice_data,  row.names = FALSE, append = TRUE)
+
+        }
+
 
     sendSweetAlert(
         session = session,
@@ -151,10 +228,6 @@ server <- function(input, output, session) {
         text = "You are now registered to use Measurely web applications",
         type = "success"
     )
-
-    #Write the measure data (from this entry) to the scale table in the db.
-
-    dbWriteTable(pool, "clinician",  clinician_data, row.names = FALSE, append = TRUE)
 
 
     })

@@ -45,30 +45,91 @@ plot_clinical_outcomes<- function(input, output, session, nested_data) {
 
 outcomes_by_measure<- reactive({
 
+  at_least_two_timepoints_cases<- nested_data() %>% dplyr::filter(at_least_two == TRUE)
+
+  by_measure<- split(at_least_two_timepoints_cases, at_least_two_timepoints_cases$measure)
+
+  n_at_least_two_timepoints<- dplyr::n_distinct(at_least_two_timepoints_cases$measure)
+
+
   switch(input$outcome_type,
 
          "Improvement" = {
 
-           measurelydashboard::make_clinical_outcomes_by_measure(nested_data, improve)
+           by_measure %>% purrr::map_dfr(~ {
+
+             tibble::tibble(
+               count = dplyr::n_distinct(.x[.x$improve == TRUE, "client_id"]),
+               percent = round( count / dplyr::n_distinct(.x$client_id) * 100, 1),
+               measure = .x$measure[1]
+
+
+             )
+
+
+           })
+
+           #count<- sum(by_measure$data %>% purrr::map_lgl(~any(.x$improve) == TRUE), na.rm = TRUE)
+           #percent<- round(count /  n_at_least_two_timepoints * 100, 1)
+
+           #measurelydashboard::make_clinical_outcomes_by_measure(nested_data, improve)
 
 
          },
 
          "Statistically Reliable Improvement" = {
 
-           measurelydashboard::make_clinical_outcomes_by_measure(nested_data, sig_improve)
+
+           by_measure %>% purrr::map_dfr(~ {
+
+             tibble::tibble(
+               count = dplyr::n_distinct(.x[.x$sig_improve == TRUE, "client_id"]),
+               percent = round( count / dplyr::n_distinct(.x$client_id) * 100, 1),
+               measure = .x$measure[1]
+
+             )
+
+
+           })
+
+
+           #measurelydashboard::make_clinical_outcomes_by_measure(nested_data, sig_improve)
 
          },
 
          "No Change" = {
 
-           measurelydashboard::make_clinical_outcomes_by_measure(nested_data, remained_same)
+           by_measure %>% purrr::map_dfr(~ {
+
+             tibble::tibble(
+               count = dplyr::n_distinct(.x[.x$remained_same == TRUE, "client_id"]),
+               percent = round( count / dplyr::n_distinct(.x$client_id)  * 100, 1),
+               measure = .x$measure[1]
+
+             )
+
+
+           })
+
+           #measurelydashboard::make_clinical_outcomes_by_measure(nested_data, remained_same)
 
          },
 
          "Deterioration" = {
 
-           measurelydashboard::make_clinical_outcomes_by_measure(nested_data, deteriorated)
+           by_measure %>% purrr::map_dfr(~ {
+
+             tibble::tibble(
+               count = dplyr::n_distinct(.x[.x$deteriorated == TRUE, "client_id"]),
+               percent = round( count / dplyr::n_distinct(.x$client_id)  * 100, 1),
+               measure = .x$measure[1]
+
+             )
+
+
+           })
+
+           #measurelydashboard::make_clinical_outcomes_by_measure(nested_data, deteriorated)
 
          }
 
@@ -87,8 +148,7 @@ output$plot_outcomes_by_measure<- plotly::renderPlotly({
 
   p<- ggplot(outcomes_by_measure(), aes(x= measure, y= percent, color = measure, fill = measure,
                                         text = paste0("Percentage of ", gsub('_', '-', measure),
-                                                      " respondents having completed at least two assessments who showed", " ", stringr::str_to_lower(input$outcome_type), ": ", percent, "%", "<br>",
-                                                      "Average pre-to-post change in ", gsub('_', '-', measure), " scores: ", average_change))) +
+                                                      " respondents having completed at least two assessments who showed", " ", stringr::str_to_lower(input$outcome_type), ": ", percent, "%"))) +
     geom_col() + scale_fill_manual(values = plot_colours) +
     xlab("Outcome Measure") + ylab(paste("%")) +
     ggtitle(paste("Percentage of", gsub('_', '-', outcomes_by_measure()$measure), "respondents (having completed at least 2 assessments) showing", stringr::str_to_sentence(input$outcome_type))) +

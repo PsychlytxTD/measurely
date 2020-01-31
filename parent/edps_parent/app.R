@@ -32,14 +32,14 @@ library(glue)
 
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
-  dbname = "scaladb",
-  host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
-  user = "jameslovie",
+  dbname = "postgres",
+  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  user = "timothydeitz",
   password = Sys.getenv("PGPASSWORD")
 )
 
 
-onStop(function() { 
+onStop(function() {
   #Close pool object when session ends
   poolClose(pool)
   
