@@ -103,7 +103,7 @@ ui <- fluidPage(
 
     conditionalPanel(condition = "input.practice_selection == 'no_listing'",
 
-    textInput("practice_name", "Name of Organisation/Practice*"),
+    textInput("practice_name", "Please Indicate the Name of your Practice/Organisation*"),
 
     selectInput("practice_type", "Type of Organisation/Practice", choices = c("Private Practice", "Medical Hospital",
                                                                                   "Private Mental Health Facility",
@@ -162,7 +162,7 @@ server <- function(input, output, session) {
 
         selectizeInput(
             inputId = "practice_selection",
-            label = "Link To An Existing Practice Or Create A New Practice Listing*",
+            label = "Name of Practice/Organisation*",
             choices = practices(),
             options = list(
                 placeholder = 'Type a name or scroll down..',
@@ -182,7 +182,7 @@ server <- function(input, output, session) {
             sendSweetAlert(
                 session = session,
                 title = "Looks Like We Have A Problem...",
-                text = "Please provide your first name, last name and email address to continue.",
+                text = "Please provide your first name, last name, email address and practice/organisation name to continue.",
                 type = "error"
             )
         }
@@ -210,7 +210,7 @@ server <- function(input, output, session) {
         if(input$practice_selection == "no_listing") {
 
             practice_data<- data.frame(
-                name = input$practice_name,
+                name = req(input$practice_name),
                 id = uuid::UUIDgenerate(),
                 type = input$practice_type,
                 location = input$practice_location
