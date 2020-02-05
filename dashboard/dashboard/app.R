@@ -28,10 +28,13 @@ library(purrrlyr)
 library(uuid)
 library(shinyBS)
 library(tibble)
-library(aws.s3)
+#library(aws.s3)
 library(glue)
 library(plotly)
 library(grDevices)
+library(dutchmasters)
+nest <- nest_legacy
+unnest <- unnest_legacy
 
 
 

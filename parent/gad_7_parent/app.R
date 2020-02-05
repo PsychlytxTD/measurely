@@ -26,8 +26,9 @@ library(purrrlyr)
 library(uuid)
 library(shinyBS)
 library(tibble)
-library(aws.s3)
+#library(aws.s3)
 library(glue)
+
 
 
 pool <- dbPool( #Set up the connection with the db
@@ -49,7 +50,7 @@ onStop(function() {
 
 #global_subscale_info<- readRDS("global_subscale_info_list.Rds") #psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
 
-global_subscale_info<- devtools::use_data("global_subscale_info_list")
+global_subscale_info<- readRDS("global_subscale_info_list.Rds")
 
 subscale_info_1<- global_subscale_info[["GAD_7"]] #Subset the global list to retrive the subscale list(s) for this particular measure
                                                   #All of the subscale lists should be upper case acronyms with words separated by underscores

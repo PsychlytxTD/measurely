@@ -1,11 +1,11 @@
-
+//Comment
                        
                                 .skin-blue .main-header .logo {
                                  font-size: 20px;
                                  text-align: left;
                                  line-height: 60px;
                                  height: 60px;
-                                background-color: #d35400;
+                                 background-color: #d35400;
                                 }
                                 
                              
@@ -89,7 +89,12 @@
                                 .checkbox-inline {margin-right: 45px; padding-top: 8px;}
                                 
                                 .shiny-options-group {font-size: 17px;}
-                               
+                                
+                                .reportbutton {
+                                 width: 270px; background-color:#283747;color:#d35400;
+                                }
+                                
+                             
                                 .selectize-input { line-height: 30px; }
                                 
                                 .selectize-dropdown { line-height: 30px; }

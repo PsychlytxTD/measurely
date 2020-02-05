@@ -11,13 +11,15 @@
 
 generate_reliability_widget_UI <- function(id) {
 
-#Set the namespace
+  #Set the namespace
 
   ns <- NS(id)
 
-#Dynamically-generated widget
+  #Dynamically-generated widget
+
 
   fluidRow(uiOutput(ns("reliability_widget_out")))
+
 
 }
 
@@ -87,100 +89,99 @@ generate_reliability_widget_UI <- function(id) {
 
 #Subscale list parameters (mostly lists themselves) are arguments to the module function.
 
-generate_reliability_widget <- function(input, output, session, title, brief_title, measure, subscale, population_quantity, populations, input_population, sds, means, mean_sd_references, reliabilities,
-           reliability_references, cutoff_values, cutoff_labels, cutoff_references, cutoff_quantity, items, max_score, min_score,
-           plot_shading_gap, plot_cutoff_label_start, plot_cutoff_label_size,description, sample_overview, journal_references, existing_data) {
+generate_reliability_widget <- function(input, output, session, title, brief_title, measure, subscale, population_quantity,
+                                        populations, input_population, sds, means, mean_sd_references, reliabilities,
+                                        reliability_references, cutoff_values, cutoff_labels, cutoff_references, cutoff_quantity,
+                                        items, max_score, min_score, plot_shading_gap, plot_cutoff_label_start,
+                                        plot_cutoff_label_size, description, sample_overview, journal_references, existing_data) {
 
 
 
-     reliability_widget_reac <- reactive({
+  reliability_widget_reac <- reactive({
+
+    ns <- session$ns  #Set the namespace
+
+    subscale_title<- div(fluidRow(column(width = 7, offset = 3,
+
+                                         h4(tags$strong(title)) #The name of the subscale should appear centred, above the widgets
+
+    )))
+
+    #Widgets will be stored in this list before being called in do.call()
+
+    reliability_widget_list <-
+
+      #Params_list_maker() creates a list of lists, each containing parameters corresponding to a different population
+      #It will return a single list matching the population selected by the user
+
+      purrr::pmap(params_list_maker(
+        title = title,
+        measure = measure,
+        subscale = subscale,
+        population_quantity = population_quantity,
+        populations = populations,
+        input_population = input_population(), #input_population() is the population reactive object selected from the selectInput widget in the parent app
+        means = means,
+        sds = sds,
+        mean_sd_references = mean_sd_references,
+        reliabilities = reliabilities,
+        reliability_references = reliability_references,
+        cutoff_values = cutoff_values,
+        cutoff_labels = cutoff_labels,
+        cutoff_references = cutoff_references,
+        cutoff_quantity = cutoff_quantity
+      )[c(1, 6, 7, 13)], #Within the list, iterate only over the parameters  relevant to generating the reliability widget
+
+      #Set these relevant parameters as function arguments (need to do this or the code won't run)
+
+      function(mean_sd_rel_ids, reliabilities, reliability_references, mean_sd_rel_reference_ids) {
+
+        #Create a div containing the dynamically generated widgets
+
+        div(column(width = 2,
+
+                   numericInput(inputId = ns(mean_sd_rel_ids), label = tags$strong("Test-Retest Reliability"), value = reliabilities),
+
+                   textInput(inputId = ns(mean_sd_rel_reference_ids), label = "Reference", value = reliability_references),
+
+                   hr()
+
+        ))
+
+      })
+
+
+    if(length(existing_data()$reliability) >= 1) { #Pull in the settings (if existing data is available) to prepopulate widgets with client's settings
+
+      updateNumericInput(session, "mean_sd_rel_value_id", "Test-Retest Reliability", value = existing_data()$reliability[1])
+
+      updateTextInput(session, "mean_sd_rel_reference_id", "Reference", value = existing_data()$reliability_reference[1])
+
+    }
+
+
+    do.call(tagList, list(subscale_title, reliability_widget_list))
+
+  })
 
 
 
-      ns <- session$ns  #Set the namespace
+  #Render the widgets
+
+  output$reliability_widget_out <- renderUI({
+
+    reliability_widget_reac()
+
+  })
+
+  #Make sure the values for the mean widgets are accessible even if tab is not clicked
+
+  outputOptions(output, "reliability_widget_out", suspendWhenHidden = FALSE)
+
+  #Need to finish the module with reactive value list containing id of value widget & reference widget - so these can be accessed by another module.
+  #Add req() so the input values aren't NULL initially
+
+  reactive({ list( req(input$mean_sd_rel_value_id), req(input$mean_sd_rel_reference_id) ) })
 
 
-      subscale_title<- div(fluidRow(column(width = 7, offset = 3,
-
-                                           h4(tags$strong(title)) #The name of the subscale should appear centred, above the widgets
-
-      )))
-
-       #Widgets will be stored in this list before being called in do.call()
-
-       reliability_widget_list <-
-
-        #Params_list_maker() creates a list of lists, each containing parameters corresponding to a different population
-        #It will return a single list matching the population selected by the user
-
-        purrr::pmap(params_list_maker(
-          title = title,
-          measure = measure,
-          subscale = subscale,
-          population_quantity = population_quantity,
-          populations = populations,
-          input_population = input_population(), #input_population() is the population reactive object selected from the selectInput widget in the parent app
-          means = means,
-          sds = sds,
-          mean_sd_references = mean_sd_references,
-          reliabilities = reliabilities,
-          reliability_references = reliability_references,
-          cutoff_values = cutoff_values,
-          cutoff_labels = cutoff_labels,
-          cutoff_references = cutoff_references,
-          cutoff_quantity = cutoff_quantity
-        )[c(1, 6, 7, 13)], #Within the list, iterate only over the parameters  relevant to generating the reliability widget
-
-       #Set these relevant parameters as function arguments (need to do this or the code won't run)
-
-        function(mean_sd_rel_ids, reliabilities, reliability_references, mean_sd_rel_reference_ids) {
-
-         #Create a div containing the dynamically generated widgets
-
-          div(column(width = 2,
-
-            numericInput(inputId = ns(mean_sd_rel_ids), label = tags$strong("Test-Retest Reliability"), value = reliabilities),
-
-            textInput(inputId = ns(mean_sd_rel_reference_ids),label = "Reference", value = mean_sd_references),
-
-            hr()
-
-          ))
-
-        })
-
-
-       if(length(existing_data()$reliability) >= 1) { #Pull in the settings (if existing data is available) to prepopulate widgets with client's settings
-
-         updateNumericInput(session, "mean_sd_rel_value_id", "Test-Retest Reliability", value = existing_data()$reliability[1])
-
-         updateTextInput(session, "mean_sd_rel_reference_id", "Reference", value = existing_data()$reliability_reference[1])
-
-       }
-
-
-      do.call(tagList, list(subscale_title, reliability_widget_list))
-
-    })
-
-
-
-   #Render the widgets
-
-    output$reliability_widget_out <- renderUI({
-
-       reliability_widget_reac()
-
-    })
-
-    #Make sure the values for the mean widgets are accessible even if tab is not clicked
-
-    outputOptions(output, "reliability_widget_out", suspendWhenHidden = FALSE)
-
-    #Need to finish the module with reactive value list containing id of value widget & reference widget - so these can be accessed by another module.
-    #Add req() so the input values aren't NULL initially
-
-    reactive({ list( req(input$mean_sd_rel_value_id), req(input$mean_sd_rel_reference_id) ) })
-
-
-  }
+}

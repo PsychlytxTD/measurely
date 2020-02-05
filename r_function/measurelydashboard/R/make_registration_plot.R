@@ -45,7 +45,7 @@ make_registration_plot<- function(input, output, session, client_table) {
 
   reg_df$creation_date<- format(reg_df$creation_date, "%b-%y")
 
-  reg_df$creation_date<- factor(reg_df$creation_date, levels = reg_df$creation_date)
+  reg_df$creation_date<- factor(reg_df$creation_date, levels = unique(reg_df$creation_date))
 
   reg_df<- reg_df %>% dplyr::mutate(change = n - lag(n))
 

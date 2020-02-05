@@ -26,7 +26,6 @@ library(purrrlyr)
 library(uuid)
 library(shinyBS)
 library(tibble)
-library(aws.s3)
 library(glue)
 
 pool <- dbPool( #Set up the connection with the db

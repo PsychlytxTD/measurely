@@ -51,7 +51,7 @@
 
      by_measure_nested<- nested_data() %>% dplyr::mutate(data = purrr::map(data, ~ dplyr::mutate(., timepoint = 1:length(.x$date))))
 
-     by_measure<- tidyr::unnest(by_measure_nested)
+     by_measure<- unnest(by_measure_nested)
 
      by_measure<- dplyr::mutate(by_measure, timepoint = paste("Time", timepoint))
 

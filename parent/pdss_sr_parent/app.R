@@ -32,9 +32,9 @@ library(glue)
 
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
-  dbname = "scaladb",
-  host = "scaladb.cdanbvyi6gfm.ap-southeast-2.rds.amazonaws.com",
-  user = "jameslovie",
+  dbname = "measurely",
+  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  user = "timothydeitz",
   password = Sys.getenv("PGPASSWORD")
 )
 
