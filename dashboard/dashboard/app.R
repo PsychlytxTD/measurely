@@ -33,10 +33,6 @@ library(glue)
 library(plotly)
 library(grDevices)
 library(dutchmasters)
-nest <- nest_legacy
-unnest <- unnest_legacy
-
-
 
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
@@ -64,7 +60,7 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 #clinician_object<- httr::content(clinician_object)
 
-clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
+clinician_id<- "af7c5ab1-a862-466d-9e56-98580891db9f" #paste(clinician_object["sub"]) #Access the id object
 
 practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j" #In practice, this value will be passed in from authentication
 
@@ -211,6 +207,8 @@ server <- shinyServer(function(input, output, session) {
 
  })
 
+ observe({ print(measure_table()) })
+
 
  client_table<- reactive({
 
@@ -300,7 +298,7 @@ server <- shinyServer(function(input, output, session) {
 
   nested_data<- callModule(measurelydashboard::make_nested_data, "make_nested_data", joined_data)
 
-  observe({ tbl_df(nested_data()) %>% print(n = Inf) })
+
 
 
   callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data)

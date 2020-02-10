@@ -144,6 +144,8 @@ outcomes_by_demographic<- reactive({
 
 })
 
+observe({ print(outcomes_by_demographic() )})
+
 #Make the drill-down plot
 
 output$summary_outcomes_plot_by_demographics<- renderPlotly({

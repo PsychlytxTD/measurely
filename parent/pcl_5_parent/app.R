@@ -45,7 +45,7 @@ onStop(function() {
 
 
 
-global_subscale_info<- readRDS("global_subscale_info_list.Rds") #psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
+global_subscale_info<- readRDS("global_subscale_info_list.Rds") #readRDS("global_subscale_info_list.Rds") #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["PCL_5"]] #Subset the global list to retrive the subscale list(s) for this particular measure
 subscale_info_2<- global_subscale_info[["PCL_5_Intrusion"]] #All of the subscale lists should be upper case acronyms with words separated by underscores
@@ -55,7 +55,7 @@ subscale_info_5<- global_subscale_info[["PCL_5_Avoidance"]]
 
 clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
 
-#url<- "https://scala.au.auth0.com/userinfo"
+#url<- "https://scala.au..com/userinfo"
 
 #clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
 #`Content-Type` = "application/json"))

@@ -46,7 +46,7 @@ onStop(function() {
 
 
 
-global_subscale_info<- psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
+global_subscale_info<- readRDS("global_subscale_info_list.Rds") #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["PHQ_9"]] #Subset the global list to retrive the subscale list(s) for this particular measure
 #All of the subscale lists should be upper case acronyms with words separated by underscores
@@ -54,15 +54,16 @@ subscale_info_1<- global_subscale_info[["PHQ_9"]] #Subset the global list to ret
 
 clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  ##This is how we will access the clinician username (i.e. email) to pass to the modules
 
-#url<- "https://scala.au.auth0.com/userinfo"
+#url<- "https://scala.au..com/userinfo"
 
 #clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
 #`Content-Type` = "application/json"))
 
 #clinician_object<- httr::content(clinician_object)
 
-clinician_id<- "auth0|5c99f47197d7ec57ff84527e" #paste(clinician_object["sub"]) #Access the id object
+clinician_id<- "af7c5ab1-a862-466d-9e56-98580891db9f" #paste(clinician_object["sub"]) #Access the id object
 
+practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j"
 
 
 
@@ -379,7 +380,7 @@ server <- function(input, output, session) {
   formatted_response_body_for_email<- callModule(psychlytx::format_phq9_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
-  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email, practice_id)  #Write newly entered item responses from measure to db
+  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
   
   
   

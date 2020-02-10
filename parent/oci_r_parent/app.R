@@ -26,7 +26,7 @@ library(purrrlyr)
 library(uuid)
 library(shinyBS)
 library(tibble)
-library(aws.s3)
+#library(aws.s3)
 library(glue)
 
 
@@ -48,7 +48,7 @@ onStop(function() {
 
 
 
-global_subscale_info<- global_subscale_info<- readRDS("global_subscale_info_list.Rds")  #psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
+global_subscale_info<- global_subscale_info<- readRDS("global_subscale_info_list.Rds")  #readRDS("global_subscale_info_list.Rds") #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["OCI_R"]] #Subset the global list to retrive the subscale list(s) for this particular measure
 subscale_info_2<- global_subscale_info[["OCI_R_Washing"]] #All of the subscale lists should be upper case acronyms with words separated by underscores
@@ -62,7 +62,7 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j"
 
-#url<- "https://scala.au.auth0.com/userinfo"
+#url<- "https://scala.au..com/userinfo"
 
 #clinician_object<- httr::GET( url, httr::add_headers(Authorization = paste("Bearer", Sys.getenv("SHINYPROXY_OIDC_ACCESS_TOKEN")),
 #`Content-Type` = "application/json"))

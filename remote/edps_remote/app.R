@@ -26,7 +26,7 @@ library(purrrlyr)
 library(uuid)
 library(shinyBS)
 library(tibble)
-library(aws.s3)
+#library(aws.s3)
 library(glue)
 
 
