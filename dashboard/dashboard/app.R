@@ -207,7 +207,6 @@ server <- shinyServer(function(input, output, session) {
 
  })
 
- observe({ print(measure_table()) })
 
 
  client_table<- reactive({
@@ -297,9 +296,6 @@ server <- shinyServer(function(input, output, session) {
 
 
   nested_data<- callModule(measurelydashboard::make_nested_data, "make_nested_data", joined_data)
-
-
-
 
   callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data)
 

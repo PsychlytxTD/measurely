@@ -127,45 +127,85 @@ outcomes_by_demographic<- reactive({
 
   if(length(current_category())) {
 
-    outcomes_df<- client_table() %>% dplyr::inner_join(nested_data(), by = c("id" = "client_id"))
+    #Joine client demographics info to the nested scale outcome data.
 
-    outcomes_df<- outcomes_df[, c(input$demographic_variable, "improve", "sig_improve", "remained_same", "deteriorated")]
+    outcomes_df<- client_table() %>% dplyr::left_join(nested_data(), by = c("id" = "client_id"))
 
-    names(outcomes_df)<- c("selected", "Improved", "Reliably Improved", "No Change", "Deteriorated")
+    outcomes_df<- outcomes_df[, c("id", req(input$demographic_variable), "improve", "sig_improve", "remained_same", "deteriorated")]
+
+    names(outcomes_df)[1:2]<- c("client_id", "selected")
 
     outcomes_df<- outcomes_df %>% dplyr::filter(selected %in% current_category())
 
-    outcomes_df_gathered<- outcomes_df %>% tidyr::gather("outcome", "status", -selected) %>% dplyr::filter(status == TRUE)
+    unique_clients<- dplyr::n_distinct(outcomes_df$client_id) #Get the number of unique clients.
 
-    outcomes_summary<- forcats::fct_count(outcomes_df_gathered$outcome, sort = TRUE, prop = TRUE) %>% dplyr::mutate(p = p * 100) %>%
-      dplyr::select(Variable = f, Count = n, Percent = p)
+    nested_outcomes_by_id<- outcomes_df %>% dplyr::group_by(client_id) %>% tidyr::nest()
+
+
+    #Determine how many clients showed at least one improvement/sig_improvement etc.
+    improved<- sum(nested_outcomes_by_id$data %>% purrr::map_lgl(~any(.x$improve) == TRUE), na.rm = TRUE)
+    improved_percent<- round(improved /  unique_clients * 100, 1)
+    sig_improved<- sum(nested_outcomes_by_id$data %>% purrr::map_lgl(~any(.x$sig_improve) == TRUE), na.rm = TRUE)
+    sig_improved_percent<- round(sig_improved /  unique_clients * 100, 1)
+    remained_same<- sum(nested_outcomes_by_id$data %>% purrr::map_lgl(~any(.x$remained_same) == TRUE), na.rm = TRUE)
+    remained_same_percent<- round(remained_same /  unique_clients * 100, 1)
+    deteriorated<- sum(nested_outcomes_by_id$data %>% purrr::map_lgl(~any(.x$deteriorated) == TRUE), na.rm = TRUE)
+    deteriorated_percent<- round(deteriorated /  unique_clients * 100, 1)
+
+    outcomes<- tibble::tibble(improved, improved_percent, sig_improved, sig_improved_percent,
+                              remained_same, remained_same_percent, deteriorated, deteriorated_percent)
+
+
+    #First generate df with the outcome types as key and counts
+    count<- dplyr::select(outcomes, -contains("percent")) %>% tidyr::gather()
+
+    #Get percentages
+    percent<- dplyr::select(outcomes, contains("percent")) %>% tidyr::gather() %>% dplyr::select(Percent = value)
+
+    #Join counts with pecentages (i.e. % of clients that showed each type of outcome).
+    outcomes_summary<- dplyr::bind_cols(count, percent) %>% dplyr::select(Variable = key, Count = value, Percent)
+
+    #Recode outcome types
+    outcomes_summary$Variable<- dplyr::recode(outcomes_summary$Variable,
+                                              "improved" = "Improved",
+                                              "sig_improved" = "Reliably Improved",
+                                              "remained_same" = "No Change",
+                                              "deteriorated" = "Deteriorated"
+    )
+
+
+    outcomes_summary<- dplyr::filter(outcomes_summary, Count != 0)
+
+    return(outcomes_summary)
+
 
   }
 
 })
 
-observe({ print(outcomes_by_demographic() )})
+observe({print(outcomes_by_demographic())})
+
 
 #Make the drill-down plot
 
 output$summary_outcomes_plot_by_demographics<- renderPlotly({
 
-  validate(need(length(outcomes_by_demographic()$Percent) >= 1, "No data to show yet. Click on a category of the left plot."))
+  validate(need(nrow(outcomes_by_demographic()) >= 1, "No data to show yet. Click on a category of the left plot."))
 
-  p<- ggplot(outcomes_by_demographic(), aes(x = current_category()[[1]],
-                                                 y = Percent,
-                                                 fill = forcats::fct_reorder(Variable, Percent),
+  p<- ggplot(outcomes_by_demographic(), aes(x = forcats::fct_reorder(Variable, Count),#current_category()[[1]],
+                                                 y = Count,
+                                                 fill = Variable,#forcats::fct_reorder(Variable, Count),
                                                  text = paste(Variable, "<br>","Count: ", Count))) +
-    geom_col() + geom_text(aes(label = paste0(round(Percent, 1), "%")), size = 3,
-                           position = position_stack(vjust = 0.5)) + scale_fill_manual(values = c("Improved" = "#7fff00", "Reliably Improved" = "green", "No Change" = "#d35400", "Deteriorated" = "#cd5c5c")) +
-    theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
+    geom_col() + geom_text(aes(label = paste0(round(Percent, 1), "%")), vjust = 4, size = 3) + scale_fill_manual(values = c("Improved" = "#7fff00", "Reliably Improved" = "green", "No Change" = "#d35400", "Deteriorated" = "#cd5c5c")) +
+    scale_y_continuous(breaks = scales::breaks_pretty()) + theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.grid.major.y = element_line("grey"),
           panel.background = element_blank(),
-          axis.line = element_blank()) + xlab("") +
+          axis.line = element_blank(),
+          axis.text.x = element_text(angle = 90, hjust = 1)) + xlab("") +
     theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
           plot.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
-          legend.background = element_rect(fill = '#e5e5e5'))
+          legend.position = "none") #legend.background = element_rect(fill = '#e5e5e5'))
 
 
 
