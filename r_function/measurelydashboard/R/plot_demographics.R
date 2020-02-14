@@ -99,10 +99,13 @@ output$demographics_plot <- plotly::renderPlotly({
   demographics$labels[demographics$labels == "" | is.na(demographics$labels)]<- "Missing"
 
 
-  plot_ly(demographics) %>%
+  plot_ly(demographics, hoverinfo = "text") %>%
     add_pie(
       labels = ~labels,
       values = ~values,
+      hovertext= ~paste0(stringr::str_to_title(stringr::str_replace_all(input$demographic_variable, "_", " ")), ": ", labels, "<br>",
+                         "Number of Clients: ", values, "<br>",
+                         "Percentage of Clients: ", (values/nrow(client_table())) * 100, "%"),
       hole = 0.6,
       customdata = ~labels,
       marker = list(colors=rev(dutchmasters::dutchmasters$milkmaid))
@@ -183,8 +186,6 @@ outcomes_by_demographic<- reactive({
 
 })
 
-observe({print(outcomes_by_demographic())})
-
 
 #Make the drill-down plot
 
@@ -195,14 +196,14 @@ output$summary_outcomes_plot_by_demographics<- renderPlotly({
   p<- ggplot(outcomes_by_demographic(), aes(x = forcats::fct_reorder(Variable, Count),#current_category()[[1]],
                                                  y = Count,
                                                  fill = Variable,#forcats::fct_reorder(Variable, Count),
-                                                 text = paste(Variable, "<br>","Count: ", Count))) +
+                                                 text = paste0("Number of Clients that ", stringr::str_to_lower(Variable), ": ", Count, "<br>", "Percentage of Clients that ", stringr::str_to_lower(Variable), ": ",  Percent, "%"))) +
     geom_col() + geom_text(aes(label = paste0(round(Percent, 1), "%")), vjust = 4, size = 3) + scale_fill_manual(values = c("Improved" = "#7fff00", "Reliably Improved" = "green", "No Change" = "#d35400", "Deteriorated" = "#cd5c5c")) +
     scale_y_continuous(breaks = scales::breaks_pretty()) + theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.grid.major.y = element_line("grey"),
           panel.background = element_blank(),
           axis.line = element_blank(),
-          axis.text.x = element_text(angle = 90, hjust = 1)) + xlab("") +
+          axis.text.x = element_text(angle = 45, hjust = 1)) + xlab("") + ylab("Number of Client") +
     theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
           plot.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
           legend.position = "none") #legend.background = element_rect(fill = '#e5e5e5'))
@@ -215,17 +216,5 @@ output$summary_outcomes_plot_by_demographics<- renderPlotly({
 })
 
 
-# populate back button if category is chosen
-
-output$back <- renderUI({
-
-  if (length(current_category())) actionButton("clear", "Clear", icon("chevron-left"))
-
-})
-
-
-# clear the chosen category on back button press
-
-observeEvent(input$clear, current_category(NULL))
 
 }
