@@ -10,11 +10,17 @@ make_posttherapy_valueboxes_UI<- function(id) {
 
   ns<- NS(id)
 
+  tagList(
+
+  h2("Attendance & Therapy Characteristics", class = "headings"),
+
+  br(),
+
 fluidRow(
   valueBoxOutput(ns("attendances")),
   valueBoxOutput(ns("cancellations")),
   valueBoxOutput(ns("dnas"))
-)
+))
 
 }
 

@@ -129,9 +129,9 @@ super_user<- TRUE
 
    measurelydashboard::plot_demographics_UI("plot_demographics"),
 
-   measurelydashboard::plot_diagnoses_UI("plot_diagnoses"),
+   measurelydashboard::make_diagnosis_waffle_plot_UI("make_waffle"),
 
-   measurelydashboard::plot_clinical_outcomes_UI("plot_clinical_outcomes"),
+   measurelydashboard::plot_diagnoses_UI("plot_diagnoses"),
 
    measurelydashboard::make_posttherapy_valueboxes_UI("make_posttherapy_valueboxes"),
 
@@ -301,16 +301,18 @@ server <- shinyServer(function(input, output, session) {
 
   callModule(measurelydashboard::plot_demographics, "plot_demographics", client_table, nested_data)
 
+  callModule(measurelydashboard::make_diagnosis_waffle_plot, "make_waffle", posttherapy_analytics_table)
+
   callModule(measurelydashboard::plot_diagnoses, "plot_diagnoses", posttherapy_analytics_table)
-
-  callModule(measurelydashboard::plot_clinical_outcomes, "plot_clinical_outcomes", nested_data)
-
-  callModule(measurelydashboard::plot_outcomes_by_measure, "plot_outcomes_by_measure", nested_data)
 
   callModule(measurelydashboard::make_posttherapy_valueboxes, "make_posttherapy_valueboxes", posttherapy_analytics_table)
 
   callModule(measurelydashboard::plot_posttherapy_outcomes, "plot_posttherapy_outcomes",
              posttherapy_analytics_table, nested_data)
+
+  callModule(measurelydashboard::plot_clinical_outcomes, "plot_clinical_outcomes", nested_data)
+
+  callModule(measurelydashboard::plot_outcomes_by_measure, "plot_outcomes_by_measure", nested_data)
 
 
 })

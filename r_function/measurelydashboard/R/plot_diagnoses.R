@@ -12,7 +12,7 @@ plot_diagnoses_UI<- function(id) {
 
   tagList(
 
-  h2("Primary & Secondary Diagnosis Summaries", class = "headings"),
+    h3("Comorbidity Characteristics", class = "dropdown_headings"),
 
 fluidRow(
 

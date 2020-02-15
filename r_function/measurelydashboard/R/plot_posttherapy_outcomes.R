@@ -12,10 +12,9 @@ plot_posttherapy_outcomes_UI<- function(id) {
 
   tagList(
 
-  h2("Attendance Characteristics", class = "headings"),
-
-  h3("Select An Attendance Outcome", class = "dropdown_headings"),
-
+  fluidRow(
+    h3("Select An Attendance Outcome", class = "dropdown_headings"),
+  ),
 
   fluidRow(
     uiOutput(ns("posttherapy_dropdown"))
@@ -184,7 +183,10 @@ output$summary_outcomes_plot_by_posttherapy<- renderPlotly({
   p<- ggplot(outcomes_by_posttherapy(), aes(x = forcats::fct_reorder(Variable, Count),#current_category()[[1]],
                                             y = Count,
                                             fill = Variable,#forcats::fct_reorder(Variable, Count),
-                                            text = paste0("Number of Clients that ", stringr::str_to_lower(Variable), ": ", Count, "<br>", "Percentage of Clients that ", stringr::str_to_lower(Variable), ": ",  Percent, "%"))) +
+                                            text = paste0(
+                                                           stringr::str_replace(stringr::str_to_title(input$posttherapy_variable), "_", " "), ": ", stringr::str_to_title(stringr::str_replace_all(current_category(), "_", " ")), "<br>",
+                                                          "Number of clients in this category that ", stringr::str_to_lower(Variable), ": ", Count, "<br>",
+                                                          "Percentage of clients in this category that ", stringr::str_to_lower(Variable), ": ",  Percent, "%"))) +
     geom_col() + geom_text(aes(label = paste0(round(Percent, 1), "%")), vjust = 4, size = 3) + scale_fill_manual(values = c("Improved" = "#7fff00", "Reliably Improved" = "green", "No Change" = "#d35400", "Deteriorated" = "#cd5c5c")) +
     scale_y_continuous(breaks = scales::breaks_pretty()) + theme(legend.title = element_blank(), legend.justification=c(0,0), legend.position=c(0,0), panel.grid.major = element_blank(),
                                                                  panel.grid.minor = element_blank(),
@@ -192,9 +194,11 @@ output$summary_outcomes_plot_by_posttherapy<- renderPlotly({
                                                                  panel.background = element_blank(),
                                                                  axis.line = element_blank(),
                                                                  axis.text.x = element_text(angle = 45, hjust = 1)) + xlab("") + ylab("Number of Client") +
+    ggtitle(paste0(stringr::str_replace(stringr::str_to_title(input$posttherapy_variable), "_", " "), ": ", stringr::str_to_title(stringr::str_replace_all(current_category(), "_", " ")))) +
     theme(panel.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
           plot.background = element_rect(fill = '#e5e5e5', colour = '#e5e5e5'),
-          legend.position = "none") #legend.background = element_rect(fill = '#e5e5e5'))
+          legend.position = "none",
+          plot.title = element_text(hjust = 0.5)) #legend.background = element_rect(fill = '#e5e5e5'))
 
 
 
