@@ -49,6 +49,7 @@ make_landing_UI<- function(id) {
 
 make_landing<- function(input, output, session) {
 
+
   reactive({ return(input$start_button) })
 
 }

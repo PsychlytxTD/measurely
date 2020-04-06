@@ -88,8 +88,9 @@ ui<- function(request) {
       
       tags$head( 
         
-        tags$link(rel = "stylesheet", type = "text/css", href = "Styling.css") #Link to the css style sheet,
-        
+        #Old way of doing this
+        #tags$link(rel = "stylesheet", type = "text/css", href = "Styling.css") #Link to the css style sheet,
+        includeCSS(paste0(fs::path_abs("./.."), "/styling.css")) 
       ),
       
       tabItems(
