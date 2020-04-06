@@ -64,6 +64,9 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 clinician_id<- "af7c5ab1-a862-466d-9e56-98580891db9f" #paste(clinician_object["sub"]) #Access the id object
 
+practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j"
+
+
 
 
 

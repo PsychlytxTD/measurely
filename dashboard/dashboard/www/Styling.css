@@ -1,4 +1,12 @@
 
+                                 .navbar-custom-menu>.navbar-nav>li>.dropdown-menu {
+  width:900px;
+  }
+
+  .sidebar-menu li a { font-size: 30px; }
+
+
+
                                .content {background-color: #e5e5e5;}
 
                                .inner { background-color: #283747;

@@ -67,7 +67,7 @@ practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j" #In practice, this value will be
 super_user<- TRUE
 
 
-  header<- dashboardHeader(title = "Measurely | Clinical Outcomes Dashboard", titleWidth = 800)
+  header<- dashboardHeader(title = "Measurely | Clinical Outcomes Dashboard", measurelydashboard::make_notification_dropdown_UI("show_notifications"), titleWidth = 800)
 
   sidebar<- dashboardSidebar(
 
@@ -296,6 +296,8 @@ server <- shinyServer(function(input, output, session) {
 
 
   nested_data<- callModule(measurelydashboard::make_nested_data, "make_nested_data", joined_data)
+
+  callModule(measurelydashboard::make_notification_dropdown, "show_notifications", nested_data)
 
   callModule(measurelydashboard::make_outcome_valueboxes, "make_outcome_valueboxes", nested_data)
 

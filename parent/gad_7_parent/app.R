@@ -65,7 +65,7 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 #clinician_object<- httr::content(clinician_object)
 
-#clinician_id<- "78478b9f-c091-4227-bf81-ddc24313a7f3" #paste(clinician_object["sub"]) #Access the id object
+#clinician_id<- "78478b9f-c091-4227-bf81-ddc24313a7f3" #paste(clinician_object["sub"]) #Access the id objectnpractice_id<- "iueosu882jdi88jhdjjaj8888hdss9j"
 
 clinician_id<- "af7c5ab1-a862-466d-9e56-98580891db9f"
 

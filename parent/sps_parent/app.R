@@ -32,11 +32,13 @@ library(glue)
 
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
-  dbname = "measurely",
+  dbname = "postgres",
   host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
   user = "timothydeitz",
   password = Sys.getenv("PGPASSWORD")
 )
+
+yes
 
 
 onStop(function() { 
@@ -64,7 +66,7 @@ clinician_email<- "timothydeitz@gmail.com"  #Sys.getenv("SHINYPROXY_USERNAME")  
 
 clinician_id<- "af7c5ab1-a862-466d-9e56-98580891db9f" #paste(clinician_object["sub"]) #Access the id object
 
-
+practice_id<- "iueosu882jdi88jhdjjaj8888hdss9j" #In practice, will pass in practice id as an environment variable.
 
 
 ui<- function(request) {
@@ -380,7 +382,7 @@ server <- function(input, output, session) {
   formatted_response_body_for_email<- callModule(psychlytx::format_sps_responses_for_email, "format_responses_for_email", pool, clinician_email, manual_entry, measure_data)
   
   
-  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email, practice_id)  #Write newly entered item responses from measure to db
+  callModule(psychlytx::write_measure_data_to_db, "write_measure_data", pool, measure_data, manual_entry, formatted_response_body_for_email)  #Write newly entered item responses from measure to db
   
   
   
