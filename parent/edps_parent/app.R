@@ -47,7 +47,7 @@ onStop(function() {
 
 
 
-global_subscale_info<- readRDS("global_subscale_info_list.Rds") #Retrieve the global_subscale_info list from S3
+global_subscale_info<- readRDS("global_subscale_info_list.rds") #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["EDPS"]] #Subset the global list to retrive the subscale list(s) for this particular measure
 #All of the subscale lists should be upper case acronyms with words separated by underscores

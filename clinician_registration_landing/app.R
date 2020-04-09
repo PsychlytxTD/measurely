@@ -1,12 +1,3 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 library(pool)
 library(DBI)
@@ -20,9 +11,9 @@ library(magrittr)
 pool <- dbPool( #Set up the connection with the db
     drv = dbDriver("PostgreSQL"),
     dbname = "postgres",
-    host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
-    user = "timothydeitz",
-    password = Sys.getenv("PGPASSWORD")
+    host = Sys.getenv("DBHOST"),
+    user = Sys.getenv("DBUSER"),
+    password = Sys.getenv("DBPASSWORD")
 )
 
 

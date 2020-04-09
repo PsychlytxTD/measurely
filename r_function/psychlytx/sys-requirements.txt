@@ -1,0 +1,5 @@
+unixodbc
+unixodbc-dev
+postgresql
+odbc-postgresql
+libpq-dev
