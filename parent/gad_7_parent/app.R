@@ -34,9 +34,12 @@ library(glue)
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
   dbname = "postgres",
-  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
-  user = "timothydeitz",
-  password = Sys.getenv("PGPASSWORD")
+  #host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  #user = "timothydeitz",
+  #password = Sys.getenv("PGPASSWORD")
+  host = Sys.getenv("DBHOST"),
+  user = Sys.getenv("DBUSER"),
+  password = Sys.getenv("DBPASSWORD")
 )
 
 
