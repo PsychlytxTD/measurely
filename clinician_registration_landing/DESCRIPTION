@@ -1,4 +1,4 @@
-shiny-app: registration
+shiny-app: dashboard
 Type: shiny-app
 Title: Dashboard app
 Version: 0.0.0.9000
@@ -6,17 +6,9 @@ Author: person("Timothy", "Deitz", email = "psychlytx@gmail.com",
   role = c("aut", "cre"))
 Maintainer: The package maintainer <psychlytx@gmail.com>
 Description: This is a dashboard
-Depends: R (>= 3.3.2)
 License: file LICENSE 
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Depends:
-  shiny
-  RPostgreSQL
-  DBI
-  pool
-  shinyWidgets
-  dplyr
-  purrr
-  magrittr
+Depends: shinydashboard, magrittr, purrr, tidyr, dplyr, knitr, lubridate, chron, grid, shinyjs, RPostgreSQL, DBI, pool, ggplot2, stringr, ggrepel, DT, eeptools, memor, extrafont, extrafontdb, shinyhelper, shinyWidgets, shinycssloaders, httr, car, purrrlyr, uuid, shinyBS, tibble, glue, plotly, grDevices, kableExtra, tinytex
+Remotes: EdwinTh/dutchmasters

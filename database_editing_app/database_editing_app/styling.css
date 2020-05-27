@@ -1,0 +1,113 @@
+                                 
+                             
+                          
+                                
+                                .tabbable > .nav > li[class=active] > a {
+                                background-color: #283747; color:white;
+                                }
+                                
+                                .nav-tabs-custom>.nav-tabs>li.active {
+                                border-top-color: #827717;
+                                }
+                                
+                                .nav-tabs-custom>.nav-tabs>li>a:hover {
+                                  background-color: #283747;
+                                  color: #d35400;
+                                }
+                                
+                                
+                                .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+                                border-top-color: #283747;
+                                
+                                }
+                                
+                                hr {
+                                border-style: solid;
+                                border-color: #283747;
+                                border-width: 2px;
+                                }
+                                
+                                .well {background-color: white; 
+                                       color: #000000;
+                                       border: 4px solid #827717
+                                }
+                                
+                            
+                                .radio-inline {margin-right: 45px; padding-top: 8px;}
+                                
+                                .checkbox-inline {margin-right: 45px; padding-top: 8px;}
+                                
+                                .shiny-options-group {font-size: 17px;}
+                                
+                                .reportbutton {
+                                 width: 270px; background-color:#283747;color:#d35400;
+                                }
+                                
+                             
+                                .selectize-input { line-height: 30px; }
+                                
+                                .selectize-dropdown { line-height: 30px; }
+                                
+                             
+                               
+                               button .swal2-styled .swal2-confirm {background-color: #283747; border-color: #283747;}
+                               
+
+ 
+html,body{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+  
+
+.content {
+  
+  padding-left:0px;
+  padding-right:0px;
+  padding-top: 0px;
+}
+
+.submit_button {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-top: 11px;
+    padding-right: 25px;
+    padding-bottom: 11px;
+    padding-left: 18px;
+    border-top-style: solid;
+    border-top-width: 3px;
+    border-top-color: #d35400;
+    border-right-style: solid;
+    border-right-width: 3px;
+    border-right-color: #d35400;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: #d35400;
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-left-color: #d35400;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: transparent;
+    opacity: 1;
+    transition-property: background-color, border, color, text-shadow, opacity;
+    transition-duration: 500ms, 500ms, 500ms, 500ms, 200ms;
+    transition-timing-function: ease, ease, ease, ease, ease;
+    color: #d35400;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    
+}
+
+.submit_button:hover{
+  color: white;
+  background-color: #d35400;
+  border-color: white;
+}

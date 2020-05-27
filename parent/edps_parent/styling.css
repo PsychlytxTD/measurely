@@ -1,0 +1,274 @@
+
+                       
+                                .skin-blue .main-header .logo {
+                                 font-size: 20px;
+                                 text-align: left;
+                                 line-height: 60px;
+                                 height: 60px;
+                                 background-color: #d35400;
+                                }
+                                
+                             
+                                .skin-blue .main-header .logo:hover {
+                                background-color:  #283747 ;
+                                }
+                                
+                           
+                                .skin-blue .main-header .navbar {
+                                background-color: #283747;
+                                }       
+                                
+                       
+                                .skin-blue .main-sidebar {
+                                background-color: #283747;
+                                }
+                                
+                               
+                                .skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
+                                background-color:   #283747  ;
+                                
+                                }
+                                
+                               
+                                .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
+                                background-color:  #283747 ;
+                                }
+                                               
+                                .skin-blue .main-header .navbar .sidebar-toggle:hover{
+                                background-color:#827717;
+                                }
+                                
+                                .skin-blue .sidebar-menu > li:hover > a {
+                                border-left-color: #827717;
+                                }
+                                
+                                .skin-blue .sidebar-menu > li.active > a {
+                                border-left-color: #283747;
+                                }
+                                
+                                .tabbable > .nav > li[class=active] > a {
+                                background-color: #283747; color:white;
+                                }
+                                
+                                .nav-tabs-custom>.nav-tabs>li.active {
+                                border-top-color: #827717;
+                                }
+                                
+                                .nav-tabs-custom>.nav-tabs>li>a:hover {
+                                  background-color: #283747;
+                                  color: #d35400;
+                                }
+                                
+                                
+                                .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+                                border-top-color: #283747;
+                                
+                                }
+                                
+                                hr {
+                                border-style: solid;
+                                border-color: #283747;
+                                border-width: 2px;
+                                }
+                                
+                                .well {background-color: white; 
+                                       color: #000000;
+                                       border: 4px solid #827717
+                                }
+                                
+                                .pretherapy_sidepanel {
+                                  
+                                  margin-left: 250px;
+                                  
+                                }
+                                
+                                .progress-bar {background-color: #d35400;}
+                                
+                                .radio-inline {margin-right: 45px; padding-top: 8px;}
+                                
+                                .checkbox-inline {margin-right: 45px; padding-top: 8px;}
+                                
+                                .shiny-options-group {font-size: 17px;}
+                                
+                                .reportbutton {
+                                 width: 270px; background-color:#283747;color:#d35400;
+                                }
+                                
+                             
+                                .selectize-input { line-height: 30px; }
+                                
+                                .selectize-dropdown { line-height: 30px; }
+                                
+                             
+                               
+                               button .swal2-styled .swal2-confirm {background-color: #283747; border-color: #283747;}
+                               
+.modal-footer .btn-default:hover {
+  visibility: hidden;
+  content: "Continue"; 
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  background-color: #d35400;
+}
+
+.modal-footer .btn-default:hover:after {
+  content: "Continue"; 
+  visibility:visible;
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  background-image: none;
+  background-color: #d35400;
+  border-radius: 12px;
+  }
+ 
+html,body{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+  
+/* layout css */
+.landing-wrapper .landing-block{
+    width: 100%;
+    height: 100vh;
+}
+
+.landing-wrapper .background-content{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-row-gap: 0;
+}
+
+.landing-wrapper .background-content img{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.landing-wrapper .foreground-content{
+    position: absolute;
+    top: 9%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.landing-wrapper .foreground-content h1 {
+  
+  color: white;
+}
+
+.start_button {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 17px;
+    padding-top: 11px;
+    padding-right: 25px;
+    padding-bottom: 11px;
+    padding-left: 18px;
+    border-top-style: solid;
+    border-top-width: 3px;
+    border-top-color: white;
+    border-right-style: solid;
+    border-right-width: 3px;
+    border-right-color: white;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: white;
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-left-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: transparent;
+    opacity: 1;
+    transition-property: background-color, border, color, text-shadow, opacity;
+    transition-duration: 500ms, 500ms, 500ms, 500ms, 200ms;
+    transition-timing-function: ease, ease, ease, ease, ease;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    
+}
+
+.start_button:hover {
+  color: white;
+  background-color: #d35400;
+}
+
+.content {
+  
+  padding-left:0px;
+  padding-right:0px;
+  padding-top: 0px;
+}
+
+.submit_button {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-top: 11px;
+    padding-right: 25px;
+    padding-bottom: 11px;
+    padding-left: 18px;
+    border-top-style: solid;
+    border-top-width: 3px;
+    border-top-color: #d35400;
+    border-right-style: solid;
+    border-right-width: 3px;
+    border-right-color: #d35400;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: #d35400;
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-left-color: #d35400;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: transparent;
+    opacity: 1;
+    transition-property: background-color, border, color, text-shadow, opacity;
+    transition-duration: 500ms, 500ms, 500ms, 500ms, 200ms;
+    transition-timing-function: ease, ease, ease, ease, ease;
+    color: #d35400;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    
+}
+
+.submit_button:hover{
+  color: white;
+  background-color: #d35400;
+  border-color: white;
+}

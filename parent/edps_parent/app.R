@@ -1,3 +1,5 @@
+devtools::install_git("https://measurelysrv:95ce22d8-845d-4c66-a05c-e6687d791dc6@ownr.psychlytx.com/git/psychlytx.git")
+tinytex::install_tinytex(force = TRUE, repository = "https://mirrors.chevalier.io/CTAN/")
 library(shinydashboard)
 library(magrittr)
 library(purrr)
@@ -33,6 +35,9 @@ library(glue)
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
   dbname = "postgres",
+  #host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  #user = "timothydeitz",
+  #password = Sys.getenv("PGPASSWORD")
   host = Sys.getenv("DBHOST"),
   user = Sys.getenv("DBUSER"),
   password = Sys.getenv("DBPASSWORD")
@@ -44,8 +49,6 @@ onStop(function() {
   poolClose(pool)
   
 })
-
-
 
 global_subscale_info<- readRDS("global_subscale_info_list.rds") #Retrieve the global_subscale_info list from S3
 
@@ -83,8 +86,7 @@ ui<- function(request) {
       
       tags$head( 
         
-        #tags$link(rel = "stylesheet", type = "text/css", href = "Styling.css") #Link to the css style sheet,
-        includeCSS(paste0(fs::path_abs("./.."), "/styling.css"))
+        includeCSS(file.path(".", "styling.css"))
       ),
       
       tabItems(
@@ -106,6 +108,8 @@ ui<- function(request) {
                   tabBox(id = "tabset", width = 12,
                          
                          tabPanel(tags$strong("Register A New Client "),
+                                  
+                                  p("hello test"),
                                   
                                   psychlytx::analytics_pretherapy_UI("analytics_pretherapy"), #Make the client registration panel
                                   

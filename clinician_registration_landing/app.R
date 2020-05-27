@@ -6,14 +6,18 @@ library(shinyWidgets)
 library(dplyr)
 library(purrr)
 library(magrittr)
+library(uuid)
 
 
 pool <- dbPool( #Set up the connection with the db
     drv = dbDriver("PostgreSQL"),
     dbname = "postgres",
-    host = Sys.getenv("DBHOST"),
-    user = Sys.getenv("DBUSER"),
-    password = Sys.getenv("DBPASSWORD")
+    #host = Sys.getenv("DBHOST"),
+    #user = Sys.getenv("DBUSER"),
+    #password = Sys.getenv("DBPASSWORD")
+    host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+    user = "timothydeitz",
+    password = Sys.getenv("PGPASSWORD")
 )
 
 
@@ -27,8 +31,8 @@ ui <- fluidPage(
 
     tags$head(
 
-        tags$link(rel = "stylesheet", type = "text/css", href = "Styling.css") #Link to the css style sheet,
-
+        #tags$link(rel = "stylesheet", type = "text/css", href = "Styling.css") #Link to the css style sheet,
+        includeCSS(file.path(".", "styling.css"))
     ),
 
     fluidRow(
