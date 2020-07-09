@@ -71,12 +71,9 @@ updateDB <- function(editedValue, pool, tbl){
 pool <- dbPool( #Set up the connection with the db
     drv = dbDriver("PostgreSQL"),
     dbname = "postgres",
-    #host = Sys.getenv("DBHOST"),
-    #user = Sys.getenv("DBUSER"),
-    #password = Sys.getenv("DBPASSWORD")
-    host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
-    user = "timothydeitz",
-    password = Sys.getenv("PGPASSWORD")
+    host = Sys.getenv("DBHOST"),
+    user = Sys.getenv("DBUSER"),
+    password = Sys.getenv("DBPASSWORD")
 )
 
 onStop(function() {
@@ -129,8 +126,8 @@ ui <- fluidPage(
                          DT::dataTableOutput("entries_table"),
                          br(),
                          actionButton("delete_entry", "Delete Entry", class = "submit_button")
-                        #
-                         )
+                         #
+                )
             )
         )
     )
@@ -151,10 +148,10 @@ server <- function(input, output, session) {
     mysource_record<- reactive({
         
         record<- pool %>% tbl(req(input$db_table_selection)) %>% collect() #%>% 
-           # dplyr::select(contains("first_name"), contains("last_name"), 
-                             #contains("email_address"), contains("name"), contains("postcode"),
-                             #contains("location"))
-                                                                        
+        # dplyr::select(contains("first_name"), contains("last_name"), 
+        #contains("email_address"), contains("name"), contains("postcode"),
+        #contains("location"))
+        
     })
     
     # Observe the source, update reactive values accordingly
@@ -175,7 +172,7 @@ server <- function(input, output, session) {
     #practice_cols<- c(1)
     #client_cols<- c(0,1,2,3,4,8,9,10,11,12,13,14,15,16,17)
     
-   
+    
     # Render DT table and edit cell
     # 
     # no curly bracket inside renderDataTable
@@ -183,11 +180,11 @@ server <- function(input, output, session) {
     # editable must be TRUE
     output$record <- DT::renderDataTable(
         
-
+        
         rvs_record$data, rownames = FALSE, editable = TRUE, selection = 'none',
         colnames = if(input$db_table_selection == "practice") {
-                          c("Practice Name"="name", "Practice Type" = "type", "Practice Location" = "location")} else {
-                          c("First Name" = "first_name", "Last Name" = "last_name","Email Address" = "email_address")},
+            c("Practice Name"="name", "Practice Type" = "type", "Practice Location" = "location")} else {
+                c("First Name" = "first_name", "Last Name" = "last_name","Email Address" = "email_address")},
         options=list(columnDefs = list(list(visible=FALSE, targets = 
                                                 if(input$db_table_selection == "clinician") {
                                                     c(0,1,2,3,7,8,9,10,11,12,13,14)
@@ -273,8 +270,8 @@ server <- function(input, output, session) {
         )
     })
     
-
-#########################################################################
+    
+    #########################################################################
     
     
     records<- reactive({
@@ -327,29 +324,29 @@ server <- function(input, output, session) {
     
     
     selected_record_data <-eventReactive( input$select_record,
-            {
-               
-                
-               scale_entry_sql <- 
-                "SELECT entry_id, date, measure
+                                          {
+                                              
+                                              
+                                              scale_entry_sql <- 
+                                                  "SELECT entry_id, date, measure
                 FROM scale
                 WHERE client_id = ?client_id;"
-                
-               scale_entry_query <-sqlInterpolate(pool, scale_entry_sql, 
-                                                       client_id = input$client_selection)
-                
-               scale_entries<- dbGetQuery(pool, scale_entry_query) %>% dplyr::distinct(entry_id, .keep_all = TRUE)
-                
-                scale_entry_list <- scale_entries %>%
-                    tidyr::unite(dropdown_scale_entry, date, measure, sep = " ", remove = FALSE)
-                
-                scale_entry_list<- scale_entry_list %>%
-                    collect  %>%
-                    split( .$dropdown_scale_entry) %>%    # Field that will be used for the labels
-                    purrr::map(~.$entry_id)          #Field that will be returned when the clinician actually chooses the record
-              
-
-    })
+                                              
+                                              scale_entry_query <-sqlInterpolate(pool, scale_entry_sql, 
+                                                                                 client_id = input$client_selection)
+                                              
+                                              scale_entries<- dbGetQuery(pool, scale_entry_query) %>% dplyr::distinct(entry_id, .keep_all = TRUE)
+                                              
+                                              scale_entry_list <- scale_entries %>%
+                                                  tidyr::unite(dropdown_scale_entry, date, measure, sep = " ", remove = FALSE)
+                                              
+                                              scale_entry_list<- scale_entry_list %>%
+                                                  collect  %>%
+                                                  split( .$dropdown_scale_entry) %>%    # Field that will be used for the labels
+                                                  purrr::map(~.$entry_id)          #Field that will be returned when the clinician actually chooses the record
+                                              
+                                              
+                                          })
     
     
     output$scale_entry_dropdown<- renderUI({ #Make the record selection widget
@@ -381,7 +378,7 @@ server <- function(input, output, session) {
              WHERE entry_id = ?entry_id;"
         
         scale_display_query <-sqlInterpolate(pool, scale_display_sql, 
-                                           entry_id = input$scale_entry_selection)
+                                             entry_id = input$scale_entry_selection)
         
         scale_display_table<- dbGetQuery(pool, scale_display_query)
         
@@ -390,7 +387,7 @@ server <- function(input, output, session) {
             dplyr::rename_all(toupper) %>% dplyr::mutate(MEASURE = gsub("_", " ", MEASURE),
                                                          SUBSCALE = gsub("_", " ", SUBSCALE),
                                                          DATE = as.character(format(DATE, "%d/%m/%Y")))
-      
+        
     })
     
     
@@ -406,7 +403,7 @@ server <- function(input, output, session) {
                 "}"), deferRender = TRUE, scrollY = 200, scroller = TRUE, dom = "t" )
             
         )
-       
+        
         
     })
     
@@ -415,34 +412,34 @@ server <- function(input, output, session) {
     
     observeEvent(req(input$delete_entry), {
         
-   
-    conn<- poolCheckout(pool)
-    
-    
-    delete_scale_entry_query<- glue::glue_sql("DELETE FROM scale
+        
+        conn<- poolCheckout(pool)
+        
+        
+        delete_scale_entry_query<- glue::glue_sql("DELETE FROM scale
                                          WHERE entry_id = { input$scale_entry_selection }", 
-                                        .con = conn)
-    
-    dbExecute(conn, sqlInterpolate(ANSI(), delete_scale_entry_query))
-    
-    
-    delete_item_entry_query<- glue::glue_sql("DELETE FROM item
+                                                  .con = conn)
+        
+        dbExecute(conn, sqlInterpolate(ANSI(), delete_scale_entry_query))
+        
+        
+        delete_item_entry_query<- glue::glue_sql("DELETE FROM item
                                              WHERE entry_id = { input$scale_entry_selection }", 
-                                             .con = conn)
-    
-    dbExecute(conn, sqlInterpolate(ANSI(), delete_item_entry_query))
-    
-    
-    poolReturn(conn)
-    
-    shinyWidgets::sendSweetAlert(
-        session = session,
-        title = "Success !!",
-        text = "This entry has been deleted.",
-        type = "success"
-    )
-    
-    
+                                                 .con = conn)
+        
+        dbExecute(conn, sqlInterpolate(ANSI(), delete_item_entry_query))
+        
+        
+        poolReturn(conn)
+        
+        shinyWidgets::sendSweetAlert(
+            session = session,
+            title = "Success !!",
+            text = "This entry has been deleted.",
+            type = "success"
+        )
+        
+        
     })
     
     

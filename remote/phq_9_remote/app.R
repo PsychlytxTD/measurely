@@ -33,9 +33,12 @@ library(glue)
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
   dbname = "postgres",
-  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
-  user = "timothydeitz",
-  password = Sys.getenv("PGPASSWORD")
+  #host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  #user = "timothydeitz",
+  #password = Sys.getenv("PGPASSWORD")
+  host = Sys.getenv("DBHOST"),
+  user = Sys.getenv("DBUSER"),
+  password = Sys.getenv("DBPASSWORD")
 )
 
 
@@ -47,7 +50,7 @@ onStop(function() {
 
 
 
-global_subscale_info<- readRDS("global_subscale_info_list.Rds") #psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
+global_subscale_info<- readRDS("global_subscale_info_list.rds") #psychlytx::import_global_subscale_info() #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["PHQ_9"]] #Subset the global list to retrive the subscale list(s) for this particular measure
                                                   #All of the subscale lists should be upper case acronyms with words separated by underscores
@@ -73,7 +76,7 @@ ui<- function(request) {
       
       tags$head( 
         
-        tags$link(rel = "stylesheet", type = "text/css", href = "Styling.css") #Link to the css style sheet,
+        includeCSS(file.path(".", "styling.css"))
         
       ),
       
@@ -201,7 +204,8 @@ server <- function(input, output, session) {
   callModule(psychlytx::reliability_calc, "reliability_derivation")  #If selected, derive reliability value from statistics
   
   
-  holding_data<- callModule(psychlytx::read_holding_stats, "read_holding_stats", pool, measure = subscale_info_1$measure, client_id = client_id) 
+  holding_data<- callModule(psychlytx::read_holding_stats, "read_holding_stats", pool, 
+                            measure = subscale_info_1$measure, client_id = client_id, start_button_input) 
   
  
   callModule(psychlytx::simplified_show_name, "show_name", holding_data)

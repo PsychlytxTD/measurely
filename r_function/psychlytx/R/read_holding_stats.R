@@ -28,16 +28,18 @@ read_holding_stats_UI<- function(id) {
 #'
 #' @param pool A pooled db object.
 #'
-#' @param measure A string indiating name of the measure.
+#' @param measure A string indicating name of the measure.
 #'
-#' @param tabsetpanel_id A string to allow automated switch from sign-in tabpanel to questionnaire tabpanel.
+#' @param client_id A unique string representing client it.
+#'
+#' @param start_button_input  A reactive value containing value of start_button action button.
 #'
 #' @export
 #'
 
-read_holding_stats<- function(input, output, session, pool, measure, tabsetpanel_id = "tabset", client_id) {
+read_holding_stats<- function(input, output, session, pool, measure, client_id, start_button_input) {
 
-  parent_session <- get("session", envir = parent.frame(2))
+  #parent_session <- get("session", envir = parent.frame(2))
 
   holding_statistics<- reactive({ #Pull in the selected client's data (for this measure only) from the db.
 
@@ -54,12 +56,11 @@ read_holding_stats<- function(input, output, session, pool, measure, tabsetpanel
   })
 
 
-  observe( {
+  observeEvent(start_button_input(), {
 
     req(holding_statistics())
 
-
-    if(length(holding_statistics()) >= 1) { #If client id matches on id in holding table send welcome message modal to client.
+    if(nrow(holding_statistics()) >= 1) { #If client id matches on id in holding table send welcome message modal to client.
 
 
     sendSweetAlert(

@@ -1,23 +1,4 @@
-devtools::install_git("https://measurelysrv:95ce22d8-845d-4c66-a05c-e6687d791dc6@ownr.psychlytx.com/git/psychlytx.git")
-tinytex::install_tinytex(force = TRUE, repository = "https://mirrors.chevalier.io/CTAN/")
-# create a dir for fonts if not existing yet
-if (!dir.exists("~/fonts")){
-  dir.create("~/fonts")
-}
 
-# download the font file
-curl::curl_download(url="https://sourceforge.net/projects/linuxlibertine/files/linuxlibertine/5.3.0/LinLibertineTTF_5.3.0_2012_07_02.tgz",
-                    "~/fonts/LinLibertineTTF_5.3.0_2012_07_02.tgz")
-
-# extract it (for some reason untar doesnt like the exdir option so we change the working directory for this)
-current_wd = getwd()
-setwd("~/fonts")
-untar("~/fonts/LinLibertineTTF_5.3.0_2012_07_02.tgz")
-setwd(current_wd)
-
-# copy the files to the OS fonts path
-files <- list.files(path = "~/fonts/", full.names = TRUE)
-file.copy(files, "/usr/share/fonts/")
 library(shinydashboard)
 library(magrittr)
 library(purrr)
@@ -67,7 +48,7 @@ onStop(function() {
 
 
 
-global_subscale_info<- readRDS("global_subscale_info_list.Rds") #Retrieve the global_subscale_info list from S3
+global_subscale_info<- readRDS("global_subscale_info_list.rds") #Retrieve the global_subscale_info list from S3
 
 subscale_info_1<- global_subscale_info[["PDSS_SR"]] #Subset the global list to retrive the subscale list(s) for this particular measure
 #All of the subscale lists should be upper case acronyms with words separated by underscores

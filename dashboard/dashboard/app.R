@@ -34,12 +34,13 @@ library(plotly)
 library(grDevices)
 library(dutchmasters)
 
+# Define pool handler by pool on global level
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
   dbname = "postgres",
-  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
-  user = "timothydeitz",
-  password = Sys.getenv("PGPASSWORD")
+  host = Sys.getenv("DBHOST"),
+  user = Sys.getenv("DBUSER"),
+  password = Sys.getenv("DBPASSWORD")
 )
 
 
@@ -86,7 +87,7 @@ super_user<- TRUE
 
     tags$head(
 
-      tags$link(rel = "stylesheet", type = "text/css", href = "Styling.css") #Link to the css style sheet,
+      includeCSS(file.path(".", "styling.css"))
 
     ),
 

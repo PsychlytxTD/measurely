@@ -1,5 +1,3 @@
-devtools::install_git("https://measurelysrv:95ce22d8-845d-4c66-a05c-e6687d791dc6@ownr.psychlytx.com/git/psychlytx.git")
-tinytex::install_tinytex(force = TRUE, repository = "https://mirrors.chevalier.io/CTAN/")
 library(shinydashboard)
 library(magrittr)
 library(purrr)
@@ -35,12 +33,12 @@ library(glue)
 pool <- dbPool( #Set up the connection with the db
   drv = dbDriver("PostgreSQL"),
   dbname = "postgres",
-  #host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
-  #user = "timothydeitz",
-  #password = Sys.getenv("PGPASSWORD")
-  host = Sys.getenv("DBHOST"),
-  user = Sys.getenv("DBUSER"),
-  password = Sys.getenv("DBPASSWORD")
+  host = "measurely.cglmjkxzmdng.ap-southeast-2.rds.amazonaws.com",
+  user = "timothydeitz",
+  password = Sys.getenv("PGPASSWORD")
+  #host = Sys.getenv("DBHOST"),
+  #user = Sys.getenv("DBUSER"),
+  #password = Sys.getenv("DBPASSWORD")
 )
 
 

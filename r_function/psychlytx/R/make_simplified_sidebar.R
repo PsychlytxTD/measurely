@@ -49,7 +49,7 @@ make_simplified_sidebar_UI<- function(id) {
 #' Make Sidebar
 #'
 #' Module to make sidebar
-#' @param start_button_value A reactive value containing value of start_button action button.
+#' @param start_button_input A reactive value containing value of start_button action button.
 #'
 #' @export
 

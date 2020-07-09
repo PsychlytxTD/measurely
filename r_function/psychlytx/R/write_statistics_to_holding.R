@@ -116,7 +116,7 @@ write_statistics_to_holding<- function(input, ouput, session, pool, holding_data
                                               AND measure = {holding_data()$measure[1]}", .con = conn
                                               )
 
-    dbExecute(conn, sqlInterpolate(ANSI(), delete_old_holding_query))
+    dbExecute(conn, sqlInterpolate(ANSI() , delete_old_holding_query))
 
     poolReturn(conn)
 
